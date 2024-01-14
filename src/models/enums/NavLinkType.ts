@@ -1,0 +1,24 @@
+export enum NavLinkType {
+  HOME,
+  ABOUT,
+  VEHICLES,
+  TESTIMONIALS,
+  TEAM,
+  CONTACT,
+  LOGIN,
+  REGISTRATION,
+  LOGOUT,
+  ADMIN_PROFILE,
+  ADMIN_HOME,
+  ADMIN_USERS,
+  ADMIN_MARKS,
+  ADMIN_MODELS,
+  ADMIN_VEHICLES,
+  ADMIN_CLIENTS,
+}
+
+export enum NavType {
+  MAIN,
+  USER,
+  ADMIN
+}

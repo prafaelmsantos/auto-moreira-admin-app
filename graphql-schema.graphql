@@ -1,0 +1,406 @@
+"The `Long` scalar type represents non-fractional signed whole 64-bit numeric values. Long can represent values between -(2^63) and 2^63 - 1."
+scalar Long
+"The `DateTime` scalar represents an ISO-8601 compliant date time type."
+scalar DateTime
+type Mark {
+  id: Int!
+  name: String
+  models: [Model]
+  vehicles: [Vehicle]
+}
+type Model {
+  id: Int!
+  name: String
+  markId: Int!
+  mark: Mark
+  vehicles: [Vehicle]
+}
+type Vehicle {
+  id: Int!
+  markId: Int!
+  mark: Mark
+  modelId: Int!
+  model: Model
+  version: String
+  fuelType: FUEL!
+  price: Float!
+  mileage: Float!
+  year: Int!
+  color: String
+  doors: Int!
+  transmission: TRANSMISSION!
+  engineSize: Int!
+  power: Int!
+  observations: String
+  opportunity: Boolean!
+  sold: Boolean!
+  vehicleImages: [VehicleImage]
+}
+type Contact {
+  id: Int!
+  name: String
+  email: String
+  phoneNumber: Long!
+  message: String
+  dateTime: DateTime!
+}
+type Query {
+  vehicles(
+    "Returns the first _n_ elements from the list."
+    first: Int,
+    "Returns the elements in the list that come after the specified cursor."
+    after: String,
+    "Returns the last _n_ elements from the list."
+    last: Int,
+    "Returns the elements in the list that come before the specified cursor."
+    before: String,where: VehicleFilterInput, order: [VehicleSortInput!]  ): VehiclesConnection
+  marks(
+    "Returns the first _n_ elements from the list."
+    first: Int,
+    "Returns the elements in the list that come after the specified cursor."
+    after: String,
+    "Returns the last _n_ elements from the list."
+    last: Int,
+    "Returns the elements in the list that come before the specified cursor."
+    before: String,where: MarkFilterInput, order: [MarkSortInput!]  ): MarksConnection
+  models(
+    "Returns the first _n_ elements from the list."
+    first: Int,
+    "Returns the elements in the list that come after the specified cursor."
+    after: String,
+    "Returns the last _n_ elements from the list."
+    last: Int,
+    "Returns the elements in the list that come before the specified cursor."
+    before: String,where: ModelFilterInput, order: [ModelSortInput!]  ): ModelsConnection
+  contacts(
+    "Returns the first _n_ elements from the list."
+    first: Int,
+    "Returns the elements in the list that come after the specified cursor."
+    after: String,
+    "Returns the last _n_ elements from the list."
+    last: Int,
+    "Returns the elements in the list that come before the specified cursor."
+    before: String,where: ContactFilterInput, order: [ContactSortInput!]  ): ContactsConnection
+}
+type VehicleImage {
+  id: Int!
+  url: String
+  order: Int!
+  vehicleId: Int!
+  vehicle: Vehicle
+}
+"A connection to a list of items."
+type VehiclesConnection {
+  "Information to aid in pagination."
+  pageInfo: PageInfo!
+  "A list of edges."
+  edges: [VehiclesEdge!]
+  "A flattened list of the nodes."
+  nodes: [Vehicle]
+  totalCount: Int!
+}
+"A connection to a list of items."
+type MarksConnection {
+  "Information to aid in pagination."
+  pageInfo: PageInfo!
+  "A list of edges."
+  edges: [MarksEdge!]
+  "A flattened list of the nodes."
+  nodes: [Mark]
+  totalCount: Int!
+}
+"A connection to a list of items."
+type ModelsConnection {
+  "Information to aid in pagination."
+  pageInfo: PageInfo!
+  "A list of edges."
+  edges: [ModelsEdge!]
+  "A flattened list of the nodes."
+  nodes: [Model]
+  totalCount: Int!
+}
+"A connection to a list of items."
+type ContactsConnection {
+  "Information to aid in pagination."
+  pageInfo: PageInfo!
+  "A list of edges."
+  edges: [ContactsEdge!]
+  "A flattened list of the nodes."
+  nodes: [Contact]
+  totalCount: Int!
+}
+"Information about pagination in a connection."
+type PageInfo {
+  "Indicates whether more edges exist following the set defined by the clients arguments."
+  hasNextPage: Boolean!
+  "Indicates whether more edges exist prior the set defined by the clients arguments."
+  hasPreviousPage: Boolean!
+  "When paginating backwards, the cursor to continue."
+  startCursor: String
+  "When paginating forwards, the cursor to continue."
+  endCursor: String
+}
+"An edge in a connection."
+type VehiclesEdge {
+  "A cursor for use in pagination."
+  cursor: String!
+  "The item at the end of the edge."
+  node: Vehicle
+}
+"An edge in a connection."
+type MarksEdge {
+  "A cursor for use in pagination."
+  cursor: String!
+  "The item at the end of the edge."
+  node: Mark
+}
+"An edge in a connection."
+type ModelsEdge {
+  "A cursor for use in pagination."
+  cursor: String!
+  "The item at the end of the edge."
+  node: Model
+}
+"An edge in a connection."
+type ContactsEdge {
+  "A cursor for use in pagination."
+  cursor: String!
+  "The item at the end of the edge."
+  node: Contact
+}
+enum FUEL {
+  PETROL
+  DIESEL
+  HYBRID
+}
+enum TRANSMISSION {
+  MANUAL
+  AUTOMATIC
+}
+enum SortEnumType {
+  ASC
+  DESC
+}
+input VehicleFilterInput {
+  and: [VehicleFilterInput!]
+  or: [VehicleFilterInput!]
+  id: ComparableInt32OperationFilterInput
+  markId: ComparableInt32OperationFilterInput
+  mark: MarkFilterInput
+  modelId: ComparableInt32OperationFilterInput
+  model: ModelFilterInput
+  version: StringOperationFilterInput
+  fuelType: FUELOperationFilterInput
+  price: ComparableDoubleOperationFilterInput
+  mileage: ComparableDoubleOperationFilterInput
+  year: ComparableInt32OperationFilterInput
+  color: StringOperationFilterInput
+  doors: ComparableInt32OperationFilterInput
+  transmission: TRANSMISSIONOperationFilterInput
+  engineSize: ComparableInt32OperationFilterInput
+  power: ComparableInt32OperationFilterInput
+  observations: StringOperationFilterInput
+  opportunity: BooleanOperationFilterInput
+  sold: BooleanOperationFilterInput
+  vehicleImages: ListFilterInputTypeOfVehicleImageFilterInput
+}
+input VehicleSortInput {
+  id: SortEnumType
+  markId: SortEnumType
+  mark: MarkSortInput
+  modelId: SortEnumType
+  model: ModelSortInput
+  version: SortEnumType
+  fuelType: SortEnumType
+  price: SortEnumType
+  mileage: SortEnumType
+  year: SortEnumType
+  color: SortEnumType
+  doors: SortEnumType
+  transmission: SortEnumType
+  engineSize: SortEnumType
+  power: SortEnumType
+  observations: SortEnumType
+  opportunity: SortEnumType
+  sold: SortEnumType
+}
+input MarkFilterInput {
+  and: [MarkFilterInput!]
+  or: [MarkFilterInput!]
+  id: ComparableInt32OperationFilterInput
+  name: StringOperationFilterInput
+  models: ListFilterInputTypeOfModelFilterInput
+  vehicles: ListFilterInputTypeOfVehicleFilterInput
+}
+input MarkSortInput {
+  id: SortEnumType
+  name: SortEnumType
+}
+input ModelFilterInput {
+  and: [ModelFilterInput!]
+  or: [ModelFilterInput!]
+  id: ComparableInt32OperationFilterInput
+  name: StringOperationFilterInput
+  markId: ComparableInt32OperationFilterInput
+  mark: MarkFilterInput
+  vehicles: ListFilterInputTypeOfVehicleFilterInput
+}
+input ModelSortInput {
+  id: SortEnumType
+  name: SortEnumType
+  markId: SortEnumType
+  mark: MarkSortInput
+}
+input ContactFilterInput {
+  and: [ContactFilterInput!]
+  or: [ContactFilterInput!]
+  id: ComparableInt32OperationFilterInput
+  name: StringOperationFilterInput
+  email: StringOperationFilterInput
+  phoneNumber: ComparableInt64OperationFilterInput
+  message: StringOperationFilterInput
+  dateTime: ComparableDateTimeOperationFilterInput
+}
+input ContactSortInput {
+  id: SortEnumType
+  name: SortEnumType
+  email: SortEnumType
+  phoneNumber: SortEnumType
+  message: SortEnumType
+  dateTime: SortEnumType
+}
+input ComparableInt32OperationFilterInput {
+  eq: Int
+  neq: Int
+  in: [Int!]
+  nin: [Int!]
+  gt: Int
+  ngt: Int
+  gte: Int
+  ngte: Int
+  lt: Int
+  nlt: Int
+  lte: Int
+  nlte: Int
+}
+input StringOperationFilterInput {
+  and: [StringOperationFilterInput!]
+  or: [StringOperationFilterInput!]
+  eq: String
+  neq: String
+  contains: String
+  ncontains: String
+  in: [String]
+  nin: [String]
+  startsWith: String
+  nstartsWith: String
+  endsWith: String
+  nendsWith: String
+}
+input FUELOperationFilterInput {
+  eq: FUEL
+  neq: FUEL
+  in: [FUEL!]
+  nin: [FUEL!]
+}
+input ComparableDoubleOperationFilterInput {
+  eq: Float
+  neq: Float
+  in: [Float!]
+  nin: [Float!]
+  gt: Float
+  ngt: Float
+  gte: Float
+  ngte: Float
+  lt: Float
+  nlt: Float
+  lte: Float
+  nlte: Float
+}
+input TRANSMISSIONOperationFilterInput {
+  eq: TRANSMISSION
+  neq: TRANSMISSION
+  in: [TRANSMISSION!]
+  nin: [TRANSMISSION!]
+}
+input BooleanOperationFilterInput {
+  eq: Boolean
+  neq: Boolean
+}
+input ListFilterInputTypeOfVehicleImageFilterInput {
+  all: VehicleImageFilterInput
+  none: VehicleImageFilterInput
+  some: VehicleImageFilterInput
+  any: Boolean
+}
+input ListFilterInputTypeOfModelFilterInput {
+  all: ModelFilterInput
+  none: ModelFilterInput
+  some: ModelFilterInput
+  any: Boolean
+}
+input ListFilterInputTypeOfVehicleFilterInput {
+  all: VehicleFilterInput
+  none: VehicleFilterInput
+  some: VehicleFilterInput
+  any: Boolean
+}
+input ComparableInt64OperationFilterInput {
+  eq: Long
+  neq: Long
+  in: [Long!]
+  nin: [Long!]
+  gt: Long
+  ngt: Long
+  gte: Long
+  ngte: Long
+  lt: Long
+  nlt: Long
+  lte: Long
+  nlte: Long
+}
+input ComparableDateTimeOperationFilterInput {
+  eq: DateTime
+  neq: DateTime
+  in: [DateTime!]
+  nin: [DateTime!]
+  gt: DateTime
+  ngt: DateTime
+  gte: DateTime
+  ngte: DateTime
+  lt: DateTime
+  nlt: DateTime
+  lte: DateTime
+  nlte: DateTime
+}
+input VehicleImageFilterInput {
+  and: [VehicleImageFilterInput!]
+  or: [VehicleImageFilterInput!]
+  id: ComparableInt32OperationFilterInput
+  url: StringOperationFilterInput
+  order: ComparableInt32OperationFilterInput
+  vehicleId: ComparableInt32OperationFilterInput
+  vehicle: VehicleFilterInput
+}
+"The `@defer` directive may be provided for fragment spreads and inline fragments to inform the executor to delay the execution of the current fragment to indicate deprioritization of the current fragment. A query with `@defer` directive will cause the request to potentially return multiple responses, where non-deferred data is delivered in the initial response and data deferred is delivered in a subsequent response. `@include` and `@skip` take precedence over `@defer`."
+directive @defer(
+    "If this argument label has a value other than null, it will be passed on to the result of this defer directive. This label is intended to give client applications a way to identify to which fragment a deferred result belongs to."
+    label: String,
+    "Deferred when true."
+    if: Boolean
+  ) on FRAGMENT_SPREAD | INLINE_FRAGMENT
+"The `@stream` directive may be provided for a field of `List` type so that the backend can leverage technology such as asynchronous iterators to provide a partial list in the initial response, and additional list items in subsequent responses. `@include` and `@skip` take precedence over `@stream`."
+directive @stream(
+    "If this argument label has a value other than null, it will be passed on to the result of this stream directive. This label is intended to give client applications a way to identify to which fragment a streamed result belongs to."
+    label: String,
+    "The initial elements that shall be send down to the consumer."
+    initialCount: Int! = 0,
+    "Streamed when true."
+    if: Boolean
+  ) on FIELD
+"The `@specifiedBy` directive is used within the type system definition language to provide a URL for specifying the behavior of custom scalar definitions."
+directive @specifiedBy(
+    "The specifiedBy URL points to a human-readable specification. This field will only read a result for scalar types."
+    url: String!
+  ) on SCALAR
+
