@@ -10,13 +10,7 @@ import { IMode } from '../../../../models/enums/Base';
 import PageHolder from '../../../../components/base/PageHolder';
 import GetActions from '../../../../components/base/Actions';
 import { addMarkNavigate, markListNavigate } from '../utils/Utils';
-import { useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
-import { MessageType } from '../../../../models/enums/MessageTypeEnum';
-import { setSnackBar } from '../../../../redux/snackBarSlice';
-import { setModal } from '../../../../redux/modalSlice';
-import MarkService from '../../../../services/mark/MarkService';
-import { Button } from '@mui/material';
+
 import MarkValidationService from '../../../../services/mark/MarkValidationService';
 
 export default function Mark() {
