@@ -4,6 +4,8 @@ import filtersSlice from './filtersSlice';
 import loaderSlice from './loaderSlice';
 import modalSlice from './modalSlice';
 import snackBarSlice from './snackBarSlice';
+import darkModeSlice from './darkModeSlice';
+import appModeSlice from './appModeSlice';
 
 export const store = configureStore({
   reducer: {
@@ -11,7 +13,9 @@ export const store = configureStore({
     filtersSlice,
     loaderSlice,
     modalSlice,
-    snackBarSlice
+    snackBarSlice,
+    darkModeSlice,
+    appModeSlice
   }
 });
 

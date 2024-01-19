@@ -1,11 +1,16 @@
 import { useQuery } from '@apollo/client';
-import Table from '../../../components/table';
-import { columns } from './utils/Utils';
+import Table from '../../../components/table/Table';
+import { addModelNavigate, columns } from './utils/Utils';
 import { models, models_models_nodes } from '../../../queries/types/models';
 import { MODELS } from '../../../queries/Models';
 import { convertToModel } from '../../../models/Model';
+import { useNavigate } from 'react-router-dom';
+import PageHolder from '../../../components/base/PageHolder';
+import GetActions from '../../../components/base/Actions';
+import { IMode } from '../../../models/enums/Base';
 
 export default function Models() {
+  const navigate = useNavigate();
   const { data, loading } = useQuery<models>(MODELS);
 
   const rows =
@@ -13,8 +18,15 @@ export default function Models() {
       convertToModel(model as models_models_nodes)
     ) ?? [];
 
+  const handleAdd = () => navigate(addModelNavigate);
   return (
     <main>
+      <PageHolder
+        actions={GetActions({
+          mode: IMode.LIST,
+          handleAdd
+        })}
+      />
       <Table {...{ rows, loading, columns }} />
     </main>
   );

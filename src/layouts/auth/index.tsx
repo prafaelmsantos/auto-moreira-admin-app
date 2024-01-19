@@ -1,11 +1,13 @@
 import authImg from '../../assets/img/auth/auth.png';
 import { Link, Routes, Route, Navigate } from 'react-router-dom';
-import routes from '../../routes';
+import routes from '../../routes/SideBarRoutes';
 import Footer from '../../components/footer/FooterAuthDefault';
 import FixedPlugin from '../../components/fixedPlugin/FixedPlugin';
+import { RouteType } from '../../models/enums/RouteType';
+import AutoMoreiraRouter from '../../routes/AutoMoreiraRouter';
 
 export default function Auth() {
-  const getRoutes = (routes: RoutesType[]): any => {
+  /*   const getRoutes = (routes: RoutesType[]): any => {
     return routes.map((prop, key) => {
       if (prop.layout === '/auth') {
         return (
@@ -15,8 +17,8 @@ export default function Auth() {
         return null;
       }
     });
-  };
-  document.documentElement.dir = 'ltr';
+  }; */
+
   return (
     <div>
       <div className="relative float-right h-full min-h-screen w-full !bg-white dark:!bg-navy-900">
@@ -44,13 +46,14 @@ export default function Auth() {
                     </p>
                   </div>
                 </Link>
-                <Routes>
+                {/* <Routes>
                   {getRoutes(routes)}
                   <Route
                     path="/"
                     element={<Navigate to="/auth/sign-in" replace />}
                   />
-                </Routes>
+                </Routes> */}
+                <AutoMoreiraRouter routeType={RouteType.AUTH} />
                 <div className="absolute right-0 hidden h-full min-h-screen md:block lg:w-[49vw] 2xl:w-[44vw]">
                   <div
                     className="absolute flex h-full w-full items-end justify-center bg-cover bg-center"

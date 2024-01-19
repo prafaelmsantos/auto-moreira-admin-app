@@ -1,9 +1,8 @@
 /** @format */
 
-import { Routes, Route, Navigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { useEffect } from 'react';
-import { useAppDispatch } from './redux/hooks';
+import { useAppDispatch, useAppSelector } from './redux/hooks';
 import { setUser } from './redux/userSlice';
 import { closeModal } from './redux/modalSlice';
 
@@ -98,11 +97,15 @@ const App = () => {
         open={currentSnackBar.snackBar.open}
         onClose={() => dispatch(closeSnackBar())}
       />
-      <Routes>
+
+      {user ? <Admin /> : <Auth />}
+
+      {/* <Routes>
         <Route path="auth/*" element={<Auth />} />
         <Route path="admin/*" element={<Admin />} />
-        <Route path="/" element={<Navigate to="/admin" replace />} />
-      </Routes>
+    <Route path="/" element={<Navigate to="/admin" replace />} /> 
+      <Route path="/*" element={<Navigate to="/admin" replace />} />
+      </Routes> */}
     </>
   );
 };

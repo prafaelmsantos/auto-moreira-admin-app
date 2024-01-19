@@ -1,9 +1,7 @@
-import { Tooltip, IconButton } from '@mui/material';
-import { blue, red } from '@mui/material/colors';
 import { GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
-import EditTwoToneIcon from '@mui/icons-material/EditTwoTone';
-import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone';
 import { FuelTypeConverted } from '../../../../models/enums/FuelEnum';
+import Actions from '../../../../components/table/utils/Actions';
+import { RouteName } from '../../../../models/enums/RouteType';
 
 export const columns: GridColDef[] = [
   {
@@ -45,34 +43,15 @@ export const columns: GridColDef[] = [
     width: 100,
     sortable: false,
     renderCell: (params: GridRenderCellParams<any, Date>) => (
-      <>
-        <Tooltip title="Edit Order" arrow>
-          <IconButton
-            sx={{
-              '&:hover': {
-                background: blue[100]
-              },
-              color: blue[500]
-            }}
-            color="inherit"
-            size="small"
-          >
-            <EditTwoToneIcon fontSize="small" />
-          </IconButton>
-        </Tooltip>
-        <Tooltip title="Delete Order" arrow>
-          <IconButton
-            sx={{
-              '&:hover': { background: red[100] },
-              color: red[500]
-            }}
-            color="inherit"
-            size="small"
-          >
-            <DeleteTwoToneIcon fontSize="small" />
-          </IconButton>
-        </Tooltip>
-      </>
+      <Actions
+        editTitle={'Editar Veículo'}
+        deleteTitle={'Apagar Veículo'}
+        routeName={RouteName.VEHICLES}
+        id={Number(params.id)}
+      />
     )
   }
 ];
+
+export const vehicleListNavigate = '/admin/vehicles';
+export const addVehicleNavigate = '/admin/vehicles/add';

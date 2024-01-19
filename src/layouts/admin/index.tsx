@@ -1,23 +1,36 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
-import routes from '../../routes';
+
 import Footer from '../../components/footer/Footer';
 import Navbar from '../../components/navbar';
 import Sidebar from '../../components/sidebar';
+import AutoMoreiraRouter from '../../routes/AutoMoreiraRouter';
+
+import SideBarRoutes from '../../routes/SideBarRoutes';
+import { RouteType } from '../../models/enums/RouteType';
+
+export interface ICurrentRoute {
+  name: string;
+  path: string;
+}
 
 export default function Admin(props: { [x: string]: any }) {
   const { ...rest } = props;
   const location = useLocation();
-  const [open, setOpen] = React.useState(true);
-  const [currentRoute, setCurrentRoute] = React.useState('Dashboard');
+  const [open, setOpen] = useState(true);
+  const [currentRoute, setCurrentRoute] = useState<ICurrentRoute>({
+    name: 'Dashboard',
+    path: 'dashboard'
+  });
 
-  React.useEffect(() => {
+  useEffect(() => {
     window.addEventListener('resize', () =>
       window.innerWidth < 1200 ? setOpen(false) : setOpen(true)
     );
   }, []);
-  React.useEffect(() => {
-    getActiveRoute(routes);
+
+  useEffect(() => {
+    getActiveRoute(SideBarRoutes);
   }, [location.pathname]);
 
   const getActiveRoute = (routes: RoutesType[]): string | boolean => {
@@ -28,7 +41,7 @@ export default function Admin(props: { [x: string]: any }) {
           routes[i].layout + '/' + routes[i].path
         ) !== -1
       ) {
-        setCurrentRoute(routes[i].name);
+        setCurrentRoute({ name: routes[i].name, path: routes[i].path });
       }
     }
     return activeRoute;
@@ -46,7 +59,7 @@ export default function Admin(props: { [x: string]: any }) {
     }
     return activeNavbar;
   };
-  const getRoutes = (routes: RoutesType[]): any => {
+  /*  const getRoutes = (routes: RoutesType[]): any => {
     return routes.map((prop, key) => {
       if (prop.layout === '/admin') {
         return (
@@ -56,9 +69,8 @@ export default function Admin(props: { [x: string]: any }) {
         return null;
       }
     });
-  };
+  }; */
 
-  document.documentElement.dir = 'ltr';
   return (
     <div className="flex h-full w-full">
       <Sidebar open={open} onClose={() => setOpen(false)} />
@@ -72,19 +84,20 @@ export default function Admin(props: { [x: string]: any }) {
           <div className="h-full">
             <Navbar
               onOpenSidenav={() => setOpen(true)}
-              brandText={currentRoute}
-              secondary={getActiveNavbar(routes)}
+              currentRoute={currentRoute}
+              secondary={getActiveNavbar(SideBarRoutes)}
               {...rest}
             />
             <div className="pt-5s mx-auto mb-auto h-full min-h-[84vh] p-2 md:pr-2">
-              <Routes>
+              {/* <Routes>
                 {getRoutes(routes)}
-
                 <Route
                   path="/"
-                  element={<Navigate to="/admin/home" replace />}
+                  element={<Navigate to="/admin/dashboard" replace />}
                 />
-              </Routes>
+              </Routes> */}
+
+              <AutoMoreiraRouter routeType={RouteType.ADMIN} />
             </div>
             <div className="p-3">
               <Footer />
