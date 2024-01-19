@@ -4,7 +4,7 @@
 
   <p><b>Auto Moreira Admin App</b> is an online platform that allows users to rent cars for personal or business use. The website provides an easy-to-use interface for searching, comparing, and reserving cars from a wide selection of vehicles that vary in make, model, size, and price.</p>
 
-👉 Live Demo: <a href='https://auto-moreira-app.onrender.com/'>Live Demo</a>
+👉 Live Demo: <a href='https://auto-moreira-admin-app.onrender.com/'>Live Demo</a>
 
 # Getting Started with Create React App
 
