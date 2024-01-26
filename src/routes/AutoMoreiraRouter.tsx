@@ -1,5 +1,3 @@
-/** @format */
-
 import { Navigate, useRoutes } from 'react-router-dom';
 import Vehicles from '../views/admin/vehicles/Vehicles';
 import Marks from '../views/admin/marks/Marks';
@@ -58,16 +56,6 @@ export const AdminRoutes = [
       { index: true, element: <Vehicles /> },
       { path: ':id', element: <Vehicle /> }
     ]
-  },
-  {
-    path: '/admin/nft-marketplace',
-    element: <NFTMarketplace />,
-    id: 'nft-marketplace'
-  },
-  {
-    path: '/admin/data-tables',
-    element: <DataTables />,
-    id: 'data-tables'
   },
   {
     path: '/admin/profile',

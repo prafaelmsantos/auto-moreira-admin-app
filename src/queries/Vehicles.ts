@@ -11,15 +11,15 @@ export const VEHICLES = gql`
       totalCount
       nodes {
         id
-        markId
-        mark {
-          id
-          name
-        }
         modelId
         model {
           id
           name
+          markId
+          mark {
+            id
+            name
+          }
         }
         year
         color

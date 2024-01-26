@@ -1,34 +1,34 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import {
-  UseFormRegister,
   UseFormHandleSubmit,
   UseFormReset,
   useForm,
-  FieldErrors
+  FieldErrors,
+  Control
 } from 'react-hook-form';
-import { IMark } from '../../models/Mark';
+import { IMark } from '../models/Mark';
 import * as Yup from 'yup';
 
 const MarkValidationSchema: Yup.ObjectSchema<IMark> = Yup.object().shape({
-  name: Yup.string().required('O nome completo é obrigatório!'),
+  name: Yup.string().required('O nome é obrigatório!'),
   id: Yup.number().default(0)
 });
 
 export default function MarkValidationService(): [
-  UseFormRegister<IMark>,
-  UseFormHandleSubmit<IMark, undefined>,
+  UseFormHandleSubmit<IMark>,
   UseFormReset<IMark>,
   FieldErrors<IMark>,
-  boolean
+  boolean,
+  Control<IMark, any>
 ] {
   const {
-    register,
     handleSubmit,
     reset,
+    control,
     formState: { errors, isSubmitSuccessful }
   } = useForm<IMark>({
     resolver: yupResolver(MarkValidationSchema)
   });
 
-  return [register, handleSubmit, reset, errors, isSubmitSuccessful];
+  return [handleSubmit, reset, errors, isSubmitSuccessful, control];
 }

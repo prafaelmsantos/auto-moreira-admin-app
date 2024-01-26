@@ -1,11 +1,11 @@
-import { IMark } from './Mark';
-import { models_models_nodes } from '../queries/types/models';
+import { IMark } from '../../marks/models/Mark';
+import { models_models_nodes } from '../../../../queries/types/models';
 
 export interface IModel {
   id: number;
   name: string;
   markId: number;
-  mark: IMark;
+  mark?: IMark;
 }
 
 export function convertToModel(model: models_models_nodes): IModel {

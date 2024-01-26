@@ -17,11 +17,15 @@ export interface ICurrentRoute {
 export default function Admin(props: { [x: string]: any }) {
   const { ...rest } = props;
   const location = useLocation();
-  const [open, setOpen] = useState(true);
+
   const [currentRoute, setCurrentRoute] = useState<ICurrentRoute>({
-    name: 'Dashboard',
+    name: 'Painel Principal',
     path: 'dashboard'
   });
+
+  const mobile = window.innerWidth < 1200;
+
+  const [open, setOpen] = useState(!mobile);
 
   useEffect(() => {
     window.addEventListener('resize', () =>
@@ -71,19 +75,24 @@ export default function Admin(props: { [x: string]: any }) {
     });
   }; */
 
+  const isPerfilRoute = location.pathname.includes('/admin/profile');
+
   return (
     <div className="flex h-full w-full">
-      <Sidebar open={open} onClose={() => setOpen(false)} />
+      {!isPerfilRoute && <Sidebar {...{ open, setOpen, mobile }} />}
       {/* Navbar & Main Content */}
       <div className="h-full w-full bg-lightPrimary dark:!bg-navy-900">
         {/* Main Content */}
         <main
-          className={`mx-[12px] h-full flex-none transition-all md:pr-2 xl:ml-[313px]`}
+          className={`mx-[12px] h-full flex-none transition-all md:pr-2 ${
+            !isPerfilRoute ? 'xl:ml-[313px]' : ''
+          }`}
         >
           {/* Routes */}
           <div className="h-full">
             <Navbar
-              onOpenSidenav={() => setOpen(true)}
+              setOpen={setOpen}
+              open={open}
               currentRoute={currentRoute}
               secondary={getActiveNavbar(SideBarRoutes)}
               {...rest}

@@ -9,7 +9,7 @@ import { VehicleFilterInput, VehicleSortInput, FUEL, TRANSMISSION } from "./../.
 // GraphQL query operation: vehicles
 // ====================================================
 
-export interface vehicles_vehicles_nodes_mark {
+export interface vehicles_vehicles_nodes_model_mark {
   __typename: "Mark";
   id: number;
   name: string | null;
@@ -19,13 +19,13 @@ export interface vehicles_vehicles_nodes_model {
   __typename: "Model";
   id: number;
   name: string | null;
+  markId: number;
+  mark: vehicles_vehicles_nodes_model_mark | null;
 }
 
 export interface vehicles_vehicles_nodes {
   __typename: "Vehicle";
   id: number;
-  markId: number;
-  mark: vehicles_vehicles_nodes_mark | null;
   modelId: number;
   model: vehicles_vehicles_nodes_model | null;
   year: number;

@@ -39,8 +39,10 @@ export default function Table({ rows, loading, columns }: ITable) {
           '& .MuiTablePagination-selectIcon': {
             color: darkMode ? 'white' : COLORS.AUTO_MOREIRA_NAVY[700]
           },
-          '& .css-i4bv87-MuiSvgIcon-root': {
-            color: darkMode ? 'white' : COLORS.AUTO_MOREIRA_NAVY[700]
+          '& .Mui-disabled': {
+            color: darkMode
+              ? COLORS.AUTO_MOREIRA_GRAY[500]
+              : COLORS.AUTO_MOREIRA_NAVY[100]
           }
         }}
         disableColumnMenu

@@ -1,5 +1,5 @@
 import { BASE_API_URL } from '../../config/variables';
-import { IMark } from '../../models/Mark';
+import { IMark } from '../../views/admin/marks/models/Mark';
 
 class MarkService {
   static async POST(mark: IMark): Promise<Response | undefined> {

@@ -6,7 +6,7 @@ const General = () => {
       {/* Header */}
       <div className="mb-8 mt-2 w-full">
         <h4 className="px-2 text-xl font-bold text-navy-700 dark:text-white">
-          General Information
+          Informação Geral
         </h4>
         <p className="mt-2 px-2 text-base text-gray-600">
           As we live, our hearts turn colder. Cause pain is what we go through

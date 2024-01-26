@@ -3,11 +3,15 @@
 import { Link, useLocation } from 'react-router-dom';
 import DashIcon from '../../icons/DashIcon';
 
-export const SidebarLinks = (props: { routes: RoutesType[] }): JSX.Element => {
+export const SidebarLinks = (props: {
+  routes: RoutesType[];
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  mobile: boolean;
+}): JSX.Element => {
   // Chakra color mode
   let location = useLocation();
 
-  const { routes } = props;
+  const { routes, setOpen, mobile } = props;
 
   // verifies if routeName is the one active (in browser input)
   const activeRoute = (routeName: string) =>
@@ -15,9 +19,16 @@ export const SidebarLinks = (props: { routes: RoutesType[] }): JSX.Element => {
 
   const createLinks = (routes: RoutesType[]) => {
     return routes.map((route, index) => {
-      if (route.layout === '/admin' || route.layout === '/auth') {
+      if (
+        route.name !== 'Perfil' &&
+        (route.layout === '/admin' || route.layout === '/auth')
+      ) {
         return (
-          <Link key={index} to={route.layout + '/' + route.path}>
+          <Link
+            key={index}
+            to={route.layout + '/' + route.path}
+            onClick={() => mobile && setOpen(false)}
+          >
             <div className="relative mb-3 flex hover:cursor-pointer">
               <li
                 className="my-[3px] flex cursor-pointer items-center px-8"

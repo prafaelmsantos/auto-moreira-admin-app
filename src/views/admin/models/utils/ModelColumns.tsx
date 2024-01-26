@@ -1,4 +1,5 @@
 import { GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
+
 import { RouteName } from '../../../../models/enums/RouteType';
 import Actions from '../../../../components/table/utils/Actions';
 
@@ -26,14 +27,11 @@ export const columns: GridColDef[] = [
     sortable: false,
     renderCell: (params: GridRenderCellParams<any, Date>) => (
       <Actions
-        editTitle={'Editar Modelo'}
-        deleteTitle={'Apagar Modelo'}
+        editTitle={'Editar modelo'}
+        deleteTitle={'Apagar modelo'}
         routeName={RouteName.MODELS}
         id={Number(params.id)}
       />
     )
   }
 ];
-
-export const modelListNavigate = '/admin/models';
-export const addModelNavigate = '/admin/models/add';

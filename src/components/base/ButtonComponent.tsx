@@ -1,9 +1,6 @@
 /** @format */
 
-import { Box, Button, Stack, Typography } from '@mui/material';
-import { ButtonPropsColorOverrides } from '@mui/material/Button/Button';
-import { SxProps, Theme } from '@mui/material/styles';
-import { OverridableStringUnion } from '@mui/types';
+import { Button, Stack } from '@mui/material';
 
 import { MouseEventHandler, ReactNode } from 'react';
 import { useSelector } from 'react-redux';
@@ -11,7 +8,6 @@ import { RootState } from '../../redux/store';
 import { COLORS } from '../../utils/Colors';
 
 interface ButtonProps<T> {
-  title: string;
   variant?: 'text' | 'outlined' | 'contained';
   icon?: ReactNode;
   disabled?: boolean;
@@ -19,7 +15,7 @@ interface ButtonProps<T> {
 }
 
 export default function ButtonComponent(props: ButtonProps<HTMLElement>) {
-  const { title, variant = 'contained', icon, disabled, onClick } = props;
+  const { variant = 'contained', icon, disabled, onClick } = props;
   const darkMode = useSelector((state: RootState) => state.darkModeSlice.dark);
 
   return (
@@ -48,12 +44,9 @@ export default function ButtonComponent(props: ButtonProps<HTMLElement>) {
         direction="row"
         justifyContent="center"
         alignItems="center"
-        spacing={1}
+        sx={{ py: 0.5 }}
       >
         {icon && <>{icon}</>}
-        <Box>
-          <Typography>{title}</Typography>
-        </Box>
       </Stack>
     </Button>
   );

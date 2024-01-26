@@ -1,19 +1,21 @@
 import { GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
-import { FuelTypeConverted } from '../../../../models/enums/FuelEnum';
 import Actions from '../../../../components/table/utils/Actions';
 import { RouteName } from '../../../../models/enums/RouteType';
+import { IVehicle, convertBoolean } from '../models/Vehicle';
+import { FuelTypeConverted } from '../models/enums/FuelEnum';
 
 export const columns: GridColDef[] = [
   {
     field: 'id',
     headerName: 'ID',
-    width: 100
+    width: 50
   },
   {
     field: 'mark',
     headerName: 'Marca',
     width: 150,
-    valueFormatter: (params) => params.value.name
+    renderCell: (params: GridRenderCellParams<IVehicle, Date>) =>
+      (params.row as IVehicle).model?.mark?.name ?? ''
   },
   {
     field: 'model',
@@ -24,18 +26,30 @@ export const columns: GridColDef[] = [
   {
     field: 'version',
     headerName: 'Versão',
-    width: 200
+    width: 150
   },
   {
     field: 'year',
     headerName: 'Ano',
-    width: 150
+    width: 100
   },
   {
     field: 'fuelType',
     headerName: 'Combustível',
-    width: 200,
+    width: 150,
     valueFormatter: (params) => FuelTypeConverted(params.value)
+  },
+  {
+    field: 'opportunity',
+    headerName: 'Oportunidade',
+    width: 150,
+    valueFormatter: (params) => convertBoolean(params.value as boolean)
+  },
+  {
+    field: 'sold',
+    headerName: 'Vendido',
+    width: 100,
+    valueFormatter: (params) => convertBoolean(params.value as boolean)
   },
   {
     field: 'actions',
@@ -52,6 +66,3 @@ export const columns: GridColDef[] = [
     )
   }
 ];
-
-export const vehicleListNavigate = '/admin/vehicles';
-export const addVehicleNavigate = '/admin/vehicles/add';

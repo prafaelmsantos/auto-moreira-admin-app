@@ -1,5 +1,5 @@
 import { useMatch, useNavigate, useParams } from 'react-router-dom';
-import { IMark } from '../../../../models/Mark';
+import { IMark } from '../models/Mark';
 import { useAppDispatch } from '../../../../redux/hooks';
 import { useEffect, useState } from 'react';
 import { setLoader, setToInitialLoader } from '../../../../redux/loaderSlice';
@@ -11,7 +11,7 @@ import PageHolder from '../../../../components/base/PageHolder';
 import GetActions from '../../../../components/base/Actions';
 import { addMarkNavigate, markListNavigate } from '../utils/Utils';
 
-import MarkValidationService from '../../../../services/mark/MarkValidationService';
+import MarkValidationService from '../services/MarkValidationService';
 
 export default function Mark() {
   const param = useParams();
@@ -50,7 +50,7 @@ export default function Mark() {
   //const handleSumbitEdit = () => {};
   const handleClose = () => navigate(markListNavigate);
 
-  const [register, handleSubmit, reset, errors, isSubmitSuccessful] =
+  const [handleSubmit, reset, errors, isSubmitSuccessful, control] =
     MarkValidationService();
   const handleSumbitEdit = async (mark: IMark) => {
     console.log(mark);
@@ -105,7 +105,8 @@ export default function Mark() {
               handleSumbitAdd: handleSubmit(handleSumbitAdd)
             })}
           />
-          <MarkDetails {...{ mark, errors, register }} />
+
+          <MarkDetails {...{ mark, errors, control }} />
         </>
       )}
     </>

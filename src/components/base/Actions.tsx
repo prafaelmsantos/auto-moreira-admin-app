@@ -21,7 +21,6 @@ export default function GetActions({
     case IMode.LIST:
       return [
         {
-          name: 'Adicionar',
           icon: <FaPlusCircle />,
           callback: () => handleAdd && void handleAdd()
         }
@@ -30,12 +29,10 @@ export default function GetActions({
     case IMode.ADD:
       return [
         {
-          name: 'Fechar',
           icon: <FaXmark />,
           callback: () => handleClose && void handleClose()
         },
         {
-          name: 'Submeter',
           icon: <FaCheck />,
           callback: () => handleSumbitAdd && void handleSumbitAdd()
         }
@@ -44,12 +41,10 @@ export default function GetActions({
     case IMode.EDIT:
       return [
         {
-          name: 'Fechar',
           icon: <FaXmark />,
           callback: () => handleClose && void handleClose()
         },
         {
-          name: 'Submeter',
           icon: <FaCheck />,
           callback: () => handleSubmitEdit && void handleSubmitEdit()
         }

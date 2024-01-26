@@ -1,4 +1,4 @@
-import { marks_marks_nodes } from '../queries/types/marks';
+import { marks_marks_nodes } from '../../../../queries/types/marks';
 
 export interface IMark {
   id: number;

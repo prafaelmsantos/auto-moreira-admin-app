@@ -3,22 +3,18 @@ scalar Long
 "The `DateTime` scalar represents an ISO-8601 compliant date time type."
 scalar DateTime
 type Mark {
-  id: Int!
   name: String
   models: [Model]
-  vehicles: [Vehicle]
+  id: Int!
 }
 type Model {
-  id: Int!
   name: String
   markId: Int!
   mark: Mark
   vehicles: [Vehicle]
+  id: Int!
 }
 type Vehicle {
-  id: Int!
-  markId: Int!
-  mark: Mark
   modelId: Int!
   model: Model
   version: String
@@ -35,14 +31,15 @@ type Vehicle {
   opportunity: Boolean!
   sold: Boolean!
   vehicleImages: [VehicleImage]
+  id: Int!
 }
 type Contact {
-  id: Int!
   name: String
   email: String
   phoneNumber: Long!
   message: String
   dateTime: DateTime!
+  id: Int!
 }
 type Query {
   vehicles(
@@ -83,11 +80,10 @@ type Query {
     before: String,where: ContactFilterInput, order: [ContactSortInput!]  ): ContactsConnection
 }
 type VehicleImage {
-  id: Int!
   url: String
-  order: Int!
   vehicleId: Int!
   vehicle: Vehicle
+  id: Int!
 }
 "A connection to a list of items."
 type VehiclesConnection {
@@ -184,9 +180,6 @@ enum SortEnumType {
 input VehicleFilterInput {
   and: [VehicleFilterInput!]
   or: [VehicleFilterInput!]
-  id: ComparableInt32OperationFilterInput
-  markId: ComparableInt32OperationFilterInput
-  mark: MarkFilterInput
   modelId: ComparableInt32OperationFilterInput
   model: ModelFilterInput
   version: StringOperationFilterInput
@@ -203,11 +196,9 @@ input VehicleFilterInput {
   opportunity: BooleanOperationFilterInput
   sold: BooleanOperationFilterInput
   vehicleImages: ListFilterInputTypeOfVehicleImageFilterInput
+  id: ComparableInt32OperationFilterInput
 }
 input VehicleSortInput {
-  id: SortEnumType
-  markId: SortEnumType
-  mark: MarkSortInput
   modelId: SortEnumType
   model: ModelSortInput
   version: SortEnumType
@@ -223,51 +214,51 @@ input VehicleSortInput {
   observations: SortEnumType
   opportunity: SortEnumType
   sold: SortEnumType
+  id: SortEnumType
 }
 input MarkFilterInput {
   and: [MarkFilterInput!]
   or: [MarkFilterInput!]
-  id: ComparableInt32OperationFilterInput
   name: StringOperationFilterInput
   models: ListFilterInputTypeOfModelFilterInput
-  vehicles: ListFilterInputTypeOfVehicleFilterInput
+  id: ComparableInt32OperationFilterInput
 }
 input MarkSortInput {
-  id: SortEnumType
   name: SortEnumType
+  id: SortEnumType
 }
 input ModelFilterInput {
   and: [ModelFilterInput!]
   or: [ModelFilterInput!]
-  id: ComparableInt32OperationFilterInput
   name: StringOperationFilterInput
   markId: ComparableInt32OperationFilterInput
   mark: MarkFilterInput
   vehicles: ListFilterInputTypeOfVehicleFilterInput
+  id: ComparableInt32OperationFilterInput
 }
 input ModelSortInput {
-  id: SortEnumType
   name: SortEnumType
   markId: SortEnumType
   mark: MarkSortInput
+  id: SortEnumType
 }
 input ContactFilterInput {
   and: [ContactFilterInput!]
   or: [ContactFilterInput!]
-  id: ComparableInt32OperationFilterInput
   name: StringOperationFilterInput
   email: StringOperationFilterInput
   phoneNumber: ComparableInt64OperationFilterInput
   message: StringOperationFilterInput
   dateTime: ComparableDateTimeOperationFilterInput
+  id: ComparableInt32OperationFilterInput
 }
 input ContactSortInput {
-  id: SortEnumType
   name: SortEnumType
   email: SortEnumType
   phoneNumber: SortEnumType
   message: SortEnumType
   dateTime: SortEnumType
+  id: SortEnumType
 }
 input ComparableInt32OperationFilterInput {
   eq: Int
@@ -376,11 +367,10 @@ input ComparableDateTimeOperationFilterInput {
 input VehicleImageFilterInput {
   and: [VehicleImageFilterInput!]
   or: [VehicleImageFilterInput!]
-  id: ComparableInt32OperationFilterInput
   url: StringOperationFilterInput
-  order: ComparableInt32OperationFilterInput
   vehicleId: ComparableInt32OperationFilterInput
   vehicle: VehicleFilterInput
+  id: ComparableInt32OperationFilterInput
 }
 "The `@defer` directive may be provided for fragment spreads and inline fragments to inform the executor to delay the execution of the current fragment to indicate deprioritization of the current fragment. A query with `@defer` directive will cause the request to potentially return multiple responses, where non-deferred data is delivered in the initial response and data deferred is delivered in a subsequent response. `@include` and `@skip` take precedence over `@defer`."
 directive @defer(

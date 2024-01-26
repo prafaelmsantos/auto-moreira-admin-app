@@ -4,7 +4,6 @@ import { Box, Stack } from '@mui/material';
 import ButtonComponent from './ButtonComponent';
 
 export type IAction = {
-  name: string;
   isOutlined?: boolean;
   isError?: boolean;
   icon?: JSX.Element;
@@ -38,13 +37,12 @@ export default function PageHolder({ actions }: IPageHolder) {
             }}
           >
             {actions &&
-              actions.map((action) => (
-                <Box key={action.name} sx={{ pb: '0.3rem' }}>
+              actions.map((action, key) => (
+                <Box key={key} sx={{ pb: '0.3rem' }}>
                   <ButtonComponent
                     disabled={action.disabled}
                     icon={action.icon}
                     onClick={action.callback}
-                    title={action.name}
                     variant={action.isOutlined ? 'outlined' : 'contained'}
                   />
                 </Box>

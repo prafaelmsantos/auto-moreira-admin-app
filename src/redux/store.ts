@@ -1,6 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
 import userSlice from './userSlice';
-import filtersSlice from './filtersSlice';
 import loaderSlice from './loaderSlice';
 import modalSlice from './modalSlice';
 import snackBarSlice from './snackBarSlice';
@@ -10,7 +9,6 @@ import appModeSlice from './appModeSlice';
 export const store = configureStore({
   reducer: {
     userSlice,
-    filtersSlice,
     loaderSlice,
     modalSlice,
     snackBarSlice,

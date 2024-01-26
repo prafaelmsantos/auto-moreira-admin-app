@@ -1,79 +1,100 @@
-import { FcGoogle } from 'react-icons/fc';
+import { TextField } from '@mui/material';
 import InputField from '../../components/fields/InputField';
-import Checkbox from '../../components/checkbox';
+import SignInValidationService from './services/SignInValidationService';
+import { IUser, IUserLogin } from './models/User';
+import { MessageType } from '../../models/enums/MessageTypeEnum';
+import { setModal } from '../../redux/modalSlice';
+import { setSnackBar } from '../../redux/snackBarSlice';
+import UserService from '../../services/UserService';
+import AuthService from './services/AuthService';
+import { useAppDispatch } from '../../redux/hooks';
+import { useNavigate } from 'react-router-dom';
 
 export default function SignIn() {
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
+  const [register, handleSubmit, reset, errors, isSubmitSuccessful] =
+    SignInValidationService();
+
+  console.log(errors);
+
+  const onSubmit = async (user: IUserLogin) => {
+    const response = await AuthService.Login(user);
+    if (response) {
+      if (response.ok) {
+        const responseUser = (await response
+          .json()
+          .then((response) => response)) as IUser;
+
+        UserService.setCurrentUser(responseUser, dispatch, navigate);
+        window.scrollTo(0, 0);
+        return Promise.resolve();
+      } else {
+        dispatch(
+          setModal({
+            title: 'Erro ao tentar efetuar login ao sistema',
+            message:
+              'Lamentamos mas os dados inseridos não estão corretos. Por favor, verifique o email ou a password.',
+            type: MessageType.ERROR,
+            open: true
+          })
+        );
+      }
+    }
+  };
+
   return (
     <div className="mb-16 mt-16 flex h-full w-full items-center justify-center px-2 md:mx-0 md:px-0 lg:mb-10 lg:items-center lg:justify-start">
       {/* Sign in section */}
       <div className="mt-[10vh] w-full max-w-full flex-col items-center md:pl-4 lg:pl-0 xl:max-w-[420px]">
         <h4 className="mb-2.5 text-4xl font-bold text-navy-700 dark:text-white">
-          Sign In
+          Entrar
         </h4>
         <p className="mb-9 ml-1 text-base text-gray-600">
-          Enter your email and password to sign in!
+          Insira o seu nome de utilizador e a sua palavra-passe
         </p>
-        <div className="mb-6 flex h-[50px] w-full items-center justify-center gap-2 rounded-xl bg-lightPrimary hover:cursor-pointer dark:bg-navy-800">
-          <div className="rounded-full text-xl">
-            <FcGoogle />
-          </div>
-          <h5 className="text-sm font-medium text-navy-700 dark:text-white">
-            Sign In with Google
-          </h5>
-        </div>
-        <div className="mb-6 flex items-center  gap-3">
-          <div className="h-px w-full bg-gray-200 dark:bg-navy-700" />
-          <p className="text-base text-gray-600 dark:text-white"> or </p>
-          <div className="h-px w-full bg-gray-200 dark:bg-navy-700" />
-        </div>
+
         {/* Email */}
         <InputField
           variant="auth"
           extra="mb-3"
-          label="Email*"
-          placeholder="mail@simmmple.com"
-          id="email"
+          label="Nome de Utilizador*"
+          placeholder="cr7master"
+          id="username"
           type="text"
+          register={register('userName')}
+          error={!!errors.userName}
+          helperText={errors.userName?.message}
         />
 
         {/* Password */}
         <InputField
           variant="auth"
           extra="mb-3"
-          label="Password*"
-          placeholder="Min. 8 characters"
+          label="Palavra-passe*"
+          placeholder="Min. 6 caracteres"
           id="password"
           type="password"
+          register={register('password')}
+          error={!!errors.password}
+          helperText={errors.password?.message}
         />
         {/* Checkbox */}
-        <div className="mb-4 flex items-center justify-between px-2">
-          <div className="flex items-center">
-            <Checkbox />
-            <p className="ml-2 text-sm font-medium text-navy-700 dark:text-white">
-              Keep me logged In
-            </p>
-          </div>
+        <div className="mb-4 mt-1 flex items-center justify-end px-2">
           <a
             className="text-sm font-medium text-brand-500 hover:text-brand-600 dark:text-white"
             href=" "
           >
-            Forgot Password?
+            Esqueceu-se da palavra-passe?
           </a>
         </div>
-        <button className="linear mt-2 w-full rounded-xl bg-brand-500 py-[12px] text-base font-medium text-white transition duration-200 hover:bg-brand-600 active:bg-brand-700 dark:bg-brand-400 dark:text-white dark:hover:bg-brand-300 dark:active:bg-brand-200">
-          Sign In
+        <button
+          onClick={handleSubmit(onSubmit)}
+          className="linear mt-2 w-full rounded-xl bg-brand-500 py-[12px] text-base font-medium text-white transition duration-200 hover:bg-brand-600 active:bg-brand-700 dark:bg-brand-400 dark:text-white dark:hover:bg-brand-300 dark:active:bg-brand-200"
+        >
+          Entrar
         </button>
-        <div className="mt-4">
-          <span className=" text-sm font-medium text-navy-700 dark:text-gray-600">
-            Not registered yet?
-          </span>
-          <a
-            href=" "
-            className="ml-1 text-sm font-medium text-brand-500 hover:text-brand-600 dark:text-white"
-          >
-            Create an account
-          </a>
-        </div>
       </div>
     </div>
   );

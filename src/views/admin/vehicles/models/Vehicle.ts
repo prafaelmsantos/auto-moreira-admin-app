@@ -1,16 +1,14 @@
-import { IMark } from './Mark';
-import { IModel } from './Model';
+import { IMark } from '../../marks/models/Mark';
+import { IModel } from '../../models/models/Model';
 import { Fuel, FuelTypeGraphQLConverted } from './enums/FuelEnum';
 import {
   Transmission,
   TransmissionGraphQLConverted
 } from './enums/TransmissionEnum';
-import { vehicles_vehicles_nodes } from '../queries/types/vehicles';
+import { vehicles_vehicles_nodes } from '../../../../queries/types/vehicles';
 
 export interface IVehicle {
   id: number;
-  markId: number;
-  mark: IMark;
   modelId: number;
   model: IModel;
   year: number;
@@ -31,14 +29,15 @@ export interface IVehicle {
 export function convertToVehicle(vehicle: vehicles_vehicles_nodes): IVehicle {
   return {
     id: vehicle.id,
-    markId: vehicle.markId,
-    mark: { id: vehicle.markId, name: vehicle.mark?.name ?? '' },
     modelId: vehicle.modelId,
     model: {
       id: vehicle.modelId,
       name: vehicle.model?.name ?? '',
-      markId: vehicle.markId,
-      mark: { id: vehicle.markId, name: vehicle.mark?.name ?? '' }
+      markId: vehicle.model?.markId ?? 0,
+      mark: {
+        id: vehicle.model?.markId ?? 0,
+        name: vehicle.model?.mark?.name ?? ''
+      }
     },
     year: vehicle.year,
     color: vehicle?.color ?? '',
@@ -54,4 +53,8 @@ export function convertToVehicle(vehicle: vehicles_vehicles_nodes): IVehicle {
     opportunity: vehicle.opportunity,
     sold: vehicle.sold
   };
+}
+
+export function convertBoolean(value: boolean): string {
+  return value ? 'Sim' : 'Não';
 }

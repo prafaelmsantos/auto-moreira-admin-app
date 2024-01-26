@@ -89,32 +89,31 @@ export interface ListFilterInputTypeOfVehicleImageFilterInput {
 export interface MarkFilterInput {
   and?: MarkFilterInput[] | null;
   or?: MarkFilterInput[] | null;
-  id?: ComparableInt32OperationFilterInput | null;
   name?: StringOperationFilterInput | null;
   models?: ListFilterInputTypeOfModelFilterInput | null;
-  vehicles?: ListFilterInputTypeOfVehicleFilterInput | null;
+  id?: ComparableInt32OperationFilterInput | null;
 }
 
 export interface MarkSortInput {
-  id?: SortEnumType | null;
   name?: SortEnumType | null;
+  id?: SortEnumType | null;
 }
 
 export interface ModelFilterInput {
   and?: ModelFilterInput[] | null;
   or?: ModelFilterInput[] | null;
-  id?: ComparableInt32OperationFilterInput | null;
   name?: StringOperationFilterInput | null;
   markId?: ComparableInt32OperationFilterInput | null;
   mark?: MarkFilterInput | null;
   vehicles?: ListFilterInputTypeOfVehicleFilterInput | null;
+  id?: ComparableInt32OperationFilterInput | null;
 }
 
 export interface ModelSortInput {
-  id?: SortEnumType | null;
   name?: SortEnumType | null;
   markId?: SortEnumType | null;
   mark?: MarkSortInput | null;
+  id?: SortEnumType | null;
 }
 
 export interface StringOperationFilterInput {
@@ -142,9 +141,6 @@ export interface TRANSMISSIONOperationFilterInput {
 export interface VehicleFilterInput {
   and?: VehicleFilterInput[] | null;
   or?: VehicleFilterInput[] | null;
-  id?: ComparableInt32OperationFilterInput | null;
-  markId?: ComparableInt32OperationFilterInput | null;
-  mark?: MarkFilterInput | null;
   modelId?: ComparableInt32OperationFilterInput | null;
   model?: ModelFilterInput | null;
   version?: StringOperationFilterInput | null;
@@ -161,22 +157,19 @@ export interface VehicleFilterInput {
   opportunity?: BooleanOperationFilterInput | null;
   sold?: BooleanOperationFilterInput | null;
   vehicleImages?: ListFilterInputTypeOfVehicleImageFilterInput | null;
+  id?: ComparableInt32OperationFilterInput | null;
 }
 
 export interface VehicleImageFilterInput {
   and?: VehicleImageFilterInput[] | null;
   or?: VehicleImageFilterInput[] | null;
-  id?: ComparableInt32OperationFilterInput | null;
   url?: StringOperationFilterInput | null;
-  order?: ComparableInt32OperationFilterInput | null;
   vehicleId?: ComparableInt32OperationFilterInput | null;
   vehicle?: VehicleFilterInput | null;
+  id?: ComparableInt32OperationFilterInput | null;
 }
 
 export interface VehicleSortInput {
-  id?: SortEnumType | null;
-  markId?: SortEnumType | null;
-  mark?: MarkSortInput | null;
   modelId?: SortEnumType | null;
   model?: ModelSortInput | null;
   version?: SortEnumType | null;
@@ -192,6 +185,7 @@ export interface VehicleSortInput {
   observations?: SortEnumType | null;
   opportunity?: SortEnumType | null;
   sold?: SortEnumType | null;
+  id?: SortEnumType | null;
 }
 
 //==============================================================

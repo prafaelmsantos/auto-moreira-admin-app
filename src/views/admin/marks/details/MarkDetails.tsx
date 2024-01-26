@@ -1,22 +1,22 @@
 import { Grid } from '@mui/material';
-import { IMark } from '../../../../models/Mark';
-import { FieldErrors, UseFormRegister } from 'react-hook-form';
-import TextFieldValidation from '../../../../components/validation/TextFieldValidation';
+import { IMark } from '../models/Mark';
+import { Control, FieldErrors } from 'react-hook-form';
+import TextFieldFormValidation from '../../../../components/form/TextFieldFormValidation';
 
 interface IMarkDetails {
   mark: IMark;
   errors: FieldErrors<IMark>;
-  register: UseFormRegister<IMark>;
+  control: Control<IMark, any>;
 }
-export default function MarkDetails({ mark, errors, register }: IMarkDetails) {
+export default function MarkDetails({ mark, errors, control }: IMarkDetails) {
   return (
     <Grid container mt={5} px={5}>
       <Grid item xs={12}>
-        <TextFieldValidation
+        <TextFieldFormValidation
           label={'Nome'}
           error={!!errors.name}
           helperText={errors.name?.message}
-          register={register('name')}
+          control={control}
           defaultValue={mark.name}
         />
       </Grid>

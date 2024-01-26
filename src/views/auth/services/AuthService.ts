@@ -1,17 +1,14 @@
 import { AnyAction, Dispatch, ThunkDispatch } from '@reduxjs/toolkit';
-import { BASE_API_URL } from '../config/variables';
-import { removeUser, setUser } from '../redux/userSlice';
 import { NavigateFunction } from 'react-router-dom';
-import {
-  IUser,
-  IUserLogin,
-  IUserRegistration
-} from '../views/auth/models/User';
-import { setSnackBar } from '../redux/snackBarSlice';
-import { MessageType } from '../models/enums/MessageTypeEnum';
+import { BASE_API_URL } from '../../../config/variables';
+import { MessageType } from '../../../models/enums/MessageTypeEnum';
+import { setSnackBar } from '../../../redux/snackBarSlice';
+import { setUser, removeUser } from '../../../redux/userSlice';
+import UserService from '../../../services/UserService';
+import { IUserRegistration, IUserLogin, IUser } from '../models/User';
 
-class UserService {
-  static async registration(
+class AuthService {
+  static async Registration(
     user: IUserRegistration
   ): Promise<Response | undefined> {
     const endpoint = `${BASE_API_URL}${'api/users/createUser'}`;
@@ -28,7 +25,7 @@ class UserService {
     }
   }
 
-  static async login(userLogin: IUserLogin): Promise<Response | undefined> {
+  static async Login(userLogin: IUserLogin): Promise<Response | undefined> {
     const endpoint = `${BASE_API_URL}${'api/users/login'}`;
     try {
       const response = await fetch(endpoint, {
@@ -57,7 +54,7 @@ class UserService {
   ): void {
     dispatch(setUser(user));
     localStorage.setItem('user', JSON.stringify(user));
-    navigate('/admin/dashboard');
+    navigate('/admin');
     dispatch(
       setSnackBar({
         open: true,
@@ -75,13 +72,11 @@ class UserService {
       undefined,
       AnyAction
     > &
-      Dispatch<AnyAction>,
-    navigate: NavigateFunction
+      Dispatch<AnyAction>
   ): void {
     dispatch(removeUser());
     localStorage.removeItem('user');
-    navigate('/auth/sign-in');
   }
 }
 
-export default UserService;
+export default AuthService;

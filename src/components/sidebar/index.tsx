@@ -6,9 +6,11 @@ import routes from '../../routes/SideBarRoutes';
 
 const Sidebar = (props: {
   open: boolean;
-  onClose: React.MouseEventHandler<HTMLSpanElement>;
+  mobile: boolean;
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
-  const { open, onClose } = props;
+  const { open, setOpen, mobile } = props;
+
   return (
     <div
       className={`sm:none duration-175 linear fixed !z-50 flex min-h-full flex-col bg-white pb-10 shadow-2xl shadow-white/5 transition-all dark:!bg-navy-800 dark:text-white md:!z-50 lg:!z-50 xl:!z-0 ${
@@ -17,7 +19,7 @@ const Sidebar = (props: {
     >
       <span
         className="absolute right-4 top-4 block cursor-pointer xl:hidden"
-        onClick={onClose}
+        onClick={() => setOpen(false)}
       >
         <HiX />
       </span>
@@ -31,7 +33,7 @@ const Sidebar = (props: {
       {/* Nav item */}
 
       <ul className="mb-auto pt-1">
-        <Links routes={routes} />
+        <Links {...{ routes, setOpen, mobile }} />
       </ul>
 
       {/* Nav item end */}
