@@ -8,6 +8,8 @@ export enum RouteName {
   MARKS = 'marks',
   MODELS = 'models',
   VEHICLES = 'vehicles',
+  CLIENT_MESSAGES = 'client-messages',
+  USERS = 'users',
   PROFILE = 'profile',
   SIGN_IN = 'sign-in'
 }

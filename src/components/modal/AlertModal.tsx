@@ -12,13 +12,13 @@ import {
   DialogContent,
   DialogActions,
   Button,
-  Box
+  Box,
+  Card
 } from '@mui/material';
 
 import { useMemo } from 'react';
 import { MessageType } from '../../models/enums/MessageTypeEnum';
 import { COLORS } from '../../utils/Colors';
-import Card from '../card';
 
 type IAlertModal = {
   message: string;

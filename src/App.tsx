@@ -5,13 +5,13 @@ import { setUser } from './redux/userSlice';
 import { closeModal } from './redux/modalSlice';
 
 import { RootState } from './redux/store';
-import AutoMoreiraSnackbar from './components/shared/AutoMoreiraSnackbar';
-import AutoMoreiraLoader from './components/shared/AutoMoreiraLoader';
+import AutoMoreiraSnackbar from './components/snackBar/AutoMoreiraSnackbar';
+import AutoMoreiraLoader from './components/loader/AutoMoreiraLoader';
 
 import { getCurrentUser } from './config/localStorage';
 import Auth from './layouts/auth';
 import Admin from './layouts/admin';
-import AlertModal from './components/shared/AlertModal';
+import AlertModal from './components/modal/AlertModal';
 import { closeSnackBar } from './redux/snackBarSlice';
 
 const App = () => {
@@ -21,8 +21,9 @@ const App = () => {
 
   useEffect(() => {
     user && dispatch(setUser(user));
-  }, [user]);
+  }, []);
 
+  const currentUser = useSelector((state: RootState) => state.userSlice.user);
   const currentLoader = useSelector(
     (state: RootState) => state.loaderSlice.loader
   );
@@ -31,8 +32,6 @@ const App = () => {
   const currentSnackBar = useSelector(
     (state: RootState) => state.snackBarSlice
   );
-
-  console.log(user);
 
   return (
     <>

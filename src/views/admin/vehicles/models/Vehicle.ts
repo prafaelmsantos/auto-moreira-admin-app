@@ -1,4 +1,3 @@
-import { IMark } from '../../marks/models/Mark';
 import { IModel } from '../../models/models/Model';
 import { Fuel, FuelTypeGraphQLConverted } from './enums/FuelEnum';
 import {
@@ -13,13 +12,13 @@ export interface IVehicle {
   model: IModel;
   year: number;
   color: string;
-  observations: string;
+  observations?: string;
   mileage: number;
   price: number;
-  fuelType: Fuel;
-  version: string;
+  fuelType: Fuel | null;
+  version?: string;
   doors: number;
-  transmission: Transmission;
+  transmission: Transmission | null;
   engineSize: number;
   power: number;
   opportunity: boolean;

@@ -2,7 +2,6 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import {
   UseFormRegister,
   UseFormHandleSubmit,
-  UseFormReset,
   useForm,
   FieldErrors
 } from 'react-hook-form';
@@ -21,18 +20,15 @@ const UserLoginValidationSchema: Yup.ObjectSchema<IUserLogin> =
 export default function SignInValidationService(): [
   UseFormRegister<IUserLogin>,
   UseFormHandleSubmit<IUserLogin, undefined>,
-  UseFormReset<IUserLogin>,
-  FieldErrors<IUserLogin>,
-  boolean
+  FieldErrors<IUserLogin>
 ] {
   const {
     register,
     handleSubmit,
-    reset,
-    formState: { errors, isSubmitSuccessful }
+    formState: { errors }
   } = useForm<IUserLogin>({
     resolver: yupResolver(UserLoginValidationSchema)
   });
 
-  return [register, handleSubmit, reset, errors, isSubmitSuccessful];
+  return [register, handleSubmit, errors];
 }

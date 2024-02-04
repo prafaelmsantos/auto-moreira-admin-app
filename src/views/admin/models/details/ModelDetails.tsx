@@ -1,59 +1,61 @@
 import { Autocomplete, Grid, TextField } from '@mui/material';
-import { FieldErrors, UseFormRegister } from 'react-hook-form';
-import TextFieldValidation from '../../../../components/form/TextFieldFormValidation';
+import { Control, Controller, FieldErrors } from 'react-hook-form';
 import { IModel } from '../models/Model';
-import { IMode } from '../../../../models/enums/Base';
 import { IMark } from '../../marks/models/Mark';
+import TextFieldFormValidation from '../../../../components/form/TextFieldFormValidation';
+import { AutocompleteFormValidationSX } from '../../../../components/form/AutocompleteFormValidation';
 
 interface IModelDetails {
   model: IModel;
   errors: FieldErrors<IModel>;
-  register: UseFormRegister<IModel>;
   marks: IMark[];
+  control: Control<IModel>;
 }
 export default function ModelDetails({
   model,
   errors,
-  register,
-  marks
+  marks,
+  control
 }: IModelDetails) {
   return (
     <Grid container mt={5} px={5} spacing={2}>
       <Grid item md={6} xs={12}>
-        <TextField
-          fullWidth
+        <TextFieldFormValidation
           label={'Nome'}
-          //onChange={(event) => handleOnChange(event, 'description')}
-
-          value={model.name}
+          error={!!errors.name}
+          helperText={errors.name?.message}
+          control={control}
+          defaultValue={model.name}
+          name={'name'}
         />
       </Grid>
       <Grid item md={6} xs={12}>
-        <Autocomplete
-          fullWidth
-          getOptionLabel={(option) => option.name}
-          id="tags-standard"
-          isOptionEqualToValue={(option, value) => option.id === value.id}
-          key={marks.length !== 0 ? marks[0].id : 0}
-          /* onChange={(event, value) => {
-                                handleChangeRoles(value);
-                            }} */
-          options={marks}
-          renderInput={(params) => (
-            <TextField
-              {...params}
-              /* error={rolesValidation && rolesValidation.error}
-                                    helperText={
-                                        rolesValidation && rolesValidation.message !== ''
-                                            ? intl.formatMessage({ id: rolesValidation.message })
-                                            : null
-                                    } */
-              label={'Marca'}
-              placeholder={'Pesquisar'}
-              required
+        <Controller
+          render={({ field }) => (
+            <Autocomplete
+              {...field}
+              isOptionEqualToValue={(option, value) => option === value}
+              options={marks.map((x) => x.id)}
+              getOptionLabel={(option) =>
+                marks.find((x) => x.id === option)?.name ?? ''
+              }
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  required
+                  label={'Marca'}
+                  variant="outlined"
+                  error={!!errors.markId}
+                  helperText={errors.markId?.message}
+                  sx={AutocompleteFormValidationSX(!!errors.markId)}
+                />
+              )}
+              onChange={(_, data) => field.onChange(data)}
             />
           )}
-          value={marks.find((x) => x.id === model.markId)}
+          name={'markId'}
+          control={control}
+          defaultValue={marks.find((x) => x.id === model.markId)?.id}
         />
       </Grid>
     </Grid>

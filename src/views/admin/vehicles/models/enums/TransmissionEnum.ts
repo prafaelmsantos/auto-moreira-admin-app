@@ -14,3 +14,19 @@ export function TransmissionGraphQLConverted(transmission: TRANSMISSION) {
     ? Transmission.AUTOMATIC
     : Transmission.MANUAL;
 }
+
+type ITransmission = {
+  id: Transmission;
+  name: string;
+};
+
+export const transmissions: ITransmission[] = [
+  {
+    id: Transmission.MANUAL,
+    name: TransmissionConverted(Transmission.MANUAL)
+  },
+  {
+    id: Transmission.AUTOMATIC,
+    name: TransmissionConverted(Transmission.AUTOMATIC)
+  }
+];

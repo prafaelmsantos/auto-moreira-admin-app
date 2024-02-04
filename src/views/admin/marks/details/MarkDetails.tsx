@@ -18,6 +18,7 @@ export default function MarkDetails({ mark, errors, control }: IMarkDetails) {
           helperText={errors.name?.message}
           control={control}
           defaultValue={mark.name}
+          name={'name'}
         />
       </Grid>
     </Grid>

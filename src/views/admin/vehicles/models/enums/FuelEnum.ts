@@ -21,3 +21,14 @@ export function FuelTypeGraphQLConverted(fuelType: FUEL) {
     ? Fuel.DIESEL
     : Fuel.HYBRID;
 }
+
+type IFuel = {
+  id: Fuel;
+  name: string;
+};
+
+export const fuels: IFuel[] = [
+  { id: Fuel.PETROL, name: FuelTypeConverted(Fuel.PETROL) },
+  { id: Fuel.DIESEL, name: FuelTypeConverted(Fuel.DIESEL) },
+  { id: Fuel.HYBRID, name: FuelTypeConverted(Fuel.HYBRID) }
+];

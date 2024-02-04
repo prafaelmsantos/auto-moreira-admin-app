@@ -11,6 +11,88 @@ type IAutocompleteFormValidation = {
   control: Control<any, any>;
   options: any[];
   defaultValue?: any;
+  name: string;
+};
+
+export const AutocompleteFormValidationSX = (error: boolean) => {
+  const darkMode = useSelector((state: RootState) => state.darkModeSlice.dark);
+  const redColor = '#d32f2f';
+  return {
+    '& .MuiAutocomplete-endAdornment .MuiSvgIcon-root': {
+      color: error
+        ? redColor
+        : darkMode
+        ? 'white'
+        : COLORS.AUTO_MOREIRA_NAVY[700]
+    },
+    '& .MuiInputBase-input.Mui-disabled': {
+      color: error
+        ? redColor
+        : darkMode
+        ? 'white'
+        : COLORS.AUTO_MOREIRA_NAVY[700]
+    },
+    '& label.MuiInputLabel-root': {
+      color: error
+        ? redColor
+        : darkMode
+        ? 'white'
+        : COLORS.AUTO_MOREIRA_NAVY[700]
+    },
+    '& .MuiOutlinedInput-input': {
+      color: error
+        ? redColor
+        : darkMode
+        ? 'white'
+        : COLORS.AUTO_MOREIRA_NAVY[700]
+    },
+    '& .MuiOutlinedInput-root': {
+      '& fieldset': {
+        borderColor: error
+          ? redColor
+          : darkMode
+          ? 'white'
+          : COLORS.AUTO_MOREIRA_NAVY[700]
+      },
+      '&:hover fieldset': {
+        borderColor: error
+          ? redColor
+          : darkMode
+          ? 'white'
+          : COLORS.AUTO_MOREIRA_NAVY[700]
+      },
+      '&.Mui-focused fieldset': {
+        borderColor: error
+          ? redColor
+          : darkMode
+          ? 'white'
+          : COLORS.AUTO_MOREIRA_NAVY[700]
+      }
+    },
+    '& .MuiOutlinedInput-root.Mui-disabled': {
+      '& fieldset': {
+        borderColor: error
+          ? redColor
+          : darkMode
+          ? 'white'
+          : COLORS.AUTO_MOREIRA_NAVY[700]
+      },
+      '&:hover fieldset': {
+        borderColor: error
+          ? redColor
+          : darkMode
+          ? 'white'
+          : COLORS.AUTO_MOREIRA_NAVY[700]
+      },
+      '& .Mui-focused fieldset': {
+        borderColor: error
+          ? redColor
+          : darkMode
+          ? 'white'
+          : COLORS.AUTO_MOREIRA_NAVY[700]
+      }
+    }
+  };
 };
 export default function AutocompleteFormValidation({
   error,
@@ -18,7 +100,8 @@ export default function AutocompleteFormValidation({
   label,
   control,
   options,
-  defaultValue
+  defaultValue,
+  name
 }: IAutocompleteFormValidation) {
   const darkMode = useSelector((state: RootState) => state.darkModeSlice.dark);
   const redColor = '#d32f2f';
@@ -29,7 +112,7 @@ export default function AutocompleteFormValidation({
         <Autocomplete
           {...field}
           options={options}
-          getOptionLabel={(option) => option}
+          getOptionLabel={(option) => option.name}
           renderInput={(params) => (
             <TextField
               {...params}
@@ -119,7 +202,7 @@ export default function AutocompleteFormValidation({
           onChange={(_, data) => field.onChange(data)}
         />
       )}
-      name="name"
+      name={name}
       control={control}
       defaultValue={defaultValue}
     />

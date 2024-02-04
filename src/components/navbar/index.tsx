@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 import { FiAlignJustify } from 'react-icons/fi';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import navbarimage from '../../assets/img/auth/back.jpg';
 import { BsArrowBarUp } from 'react-icons/bs';
 import { FiSearch } from 'react-icons/fi';

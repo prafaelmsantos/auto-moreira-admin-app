@@ -28,6 +28,41 @@ export interface BooleanOperationFilterInput {
   neq?: boolean | null;
 }
 
+export interface ClientMessageFilterInput {
+  and?: ClientMessageFilterInput[] | null;
+  or?: ClientMessageFilterInput[] | null;
+  name?: StringOperationFilterInput | null;
+  email?: StringOperationFilterInput | null;
+  phoneNumber?: ComparableInt64OperationFilterInput | null;
+  message?: StringOperationFilterInput | null;
+  dateTime?: ComparableDateTimeOperationFilterInput | null;
+  id?: ComparableInt32OperationFilterInput | null;
+}
+
+export interface ClientMessageSortInput {
+  name?: SortEnumType | null;
+  email?: SortEnumType | null;
+  phoneNumber?: SortEnumType | null;
+  message?: SortEnumType | null;
+  dateTime?: SortEnumType | null;
+  id?: SortEnumType | null;
+}
+
+export interface ComparableDateTimeOperationFilterInput {
+  eq?: any | null;
+  neq?: any | null;
+  in?: any[] | null;
+  nin?: any[] | null;
+  gt?: any | null;
+  ngt?: any | null;
+  gte?: any | null;
+  ngte?: any | null;
+  lt?: any | null;
+  nlt?: any | null;
+  lte?: any | null;
+  nlte?: any | null;
+}
+
 export interface ComparableDoubleOperationFilterInput {
   eq?: number | null;
   neq?: number | null;
@@ -56,6 +91,21 @@ export interface ComparableInt32OperationFilterInput {
   nlt?: number | null;
   lte?: number | null;
   nlte?: number | null;
+}
+
+export interface ComparableInt64OperationFilterInput {
+  eq?: any | null;
+  neq?: any | null;
+  in?: any[] | null;
+  nin?: any[] | null;
+  gt?: any | null;
+  ngt?: any | null;
+  gte?: any | null;
+  ngte?: any | null;
+  lt?: any | null;
+  nlt?: any | null;
+  lte?: any | null;
+  nlte?: any | null;
 }
 
 export interface FUELOperationFilterInput {

@@ -8,7 +8,6 @@ import { IMode } from '../../../../models/enums/Base';
 import PageHolder from '../../../../components/base/PageHolder';
 import GetActions from '../../../../components/base/Actions';
 
-import MarkValidationService from '../../marks/services/MarkValidationService';
 import { IModel } from '../models/Model';
 import { addModelNavigate, modelListNavigate } from '../utils/Utils';
 import ModelDetails from './ModelDetails';
@@ -36,7 +35,7 @@ export default function Model() {
   useEffect(() => {
     if (markId) {
       dispatch(setLoader(true));
-      const endpoint = `${BASE_API_URL}${'api/models/'}${Number(param.id)}`;
+      const endpoint = `${BASE_API_URL}${'api/models/'}${markId}`;
       getData<IModel>(`${endpoint}`)
         .then((data) => {
           setModel(data);
@@ -58,12 +57,12 @@ export default function Model() {
 
   const handleClose = () => navigate(modelListNavigate);
 
-  const [register, handleSubmit, reset, errors, isSubmitSuccessful, control] =
-    ModelValidationService();
+  const [handleSubmit, reset, errors, isSubmitSuccessful, control] =
+    ModelValidationService(model);
 
-  const handleSumbitEdit = async (mark: IModel) => {
-    console.log(mark);
-    if (mark) {
+  const handleSumbitEdit = async (model: IModel) => {
+    console.log(model);
+    if (model) {
       /* const response = await MarkService.PUT(mark);
       if (response) {
         if (response.ok) {
@@ -114,7 +113,7 @@ export default function Model() {
               handleSumbitAdd: handleSubmit(handleSumbitAdd)
             })}
           />
-          <ModelDetails {...{ model, errors, register, marks, control }} />
+          <ModelDetails {...{ model, errors, marks, control }} />
         </>
       )}
     </>

@@ -33,7 +33,7 @@ type Vehicle {
   vehicleImages: [VehicleImage]
   id: Int!
 }
-type Contact {
+type ClientMessage {
   name: String
   email: String
   phoneNumber: Long!
@@ -69,7 +69,7 @@ type Query {
     last: Int,
     "Returns the elements in the list that come before the specified cursor."
     before: String,where: ModelFilterInput, order: [ModelSortInput!]  ): ModelsConnection
-  contacts(
+  clientMessages(
     "Returns the first _n_ elements from the list."
     first: Int,
     "Returns the elements in the list that come after the specified cursor."
@@ -77,7 +77,7 @@ type Query {
     "Returns the last _n_ elements from the list."
     last: Int,
     "Returns the elements in the list that come before the specified cursor."
-    before: String,where: ContactFilterInput, order: [ContactSortInput!]  ): ContactsConnection
+    before: String,where: ClientMessageFilterInput, order: [ClientMessageSortInput!]  ): ClientMessagesConnection
 }
 type VehicleImage {
   url: String
@@ -116,13 +116,13 @@ type ModelsConnection {
   totalCount: Int!
 }
 "A connection to a list of items."
-type ContactsConnection {
+type ClientMessagesConnection {
   "Information to aid in pagination."
   pageInfo: PageInfo!
   "A list of edges."
-  edges: [ContactsEdge!]
+  edges: [ClientMessagesEdge!]
   "A flattened list of the nodes."
-  nodes: [Contact]
+  nodes: [ClientMessage]
   totalCount: Int!
 }
 "Information about pagination in a connection."
@@ -158,11 +158,11 @@ type ModelsEdge {
   node: Model
 }
 "An edge in a connection."
-type ContactsEdge {
+type ClientMessagesEdge {
   "A cursor for use in pagination."
   cursor: String!
   "The item at the end of the edge."
-  node: Contact
+  node: ClientMessage
 }
 enum FUEL {
   PETROL
@@ -242,9 +242,9 @@ input ModelSortInput {
   mark: MarkSortInput
   id: SortEnumType
 }
-input ContactFilterInput {
-  and: [ContactFilterInput!]
-  or: [ContactFilterInput!]
+input ClientMessageFilterInput {
+  and: [ClientMessageFilterInput!]
+  or: [ClientMessageFilterInput!]
   name: StringOperationFilterInput
   email: StringOperationFilterInput
   phoneNumber: ComparableInt64OperationFilterInput
@@ -252,7 +252,7 @@ input ContactFilterInput {
   dateTime: ComparableDateTimeOperationFilterInput
   id: ComparableInt32OperationFilterInput
 }
-input ContactSortInput {
+input ClientMessageSortInput {
   name: SortEnumType
   email: SortEnumType
   phoneNumber: SortEnumType

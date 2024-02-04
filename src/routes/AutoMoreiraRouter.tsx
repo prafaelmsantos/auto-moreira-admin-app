@@ -11,6 +11,8 @@ import Dashboard from '../views/admin/default';
 import { RouteName, RouteType } from '../models/enums/RouteType';
 import Model from '../views/admin/models/details/Model';
 import Vehicle from '../views/admin/vehicles/details/Vehicle';
+import ClientMessages from '../views/admin/client-messages/ClientMessages';
+import Users from '../views/admin/users/Users';
 
 interface IAutoMoreiraRouter {
   routeType: RouteType;
@@ -31,6 +33,11 @@ export const AdminRoutes = [
     path: '/admin/dashboard',
     element: <Dashboard />,
     id: RouteName.DASHBOARD
+  },
+  {
+    path: '/admin/users',
+    element: <Users />,
+    id: RouteName.USERS
   },
   {
     path: '/admin/marks',
@@ -56,6 +63,11 @@ export const AdminRoutes = [
       { index: true, element: <Vehicles /> },
       { path: ':id', element: <Vehicle /> }
     ]
+  },
+  {
+    path: '/admin/client-messages',
+    id: RouteName.CLIENT_MESSAGES,
+    children: [{ index: true, element: <ClientMessages /> }]
   },
   {
     path: '/admin/profile',

@@ -10,13 +10,105 @@ type ITextFieldFormValidation = {
   label: string;
   control: Control<any, any>;
   defaultValue?: string | number;
+  name: string;
 };
+
+export const TextFieldSX = (error: boolean) => {
+  const darkMode = useSelector((state: RootState) => state.darkModeSlice.dark);
+  const redColor = '#d32f2f';
+  return {
+    '& .MuiInputBase-input.Mui-disabled': {
+      color: error
+        ? redColor
+        : darkMode
+        ? 'white'
+        : COLORS.AUTO_MOREIRA_NAVY[700]
+    },
+    '& label.MuiInputLabel-root': {
+      color: error
+        ? redColor
+        : darkMode
+        ? 'white'
+        : COLORS.AUTO_MOREIRA_NAVY[700]
+    },
+    '& MuiOutlinedInput-input': {
+      color: error
+        ? redColor
+        : darkMode
+        ? 'white'
+        : COLORS.AUTO_MOREIRA_NAVY[700]
+    },
+    '& .MuiOutlinedInput-root': {
+      '& fieldset': {
+        borderColor: error
+          ? redColor
+          : darkMode
+          ? 'white'
+          : COLORS.AUTO_MOREIRA_NAVY[700]
+      },
+      '&:hover fieldset': {
+        borderColor: error
+          ? redColor
+          : darkMode
+          ? 'white'
+          : COLORS.AUTO_MOREIRA_NAVY[700]
+      },
+      '&.Mui-focused fieldset': {
+        borderColor: error
+          ? redColor
+          : darkMode
+          ? 'white'
+          : COLORS.AUTO_MOREIRA_NAVY[700]
+      }
+    },
+    '& .MuiOutlinedInput-root.Mui-disabled': {
+      '& fieldset': {
+        borderColor: error
+          ? redColor
+          : darkMode
+          ? 'white'
+          : COLORS.AUTO_MOREIRA_NAVY[700]
+      },
+      '&:hover fieldset': {
+        borderColor: error
+          ? redColor
+          : darkMode
+          ? 'white'
+          : COLORS.AUTO_MOREIRA_NAVY[700]
+      },
+      '&.Mui-focused fieldset': {
+        borderColor: error
+          ? redColor
+          : darkMode
+          ? 'white'
+          : COLORS.AUTO_MOREIRA_NAVY[700]
+      }
+    },
+    '& .MuiAutocomplete-endAdornment .MuiSvgIcon-root': {
+      color: error
+        ? redColor
+        : darkMode
+        ? 'white'
+        : COLORS.AUTO_MOREIRA_NAVY[700]
+    },
+
+    '& .MuiOutlinedInput-input': {
+      color: error
+        ? redColor
+        : darkMode
+        ? 'white'
+        : COLORS.AUTO_MOREIRA_NAVY[700]
+    }
+  };
+};
+
 export default function TextFieldFormValidation({
   error,
   helperText,
   label,
   control,
-  defaultValue
+  defaultValue,
+  name
 }: ITextFieldFormValidation) {
   const darkMode = useSelector((state: RootState) => state.darkModeSlice.dark);
   const redColor = '#d32f2f';
@@ -114,7 +206,7 @@ export default function TextFieldFormValidation({
           }}
         />
       )}
-      name="TextField"
+      name={name}
       control={control}
     />
   );
