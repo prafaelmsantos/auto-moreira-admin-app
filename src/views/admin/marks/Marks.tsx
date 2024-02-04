@@ -10,10 +10,11 @@ import GetActions from '../../../components/base/Actions';
 import { useNavigate } from 'react-router-dom';
 import { columns } from './utils/MarkColumns';
 import { addMarkNavigate } from './utils/Utils';
+import { useEffect } from 'react';
 
 export default function Marks() {
   const navigate = useNavigate();
-  const { data, loading } = useQuery<marks>(MARKS);
+  const { data, loading, refetch } = useQuery<marks>(MARKS);
 
   const rows =
     data?.marks?.nodes?.map((mark) =>
@@ -21,6 +22,11 @@ export default function Marks() {
     ) ?? [];
 
   const handleAdd = () => navigate(addMarkNavigate);
+
+  useEffect(() => {
+    void refetch();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <main>

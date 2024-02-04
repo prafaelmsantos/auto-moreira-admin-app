@@ -3,8 +3,6 @@ import { IMark } from '../models/Mark';
 import { useAppDispatch } from '../../../../redux/hooks';
 import { useEffect, useState } from 'react';
 import { setLoader, setToInitialLoader } from '../../../../redux/loaderSlice';
-import { getData } from '../../../../services/AutoMoreiraService';
-import { BASE_API_URL } from '../../../../config/variables';
 import MarkDetails from './MarkDetails';
 import { IMode } from '../../../../models/enums/Base';
 import PageHolder from '../../../../components/base/PageHolder';
@@ -12,23 +10,23 @@ import GetActions from '../../../../components/base/Actions';
 import { addMarkNavigate, markListNavigate } from '../utils/Utils';
 
 import MarkValidationService from '../services/MarkValidationService';
+import { createMark, getMark, updateMark } from '../services/MarkService';
+import { setModal } from '../../../../redux/modalSlice';
+import { MessageType } from '../../../../models/enums/MessageTypeEnum';
 
 export default function Mark() {
   const param = useParams();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-
   const [mark, setMark] = useState<IMark>({ id: 0, name: '' });
   const markId = Number(param.id);
-
   const match = useMatch(addMarkNavigate);
   const [mode, setMode] = useState<IMode>();
 
   useEffect(() => {
     if (markId) {
       dispatch(setLoader(true));
-      const endpoint = `${BASE_API_URL}${'api/marks/'}${Number(param.id)}`;
-      getData<IMark>(`${endpoint}`)
+      getMark(markId)
         .then((data) => {
           setMark(data);
           dispatch(setToInitialLoader());
@@ -47,51 +45,55 @@ export default function Mark() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [markId]);
 
-  //const handleSumbitEdit = () => {};
   const handleClose = () => navigate(markListNavigate);
 
-  const [handleSubmit, reset, errors, isSubmitSuccessful, control] =
-    MarkValidationService();
-  const handleSumbitEdit = async (mark: IMark) => {
-    console.log(mark);
-    if (mark) {
-      /* const response = await MarkService.PUT(mark);
-      if (response) {
-        if (response.ok) {
-          dispatch(
-            setSnackBar({
-              open: true,
-              message: 'Marca criada com sucesso!',
-              type: MessageType.SUCCESS
-            })
-          );
+  const [handleSubmit, errors, isSubmitSuccessful, control] =
+    MarkValidationService(mark);
 
-          isSubmitSuccessful &&
-            reset({
-              name: ''
-            });
-          return Promise.resolve();
-        } else {
-          const messageError = response
-            .json()
-            .then((response) => response.message)
-            .then((x) => x as string);
+  const handleSumbitEdit = async (mark: IMark) => {
+    dispatch(setLoader(true));
+    updateMark(mark)
+      .then((data) => {
+        setMark(data);
+        dispatch(setToInitialLoader());
+        navigate(markListNavigate);
+      })
+      .catch((e: Error) => {
+        console.error(e);
+        dispatch(setToInitialLoader());
+        dispatch(
+          setModal({
+            title: 'Erro Interno do Servidor',
+            message: e.toString(),
+            type: MessageType.ERROR,
+            open: true
+          })
+        );
+      });
+  };
+
+  const handleSumbitAdd = async (mark: IMark) => {
+    if (isSubmitSuccessful) {
+      dispatch(setLoader(true));
+      createMark(mark)
+        .then((data) => {
+          setMark(data);
+          dispatch(setToInitialLoader());
+          navigate(markListNavigate);
+        })
+        .catch((e: Error) => {
+          console.error(e);
+          dispatch(setToInitialLoader());
           dispatch(
             setModal({
               title: 'Erro Interno do Servidor',
-              message: (await messageError).toString(),
+              message: e.toString(),
               type: MessageType.ERROR,
               open: true
             })
           );
-          return Promise.reject();
-        }
-      } */
+        });
     }
-  }; // your form submit function which will invoke after successful validation
-
-  const handleSumbitAdd = async (mark: IMark) => {
-    console.log(mark);
   };
 
   return (

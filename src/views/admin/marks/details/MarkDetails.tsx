@@ -6,7 +6,7 @@ import TextFieldFormValidation from '../../../../components/form/TextFieldFormVa
 interface IMarkDetails {
   mark: IMark;
   errors: FieldErrors<IMark>;
-  control: Control<IMark, any>;
+  control: Control<IMark>;
 }
 export default function MarkDetails({ mark, errors, control }: IMarkDetails) {
   return (

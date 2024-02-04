@@ -9,26 +9,26 @@ import {
 import { IMark } from '../models/Mark';
 import * as Yup from 'yup';
 
-const MarkValidationSchema: Yup.ObjectSchema<IMark> = Yup.object().shape({
-  name: Yup.string().required('O nome é obrigatório!'),
-  id: Yup.number().default(0)
-});
-
-export default function MarkValidationService(): [
+export default function MarkValidationService(
+  mark: IMark
+): [
   UseFormHandleSubmit<IMark>,
-  UseFormReset<IMark>,
   FieldErrors<IMark>,
   boolean,
   Control<IMark, any>
 ] {
+  const MarkValidationSchema: Yup.ObjectSchema<IMark> = Yup.object().shape({
+    name: Yup.string().required('O nome é obrigatório!').default(mark.name),
+    id: Yup.number().default(mark.id)
+  });
+
   const {
     handleSubmit,
-    reset,
     control,
     formState: { errors, isSubmitSuccessful }
   } = useForm<IMark>({
     resolver: yupResolver(MarkValidationSchema)
   });
 
-  return [handleSubmit, reset, errors, isSubmitSuccessful, control];
+  return [handleSubmit, errors, isSubmitSuccessful, control];
 }
