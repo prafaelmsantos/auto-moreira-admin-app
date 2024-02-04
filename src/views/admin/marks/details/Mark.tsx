@@ -13,6 +13,7 @@ import MarkValidationService from '../services/MarkValidationService';
 import { createMark, getMark, updateMark } from '../services/MarkService';
 import { setModal } from '../../../../redux/modalSlice';
 import { MessageType } from '../../../../models/enums/MessageTypeEnum';
+import { setSnackBar } from '../../../../redux/snackBarSlice';
 
 export default function Mark() {
   const param = useParams();
@@ -56,6 +57,13 @@ export default function Mark() {
       .then((data) => {
         setMark(data);
         dispatch(setToInitialLoader());
+        dispatch(
+          setSnackBar({
+            open: true,
+            message: 'Marca atualizada com sucesso!',
+            type: MessageType.SUCCESS
+          })
+        );
         navigate(markListNavigate);
       })
       .catch((e: Error) => {
@@ -73,27 +81,32 @@ export default function Mark() {
   };
 
   const handleSumbitAdd = async (mark: IMark) => {
-    if (isSubmitSuccessful) {
-      dispatch(setLoader(true));
-      createMark(mark)
-        .then((data) => {
-          setMark(data);
-          dispatch(setToInitialLoader());
-          navigate(markListNavigate);
-        })
-        .catch((e: Error) => {
-          console.error(e);
-          dispatch(setToInitialLoader());
-          dispatch(
-            setModal({
-              title: 'Erro Interno do Servidor',
-              message: e.toString(),
-              type: MessageType.ERROR,
-              open: true
-            })
-          );
-        });
-    }
+    dispatch(setLoader(true));
+    createMark(mark)
+      .then((data) => {
+        setMark(data);
+        dispatch(setToInitialLoader());
+        dispatch(
+          setSnackBar({
+            open: true,
+            message: 'Marca criada com sucesso!',
+            type: MessageType.SUCCESS
+          })
+        );
+        navigate(markListNavigate);
+      })
+      .catch((e: Error) => {
+        console.error(e);
+        dispatch(setToInitialLoader());
+        dispatch(
+          setModal({
+            title: 'Erro Interno do Servidor',
+            message: e.toString(),
+            type: MessageType.ERROR,
+            open: true
+          })
+        );
+      });
   };
 
   return (
