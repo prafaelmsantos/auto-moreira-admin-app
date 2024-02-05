@@ -48,8 +48,7 @@ export default function Mark() {
 
   const handleClose = () => navigate(markListNavigate);
 
-  const [handleSubmit, errors, isSubmitSuccessful, control] =
-    MarkValidationService(mark);
+  const [handleSubmit, errors, control] = MarkValidationService(mark);
 
   const handleSumbitEdit = async (mark: IMark) => {
     dispatch(setLoader(true));

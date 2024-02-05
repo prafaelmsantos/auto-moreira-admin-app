@@ -16,6 +16,10 @@ import { useQuery } from '@apollo/client';
 import { marks, marks_marks_nodes } from '../../../../queries/types/marks';
 import { MARKS } from '../../../../queries/Marks';
 import { convertToMark } from '../../marks/models/Mark';
+import { createModel, updateModel } from '../services/ModelService';
+import { MessageType } from '../../../../models/enums/MessageTypeEnum';
+import { setSnackBar } from '../../../../redux/snackBarSlice';
+import { setModal } from '../../../../redux/modalSlice';
 
 export default function Model() {
   const param = useParams();
@@ -57,49 +61,64 @@ export default function Model() {
 
   const handleClose = () => navigate(modelListNavigate);
 
-  const [handleSubmit, reset, errors, isSubmitSuccessful, control] =
-    ModelValidationService(model);
+  const [handleSubmit, errors, control] = ModelValidationService(model);
 
   const handleSumbitEdit = async (model: IModel) => {
-    console.log(model);
-    if (model) {
-      /* const response = await MarkService.PUT(mark);
-      if (response) {
-        if (response.ok) {
-          dispatch(
-            setSnackBar({
-              open: true,
-              message: 'Marca criada com sucesso!',
-              type: MessageType.SUCCESS
-            })
-          );
-
-          isSubmitSuccessful &&
-            reset({
-              name: ''
-            });
-          return Promise.resolve();
-        } else {
-          const messageError = response
-            .json()
-            .then((response) => response.message)
-            .then((x) => x as string);
-          dispatch(
-            setModal({
-              title: 'Erro Interno do Servidor',
-              message: (await messageError).toString(),
-              type: MessageType.ERROR,
-              open: true
-            })
-          );
-          return Promise.reject();
-        }
-      } */
-    }
-  }; // your form submit function which will invoke after successful validation
+    dispatch(setLoader(true));
+    updateModel(model)
+      .then((data) => {
+        setModel(data);
+        dispatch(setToInitialLoader());
+        dispatch(
+          setSnackBar({
+            open: true,
+            message: 'Modelo atualizado com sucesso!',
+            type: MessageType.SUCCESS
+          })
+        );
+        navigate(modelListNavigate);
+      })
+      .catch((e: Error) => {
+        console.error(e);
+        dispatch(setToInitialLoader());
+        dispatch(
+          setModal({
+            title: 'Erro Interno do Servidor',
+            message: e.toString(),
+            type: MessageType.ERROR,
+            open: true
+          })
+        );
+      });
+  };
 
   const handleSumbitAdd = async (model: IModel) => {
-    console.log(model);
+    dispatch(setLoader(true));
+    createModel(model)
+      .then((data) => {
+        setModel(data);
+        dispatch(setToInitialLoader());
+        dispatch(
+          setSnackBar({
+            open: true,
+            message: 'Modelo criado com sucesso!',
+            type: MessageType.SUCCESS
+          })
+        );
+        navigate(modelListNavigate);
+      })
+      .catch((e: Error) => {
+        console.error(e);
+        dispatch(setToInitialLoader());
+        dispatch(
+          setModal({
+            title: 'Erro Interno do Servidor',
+            message: e.toString(),
+            type: MessageType.ERROR,
+            open: true
+          })
+        );
+      });
   };
 
   return (
@@ -113,7 +132,7 @@ export default function Model() {
               handleSumbitAdd: handleSubmit(handleSumbitAdd)
             })}
           />
-          <ModelDetails {...{ model, errors, marks, control }} />
+          <ModelDetails {...{ model, errors, marks, control, loading }} />
         </>
       )}
     </>

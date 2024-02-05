@@ -1,7 +1,6 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import {
   UseFormHandleSubmit,
-  UseFormReset,
   useForm,
   FieldErrors,
   Control
@@ -11,12 +10,7 @@ import * as Yup from 'yup';
 
 export default function MarkValidationService(
   mark: IMark
-): [
-  UseFormHandleSubmit<IMark>,
-  FieldErrors<IMark>,
-  boolean,
-  Control<IMark, any>
-] {
+): [UseFormHandleSubmit<IMark>, FieldErrors<IMark>, Control<IMark, any>] {
   const MarkValidationSchema: Yup.ObjectSchema<IMark> = Yup.object().shape({
     name: Yup.string().required('O nome é obrigatório!').default(mark.name),
     id: Yup.number().default(mark.id)
@@ -25,10 +19,10 @@ export default function MarkValidationService(
   const {
     handleSubmit,
     control,
-    formState: { errors, isSubmitSuccessful }
+    formState: { errors }
   } = useForm<IMark>({
     resolver: yupResolver(MarkValidationSchema)
   });
 
-  return [handleSubmit, errors, isSubmitSuccessful, control];
+  return [handleSubmit, errors, control];
 }

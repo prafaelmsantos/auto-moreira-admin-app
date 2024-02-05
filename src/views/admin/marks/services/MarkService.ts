@@ -1,6 +1,5 @@
 import { BASE_API_URL } from '../../../../config/variables';
 import {
-  deleteData,
   getData,
   postData,
   putData

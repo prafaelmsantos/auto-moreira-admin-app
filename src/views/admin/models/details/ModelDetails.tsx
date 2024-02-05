@@ -10,12 +10,14 @@ interface IModelDetails {
   errors: FieldErrors<IModel>;
   marks: IMark[];
   control: Control<IModel>;
+  loading: boolean;
 }
 export default function ModelDetails({
   model,
   errors,
   marks,
-  control
+  control,
+  loading
 }: IModelDetails) {
   return (
     <Grid container mt={5} px={5} spacing={2}>
@@ -34,6 +36,7 @@ export default function ModelDetails({
           render={({ field }) => (
             <Autocomplete
               {...field}
+              sx={{ mt: 1 }}
               isOptionEqualToValue={(option, value) => option === value}
               options={marks.map((x) => x.id)}
               getOptionLabel={(option) =>
