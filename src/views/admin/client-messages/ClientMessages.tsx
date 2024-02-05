@@ -1,13 +1,14 @@
 import { useQuery } from '@apollo/client';
-import {
-  clientMessages,
-  clientMessages_clientMessages_nodes
-} from '../../../queries/types/clientMessages';
-import { CLIENT_MESSAGES } from '../../../queries/ClientMessages';
+
+import { CLIENT_MESSAGES } from './queries/ClientMessages';
 import { convertToClientMessage } from './models/ClientMessage';
 import Table from '../../../components/table/Table';
 import { columns } from './utils/ClientMessageColumns';
 import { Box } from '@mui/material';
+import {
+  clientMessages,
+  clientMessages_clientMessages_nodes
+} from './queries/types/clientMessages';
 
 export default function ClientMessages() {
   const { data, loading } = useQuery<clientMessages>(CLIENT_MESSAGES);

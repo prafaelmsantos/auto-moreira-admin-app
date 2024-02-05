@@ -9,16 +9,15 @@ import PageHolder from '../../../../components/base/PageHolder';
 import GetActions from '../../../../components/base/Actions';
 
 import { useQuery } from '@apollo/client';
-import { marks, marks_marks_nodes } from '../../../../queries/types/marks';
-import { MARKS } from '../../../../queries/Marks';
+import { MARKS } from '../../marks/queries/Marks';
 import { convertToMark } from '../../marks/models/Mark';
 import { IVehicle } from '../models/Vehicle';
 import { addVehicleNavigate, vehicleListNavigate } from '../utils/Utils';
-import { MODELS } from '../../../../queries/Models';
-import { models, models_models_nodes } from '../../../../queries/types/models';
+import { MODELS } from '../../models/queries/Models';
 import { convertToModel } from '../../models/models/Model';
 import VehicleDetails from './VehicleDetails';
-import { Fuel, FuelTypeConverted } from '../models/enums/FuelEnum';
+import { marks_marks_nodes, marks } from '../../marks/queries/types/marks';
+import { models_models_nodes, models } from '../../models/queries/types/models';
 
 export default function Vehicle() {
   const param = useParams();

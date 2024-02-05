@@ -1,10 +1,10 @@
 import { IModel } from '../../models/models/Model';
+import { vehicles_vehicles_nodes } from '../queries/types/vehicles';
 import { Fuel, FuelTypeGraphQLConverted } from './enums/FuelEnum';
 import {
   Transmission,
   TransmissionGraphQLConverted
 } from './enums/TransmissionEnum';
-import { vehicles_vehicles_nodes } from '../../../../queries/types/vehicles';
 
 export interface IVehicle {
   id: number;

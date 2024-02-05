@@ -1,4 +1,4 @@
-import { clientMessages_clientMessages_nodes } from '../../../../queries/types/clientMessages';
+import { clientMessages_clientMessages_nodes } from '../queries/types/clientMessages';
 
 export interface IClientMessage {
   id: number;

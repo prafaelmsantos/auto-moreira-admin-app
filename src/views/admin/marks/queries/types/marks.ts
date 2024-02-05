@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { MarkFilterInput, MarkSortInput } from "./../../models/graphql-global-types";
+import { MarkFilterInput, MarkSortInput } from "./../../../../../models/graphql-global-types";
 
 // ====================================================
 // GraphQL query operation: marks

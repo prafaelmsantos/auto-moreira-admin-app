@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { ModelFilterInput, ModelSortInput } from "./../../models/graphql-global-types";
+import { ModelFilterInput, ModelSortInput } from "./../../../../../models/graphql-global-types";
 
 // ====================================================
 // GraphQL query operation: models

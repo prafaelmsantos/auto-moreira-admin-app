@@ -13,13 +13,13 @@ import { addModelNavigate, modelListNavigate } from '../utils/Utils';
 import ModelDetails from './ModelDetails';
 import ModelValidationService from '../services/ModelValidationService';
 import { useQuery } from '@apollo/client';
-import { marks, marks_marks_nodes } from '../../../../queries/types/marks';
-import { MARKS } from '../../../../queries/Marks';
+import { MARKS } from '../../marks/queries/Marks';
 import { convertToMark } from '../../marks/models/Mark';
 import { createModel, updateModel } from '../services/ModelService';
 import { MessageType } from '../../../../models/enums/MessageTypeEnum';
 import { setSnackBar } from '../../../../redux/snackBarSlice';
 import { setModal } from '../../../../redux/modalSlice';
+import { marks_marks_nodes, marks } from '../../marks/queries/types/marks';
 
 export default function Model() {
   const param = useParams();

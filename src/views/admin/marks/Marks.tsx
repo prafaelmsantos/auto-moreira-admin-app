@@ -1,7 +1,6 @@
 import { useQuery } from '@apollo/client';
 import { convertToMark } from './models/Mark';
-import { MARKS } from '../../../queries/Marks';
-import { marks_marks_nodes, marks } from '../../../queries/types/marks';
+import { MARKS } from './queries/Marks';
 import Table from '../../../components/table/Table';
 import PageHolder from '../../../components/base/PageHolder';
 import { IMode } from '../../../models/enums/Base';
@@ -11,6 +10,7 @@ import { useNavigate } from 'react-router-dom';
 import { columns } from './utils/MarkColumns';
 import { addMarkNavigate } from './utils/Utils';
 import { useEffect } from 'react';
+import { marks, marks_marks_nodes } from './queries/types/marks';
 
 export default function Marks() {
   const navigate = useNavigate();

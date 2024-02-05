@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { ClientMessageFilterInput, ClientMessageSortInput } from "./../../models/graphql-global-types";
+import { ClientMessageFilterInput, ClientMessageSortInput } from "./../../../../../models/graphql-global-types";
 
 // ====================================================
 // GraphQL query operation: clientMessages
