@@ -18,6 +18,7 @@ import { convertToModel } from '../../models/models/Model';
 import VehicleDetails from './VehicleDetails';
 import { marks_marks_nodes, marks } from '../../marks/queries/types/marks';
 import { models_models_nodes, models } from '../../models/queries/types/models';
+import VehicleValidationService from '../services/VehicleValidationService';
 
 export default function Vehicle() {
   const param = useParams();
@@ -89,6 +90,8 @@ export default function Vehicle() {
 
   const handleClose = () => navigate(vehicleListNavigate);
 
+  const [handleSubmit, errors, control] = VehicleValidationService(vehicle);
+
   const handleSumbitEdit = async (vehicle: IVehicle) => {
     console.log(vehicle);
     if (vehicle) {
@@ -131,18 +134,18 @@ export default function Vehicle() {
     console.log(vehicle);
   };
 
-  console.log(vehicle);
-
   return (
     <>
       {mode && (
         <>
           <PageHolder
             actions={GetActions({
-              ...{ mode, handleClose }
+              ...{ mode, handleClose },
+              handleSubmitEdit: handleSubmit(handleSumbitEdit),
+              handleSumbitAdd: handleSubmit(handleSumbitAdd)
             })}
           />
-          <VehicleDetails {...{ vehicle, marks, models }} />
+          <VehicleDetails {...{ vehicle, marks, models, errors, control }} />
         </>
       )}
     </>

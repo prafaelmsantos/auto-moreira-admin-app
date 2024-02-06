@@ -10,14 +10,12 @@ interface IModelDetails {
   errors: FieldErrors<IModel>;
   marks: IMark[];
   control: Control<IModel>;
-  loading: boolean;
 }
 export default function ModelDetails({
   model,
   errors,
   marks,
-  control,
-  loading
+  control
 }: IModelDetails) {
   return (
     <Grid container mt={5} px={5} spacing={2}>
@@ -29,6 +27,7 @@ export default function ModelDetails({
           control={control}
           defaultValue={model.name}
           name={'name'}
+          required
         />
       </Grid>
       <Grid item md={6} xs={12}>

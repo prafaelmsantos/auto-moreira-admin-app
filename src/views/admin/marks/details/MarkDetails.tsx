@@ -19,6 +19,7 @@ export default function MarkDetails({ mark, errors, control }: IMarkDetails) {
           control={control}
           defaultValue={mark.name}
           name={'name'}
+          required
         />
       </Grid>
     </Grid>

@@ -6,7 +6,7 @@ export const columns: GridColDef[] = [
   {
     field: 'id',
     headerName: 'ID',
-    width: 90
+    width: 50
   },
   {
     field: 'name',
@@ -26,12 +26,16 @@ export const columns: GridColDef[] = [
   {
     field: 'dateTime',
     headerName: 'Data/Hora',
-    width: 250
+    width: 200,
+    valueFormatter: (params) =>
+      `${(params.value as Date).toLocaleDateString()} ${(
+        params.value as Date
+      ).toLocaleTimeString()}`
   },
   {
     field: 'message',
     headerName: 'Mensagem',
-    width: 500
+    width: 250
   },
   {
     field: 'actions',

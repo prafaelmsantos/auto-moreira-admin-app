@@ -8,7 +8,9 @@ import {
   alpha,
   styled
 } from '@mui/material';
-import { TextFieldSX } from '../../../../components/form/TextFieldFormValidation';
+import TextFieldFormValidation, {
+  TextFieldSX
+} from '../../../../components/form/TextFieldFormValidation';
 import { AutocompleteFormValidationSX } from '../../../../components/form/AutocompleteFormValidation';
 import { IVehicle } from '../models/Vehicle';
 import { IMark } from '../../marks/models/Mark';
@@ -19,16 +21,21 @@ import { pink } from '@mui/material/colors';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../../redux/store';
 import { COLORS } from '../../../../utils/Colors';
+import { Control, FieldErrors } from 'react-hook-form';
 
 interface IVehicleDetails {
   vehicle: IVehicle;
   marks: IMark[];
   models: IModel[];
+  errors: FieldErrors<IVehicle>;
+  control: Control<IVehicle>;
 }
 export default function VehicleDetails({
   vehicle,
   models,
-  marks
+  marks,
+  errors,
+  control
 }: IVehicleDetails) {
   const darkMode = useSelector((state: RootState) => state.darkModeSlice.dark);
   console.log(Object.entries(Fuel));
@@ -56,13 +63,14 @@ export default function VehicleDetails({
         />
       </Grid>
       <Grid item md={4} xs={12}>
-        <TextField
-          fullWidth
-          id="outlined-basic"
-          label="Versão"
-          variant="outlined"
-          value={vehicle.version}
-          sx={TextFieldSX(false)}
+        <TextFieldFormValidation
+          label={'Versão'}
+          error={!!errors.version}
+          helperText={errors.version?.message}
+          control={control}
+          defaultValue={vehicle.version}
+          name={'version'}
+          required
         />
       </Grid>
       <Grid item md={4} xs={12}>
@@ -78,57 +86,50 @@ export default function VehicleDetails({
         />
       </Grid>
       <Grid item md={4} xs={12}>
-        <TextField
-          fullWidth
-          id="outlined-basic"
-          label="Ano"
-          variant="outlined"
+        <TextFieldFormValidation
+          label={'Ano'}
+          control={control}
+          defaultValue={vehicle.year}
+          name={'year'}
           type="number"
-          value={vehicle.year}
-          sx={TextFieldSX(false)}
         />
       </Grid>
       <Grid item md={4} xs={12}>
-        <TextField
-          fullWidth
-          id="outlined-basic"
-          label="Cor"
-          variant="outlined"
-          value={vehicle.color}
-          sx={TextFieldSX(false)}
+        <TextFieldFormValidation
+          label={'Cor'}
+          error={!!errors.color}
+          helperText={errors.color?.message}
+          control={control}
+          defaultValue={vehicle.color}
+          name={'color'}
+          required
         />
       </Grid>
       <Grid item md={4} xs={12}>
-        <TextField
-          fullWidth
-          id="outlined-basic"
-          label="Nº de Kms"
-          variant="outlined"
+        <TextFieldFormValidation
+          label={'Nº de Kms'}
+          control={control}
+          defaultValue={vehicle.mileage}
+          name={'mileage'}
           type="number"
-          value={vehicle.mileage}
-          sx={TextFieldSX(false)}
         />
       </Grid>
       <Grid item md={4} xs={12}>
-        <TextField
-          fullWidth
-          id="outlined-basic"
-          label="Preço"
-          variant="outlined"
+        <TextFieldFormValidation
+          label={'Preço'}
+          control={control}
+          defaultValue={vehicle.price}
+          name={'price'}
           type="number"
-          value={vehicle.price}
-          sx={TextFieldSX(false)}
         />
       </Grid>
       <Grid item md={4} xs={12}>
-        <TextField
-          fullWidth
-          id="outlined-basic"
-          label="Nº de portas"
-          variant="outlined"
+        <TextFieldFormValidation
+          label={'Nº de portas'}
+          control={control}
+          defaultValue={vehicle.doors}
+          name={'doors'}
           type="number"
-          value={vehicle.doors}
-          sx={TextFieldSX(false)}
         />
       </Grid>
       <Grid item md={4} xs={12}>
@@ -144,25 +145,21 @@ export default function VehicleDetails({
         />
       </Grid>
       <Grid item md={4} xs={12}>
-        <TextField
-          fullWidth
-          id="outlined-basic"
-          label="Tamanho do motor"
-          variant="outlined"
+        <TextFieldFormValidation
+          label={'Tamanho do motor'}
+          control={control}
+          defaultValue={vehicle.engineSize}
+          name={'engineSize'}
           type="number"
-          value={vehicle.engineSize}
-          sx={TextFieldSX(false)}
         />
       </Grid>
       <Grid item md={4} xs={12}>
-        <TextField
-          fullWidth
-          id="outlined-basic"
-          label="Potência"
-          variant="outlined"
+        <TextFieldFormValidation
+          label={'Potência'}
+          control={control}
+          defaultValue={vehicle.power}
+          name={'power'}
           type="number"
-          value={vehicle.power}
-          sx={TextFieldSX(false)}
         />
       </Grid>
       <Grid item md={2} xs={12}>

@@ -5,12 +5,14 @@ import { RootState } from '../../redux/store';
 import { COLORS } from '../../utils/Colors';
 
 type ITextFieldFormValidation = {
-  error: boolean;
+  error?: boolean;
   helperText?: string;
   label: string;
   control: Control<any, any>;
   defaultValue?: string | number;
   name: string;
+  required?: boolean;
+  type?: string;
 };
 
 export const TextFieldSX = (error: boolean) => {
@@ -108,7 +110,9 @@ export default function TextFieldFormValidation({
   label,
   control,
   defaultValue,
-  name
+  name,
+  required,
+  type
 }: ITextFieldFormValidation) {
   const darkMode = useSelector((state: RootState) => state.darkModeSlice.dark);
   const redColor = '#d32f2f';
@@ -118,7 +122,8 @@ export default function TextFieldFormValidation({
       render={({ field }) => (
         <TextField
           {...field}
-          required
+          required={required}
+          type={type}
           label={label}
           fullWidth
           margin="dense"

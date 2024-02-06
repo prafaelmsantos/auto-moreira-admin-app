@@ -30,7 +30,7 @@ export default function Model() {
   const markId = Number(param.id);
   const match = useMatch(addModelNavigate);
   const [mode, setMode] = useState<IMode>();
-  const { data, loading } = useQuery<marks>(MARKS);
+  const { data } = useQuery<marks>(MARKS);
   const marks =
     data?.marks?.nodes?.map((mark) =>
       convertToMark(mark as marks_marks_nodes)
@@ -132,7 +132,7 @@ export default function Model() {
               handleSumbitAdd: handleSubmit(handleSumbitAdd)
             })}
           />
-          <ModelDetails {...{ model, errors, marks, control, loading }} />
+          <ModelDetails {...{ model, errors, marks, control }} />
         </>
       )}
     </>
