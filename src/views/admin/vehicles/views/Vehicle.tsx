@@ -2,8 +2,6 @@ import { useMatch, useNavigate, useParams } from 'react-router-dom';
 import { useAppDispatch } from '../../../../redux/hooks';
 import { useEffect, useState } from 'react';
 import { setLoader, setToInitialLoader } from '../../../../redux/loaderSlice';
-import { getData } from '../../../../services/AutoMoreiraService';
-import { BASE_API_URL } from '../../../../config/variables';
 import { IMode } from '../../../../models/enums/Base';
 import PageHolder from '../../../../components/base/PageHolder';
 import GetActions from '../../../../components/base/Actions';
@@ -12,13 +10,21 @@ import { useQuery } from '@apollo/client';
 import { MARKS } from '../../marks/queries/Marks';
 import { convertToMark } from '../../marks/models/Mark';
 import { IVehicle } from '../models/Vehicle';
-import { addVehicleNavigate, vehicleListNavigate } from '../utils/Utils';
+import { addVehicleNavigate, vehicleListNavigate } from './utils/Utils';
 import { MODELS } from '../../models/queries/Models';
 import { convertToModel } from '../../models/models/Model';
-import VehicleDetails from './VehicleDetails';
+import VehicleDetails from './details/VehicleDetails';
 import { marks_marks_nodes, marks } from '../../marks/queries/types/marks';
 import { models_models_nodes, models } from '../../models/queries/types/models';
 import VehicleValidationService from '../services/VehicleValidationService';
+import {
+  createVehicle,
+  getVehicle,
+  updateVehicle
+} from '../services/VehicleService';
+import { setSnackBar } from '../../../../redux/snackBarSlice';
+import { MessageType } from '../../../../models/enums/MessageTypeEnum';
+import { setModal } from '../../../../redux/modalSlice';
 
 export default function Vehicle() {
   const param = useParams();
@@ -45,31 +51,23 @@ export default function Vehicle() {
   const match = useMatch(addVehicleNavigate);
   const [mode, setMode] = useState<IMode>();
   const { data: marksData } = useQuery<marks>(MARKS);
-  const { data: modelsData } = useQuery<models>(MODELS, {
-    variables: {
-      filter:
-        vehicle.model.markId !== 0
-          ? {
-              markId: { eq: vehicle.model.markId }
-            }
-          : null
-    }
-  });
+  const { data: modelsData } = useQuery<models>(MODELS);
+
   const marks =
-    marksData?.marks?.nodes?.map((mark) =>
-      convertToMark(mark as marks_marks_nodes)
-    ) ?? [];
+    marksData?.marks?.nodes
+      ?.map((mark) => convertToMark(mark as marks_marks_nodes))
+      ?.sort((a, b) => a.id - b.id) ?? [];
 
   const models =
-    modelsData?.models?.nodes?.map((model) =>
-      convertToModel(model as models_models_nodes)
-    ) ?? [];
+    modelsData?.models?.nodes
+      ?.filter((x) => x?.id === vehicle.model.markId)
+      ?.map((model) => convertToModel(model as models_models_nodes))
+      ?.sort((a, b) => a.id - b.id) ?? [];
 
   useEffect(() => {
     if (vehicleId) {
       dispatch(setLoader(true));
-      const endpoint = `${BASE_API_URL}${'api/vehicles/'}${vehicleId}`;
-      getData<IVehicle>(`${endpoint}`)
+      getVehicle(vehicleId)
         .then((data) => {
           setVehicle(data);
           dispatch(setToInitialLoader());
@@ -90,48 +88,73 @@ export default function Vehicle() {
 
   const handleClose = () => navigate(vehicleListNavigate);
 
-  const [handleSubmit, errors, control] = VehicleValidationService(vehicle);
+  const [handleSubmit, errors, control, watch, setValue] =
+    VehicleValidationService(vehicle);
+
+  useEffect(() => {
+    watch((value) =>
+      setVehicle((old) => ({
+        ...old,
+        modelId: value?.modelId ?? 0,
+        model: { ...old.model, markId: value.model?.markId ?? 0 }
+      }))
+    );
+  }, [watch]);
 
   const handleSumbitEdit = async (vehicle: IVehicle) => {
-    console.log(vehicle);
-    if (vehicle) {
-      /* const response = await MarkService.PUT(mark);
-      if (response) {
-        if (response.ok) {
-          dispatch(
-            setSnackBar({
-              open: true,
-              message: 'Marca criada com sucesso!',
-              type: MessageType.SUCCESS
-            })
-          );
-
-          isSubmitSuccessful &&
-            reset({
-              name: ''
-            });
-          return Promise.resolve();
-        } else {
-          const messageError = response
-            .json()
-            .then((response) => response.message)
-            .then((x) => x as string);
-          dispatch(
-            setModal({
-              title: 'Erro Interno do Servidor',
-              message: (await messageError).toString(),
-              type: MessageType.ERROR,
-              open: true
-            })
-          );
-          return Promise.reject();
-        }
-      } */
-    }
-  }; // your form submit function which will invoke after successful validation
+    dispatch(setLoader(true));
+    updateVehicle(vehicle)
+      .then(() => {
+        dispatch(setToInitialLoader());
+        dispatch(
+          setSnackBar({
+            open: true,
+            message: 'Veículo atualizado com sucesso!',
+            type: MessageType.SUCCESS
+          })
+        );
+        navigate(vehicleListNavigate);
+      })
+      .catch((e: Error) => {
+        console.error(e);
+        dispatch(setToInitialLoader());
+        dispatch(
+          setModal({
+            title: 'Erro Interno do Servidor',
+            message: e.toString(),
+            type: MessageType.ERROR,
+            open: true
+          })
+        );
+      });
+  };
 
   const handleSumbitAdd = async (vehicle: IVehicle) => {
-    console.log(vehicle);
+    dispatch(setLoader(true));
+    createVehicle(vehicle)
+      .then(() => {
+        dispatch(setToInitialLoader());
+        dispatch(
+          setSnackBar({
+            open: true,
+            message: 'Veículo criado com sucesso!',
+            type: MessageType.SUCCESS
+          })
+        );
+        navigate(vehicleListNavigate);
+      })
+      .catch((e: Error) => {
+        console.error(e);
+        dispatch(setToInitialLoader());
+        dispatch(
+          setModal({
+            title: 'Erro Interno do Servidor',
+            message: e.toString(),
+            type: MessageType.ERROR,
+            open: true
+          })
+        );
+      });
   };
 
   return (
@@ -145,7 +168,9 @@ export default function Vehicle() {
               handleSumbitAdd: handleSubmit(handleSumbitAdd)
             })}
           />
-          <VehicleDetails {...{ vehicle, marks, models, errors, control }} />
+          <VehicleDetails
+            {...{ vehicle, marks, models, errors, control, setValue }}
+          />
         </>
       )}
     </>

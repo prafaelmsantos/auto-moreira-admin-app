@@ -1,7 +1,7 @@
 import { GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
 
-import { RouteName } from '../../../../models/enums/RouteType';
-import Actions from '../../../../components/table/utils/Actions';
+import { RouteName } from '../../../../../models/enums/RouteType';
+import Actions from '../../../../../components/table/utils/Actions';
 
 export const columns: GridColDef[] = [
   {

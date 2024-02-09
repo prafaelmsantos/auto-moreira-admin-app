@@ -7,8 +7,8 @@ import { IMode } from '../../../models/enums/Base';
 import GetActions from '../../../components/base/Actions';
 
 import { useNavigate } from 'react-router-dom';
-import { columns } from './utils/MarkColumns';
-import { addMarkNavigate } from './utils/Utils';
+import { columns } from './views/utils/MarkColumns';
+import { addMarkNavigate } from './views/utils/Utils';
 import { useEffect } from 'react';
 import { marks, marks_marks_nodes } from './queries/types/marks';
 
@@ -17,9 +17,9 @@ export default function Marks() {
   const { data, loading, refetch } = useQuery<marks>(MARKS);
 
   const rows =
-    data?.marks?.nodes?.map((mark) =>
-      convertToMark(mark as marks_marks_nodes)
-    ) ?? [];
+    data?.marks?.nodes
+      ?.map((mark) => convertToMark(mark as marks_marks_nodes))
+      ?.sort((a, b) => a.id - b.id) ?? [];
 
   const handleAdd = () => navigate(addMarkNavigate);
 

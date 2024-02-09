@@ -3,11 +3,11 @@ import { IMark } from '../models/Mark';
 import { useAppDispatch } from '../../../../redux/hooks';
 import { useEffect, useState } from 'react';
 import { setLoader, setToInitialLoader } from '../../../../redux/loaderSlice';
-import MarkDetails from './MarkDetails';
+import MarkDetails from './details/MarkDetails';
 import { IMode } from '../../../../models/enums/Base';
 import PageHolder from '../../../../components/base/PageHolder';
 import GetActions from '../../../../components/base/Actions';
-import { addMarkNavigate, markListNavigate } from '../utils/Utils';
+import { addMarkNavigate, markListNavigate } from './utils/Utils';
 
 import MarkValidationService from '../services/MarkValidationService';
 import { createMark, getMark, updateMark } from '../services/MarkService';
@@ -53,8 +53,7 @@ export default function Mark() {
   const handleSumbitEdit = async (mark: IMark) => {
     dispatch(setLoader(true));
     updateMark(mark)
-      .then((data) => {
-        setMark(data);
+      .then(() => {
         dispatch(setToInitialLoader());
         dispatch(
           setSnackBar({
@@ -82,8 +81,7 @@ export default function Mark() {
   const handleSumbitAdd = async (mark: IMark) => {
     dispatch(setLoader(true));
     createMark(mark)
-      .then((data) => {
-        setMark(data);
+      .then(() => {
         dispatch(setToInitialLoader());
         dispatch(
           setSnackBar({

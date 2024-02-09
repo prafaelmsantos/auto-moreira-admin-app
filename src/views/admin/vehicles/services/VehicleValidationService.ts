@@ -3,7 +3,9 @@ import {
   UseFormHandleSubmit,
   useForm,
   FieldErrors,
-  Control
+  Control,
+  UseFormWatch,
+  UseFormSetValue
 } from 'react-hook-form';
 import * as Yup from 'yup';
 
@@ -14,20 +16,26 @@ import { Transmission } from '../models/enums/TransmissionEnum';
 
 export default function VehicleValidationService(
   vehicle: IVehicle
-): [UseFormHandleSubmit<IVehicle>, FieldErrors<IVehicle>, Control<IVehicle>] {
+): [UseFormHandleSubmit<IVehicle>, FieldErrors<IVehicle>, Control<IVehicle>,UseFormWatch<IVehicle>,UseFormSetValue<IVehicle>] {
   const VehicleValidationSchema: Yup.ObjectSchema<IVehicle> =
     Yup.object().shape({
       id: Yup.number().default(vehicle.id),
       modelId: Yup.number()
         .default(vehicle.modelId)
+        .test('O modelo é obrigatorio!',
+        'O modelo é obrigatorio!',
+        (value) => value > 0
+      )
         .required('O modelo é obrigatorio!'),
       model: Yup.object<IModel | undefined>()
         .shape({
-          name: Yup.string().default(''),
-          id: Yup.number().default(0),
-          markId: Yup.number().default(0)
+          name: Yup.string().default(vehicle.model.name),
+          id: Yup.number().default(vehicle.modelId),
+          markId: Yup.number().default(vehicle.model.markId).test('A marca é obrigatoria!',
+        'A marca é obrigatoria!',
+        (value) => value > 0).required('A marca é obrigatoria!')
         })
-        .default(undefined),
+        .default(vehicle.model),
       year: Yup.number().default(vehicle.year),
       color: Yup.string()
         .default(vehicle.color)
@@ -55,11 +63,15 @@ export default function VehicleValidationService(
 
   const {
     handleSubmit,
+    watch,
+    setValue,
     formState: { errors },
     control
   } = useForm<IVehicle>({
     resolver: yupResolver(VehicleValidationSchema)
   });
 
-  return [handleSubmit, errors, control];
+
+
+  return [handleSubmit, errors, control, watch, setValue];
 }

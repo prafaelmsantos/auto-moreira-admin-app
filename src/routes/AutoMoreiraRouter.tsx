@@ -4,13 +4,11 @@ import Marks from '../views/admin/marks/Marks';
 import Models from '../views/admin/models/Models';
 import SignIn from '../views/auth/SignIn';
 import Profile from '../views/admin/profile';
-import NFTMarketplace from '../views/admin/marketplace';
-import DataTables from '../views/admin/tables';
-import Mark from '../views/admin/marks/details/Mark';
+import Mark from '../views/admin/marks/views/Mark';
 import Dashboard from '../views/admin/default';
 import { RouteName, RouteType } from '../models/enums/RouteType';
-import Model from '../views/admin/models/details/Model';
-import Vehicle from '../views/admin/vehicles/details/Vehicle';
+import Model from '../views/admin/models/views/Model';
+import Vehicle from '../views/admin/vehicles/views/Vehicle';
 import ClientMessages from '../views/admin/client-messages/ClientMessages';
 import Users from '../views/admin/users/Users';
 

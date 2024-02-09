@@ -1,9 +1,9 @@
 import { Autocomplete, Grid, TextField } from '@mui/material';
 import { Control, Controller, FieldErrors } from 'react-hook-form';
-import { IModel } from '../models/Model';
-import { IMark } from '../../marks/models/Mark';
-import TextFieldFormValidation from '../../../../components/form/TextFieldFormValidation';
-import { AutocompleteFormValidationSX } from '../../../../components/form/AutocompleteFormValidation';
+import { IModel } from '../../models/Model';
+import { IMark } from '../../../marks/models/Mark';
+import TextFieldFormValidation from '../../../../../components/form/TextFieldFormValidation';
+import { AutocompleteSX } from '../../../../../components/form/style/AutocompleteSX';
 
 interface IModelDetails {
   model: IModel;
@@ -49,7 +49,7 @@ export default function ModelDetails({
                   variant="outlined"
                   error={!!errors.markId}
                   helperText={errors.markId?.message}
-                  sx={AutocompleteFormValidationSX(!!errors.markId)}
+                  sx={AutocompleteSX(!!errors.markId)}
                 />
               )}
               onChange={(_, data) => field.onChange(data)}

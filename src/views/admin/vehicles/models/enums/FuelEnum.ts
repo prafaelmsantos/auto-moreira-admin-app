@@ -32,3 +32,4 @@ export const fuels: IFuel[] = [
   { id: Fuel.DIESEL, name: FuelTypeConverted(Fuel.DIESEL) },
   { id: Fuel.HYBRID, name: FuelTypeConverted(Fuel.HYBRID) }
 ];
+

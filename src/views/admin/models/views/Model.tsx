@@ -2,20 +2,18 @@ import { useMatch, useNavigate, useParams } from 'react-router-dom';
 import { useAppDispatch } from '../../../../redux/hooks';
 import { useEffect, useState } from 'react';
 import { setLoader, setToInitialLoader } from '../../../../redux/loaderSlice';
-import { getData } from '../../../../services/AutoMoreiraService';
-import { BASE_API_URL } from '../../../../config/variables';
 import { IMode } from '../../../../models/enums/Base';
 import PageHolder from '../../../../components/base/PageHolder';
 import GetActions from '../../../../components/base/Actions';
 
 import { IModel } from '../models/Model';
-import { addModelNavigate, modelListNavigate } from '../utils/Utils';
-import ModelDetails from './ModelDetails';
+import { addModelNavigate, modelListNavigate } from './utils/Utils';
+import ModelDetails from './details/ModelDetails';
 import ModelValidationService from '../services/ModelValidationService';
 import { useQuery } from '@apollo/client';
 import { MARKS } from '../../marks/queries/Marks';
 import { convertToMark } from '../../marks/models/Mark';
-import { createModel, updateModel } from '../services/ModelService';
+import { createModel, getModel, updateModel } from '../services/ModelService';
 import { MessageType } from '../../../../models/enums/MessageTypeEnum';
 import { setSnackBar } from '../../../../redux/snackBarSlice';
 import { setModal } from '../../../../redux/modalSlice';
@@ -39,8 +37,7 @@ export default function Model() {
   useEffect(() => {
     if (markId) {
       dispatch(setLoader(true));
-      const endpoint = `${BASE_API_URL}${'api/models/'}${markId}`;
-      getData<IModel>(`${endpoint}`)
+      getModel(markId)
         .then((data) => {
           setModel(data);
           dispatch(setToInitialLoader());
@@ -66,8 +63,7 @@ export default function Model() {
   const handleSumbitEdit = async (model: IModel) => {
     dispatch(setLoader(true));
     updateModel(model)
-      .then((data) => {
-        setModel(data);
+      .then(() => {
         dispatch(setToInitialLoader());
         dispatch(
           setSnackBar({
@@ -95,8 +91,7 @@ export default function Model() {
   const handleSumbitAdd = async (model: IModel) => {
     dispatch(setLoader(true));
     createModel(model)
-      .then((data) => {
-        setModel(data);
+      .then(() => {
         dispatch(setToInitialLoader());
         dispatch(
           setSnackBar({

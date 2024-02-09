@@ -6,8 +6,8 @@ import { useNavigate } from 'react-router-dom';
 import GetActions from '../../../components/base/Actions';
 import PageHolder from '../../../components/base/PageHolder';
 import { IMode } from '../../../models/enums/Base';
-import { addVehicleNavigate } from './utils/Utils';
-import { columns } from './utils/VehicleColumns';
+import { addVehicleNavigate } from './views/utils/Utils';
+import { columns } from './views/utils/VehicleColumns';
 import { vehicles_vehicles_nodes, vehicles } from './queries/types/vehicles';
 
 export default function Vehicles() {
@@ -15,9 +15,9 @@ export default function Vehicles() {
   const { data, loading } = useQuery<vehicles>(VEHICLES);
 
   const rows =
-    data?.vehicles?.nodes?.map((vehicle) =>
-      convertToVehicle(vehicle as vehicles_vehicles_nodes)
-    ) ?? [];
+    data?.vehicles?.nodes
+      ?.map((vehicle) => convertToVehicle(vehicle as vehicles_vehicles_nodes))
+      ?.sort((a, b) => a.id - b.id) ?? [];
 
   const handleAdd = () => navigate(addVehicleNavigate);
   return (

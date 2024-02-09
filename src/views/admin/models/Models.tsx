@@ -1,13 +1,13 @@
 import { useQuery } from '@apollo/client';
 import Table from '../../../components/table/Table';
-import { addModelNavigate } from './utils/Utils';
+import { addModelNavigate } from './views/utils/Utils';
 import { MODELS } from './queries/Models';
 import { convertToModel } from './models/Model';
 import { useNavigate } from 'react-router-dom';
 import PageHolder from '../../../components/base/PageHolder';
 import GetActions from '../../../components/base/Actions';
 import { IMode } from '../../../models/enums/Base';
-import { columns } from './utils/ModelColumns';
+import { columns } from './views/utils/ModelColumns';
 import { models, models_models_nodes } from './queries/types/models';
 
 export default function Models() {
@@ -15,9 +15,9 @@ export default function Models() {
   const { data, loading } = useQuery<models>(MODELS);
 
   const rows =
-    data?.models?.nodes?.map((model) =>
-      convertToModel(model as models_models_nodes)
-    ) ?? [];
+    data?.models?.nodes
+      ?.map((model) => convertToModel(model as models_models_nodes))
+      ?.sort((a, b) => a.id - b.id) ?? [];
 
   const handleAdd = () => navigate(addModelNavigate);
 

@@ -1,7 +1,7 @@
 import { Grid } from '@mui/material';
-import { IMark } from '../models/Mark';
+import { IMark } from '../../models/Mark';
 import { Control, FieldErrors } from 'react-hook-form';
-import TextFieldFormValidation from '../../../../components/form/TextFieldFormValidation';
+import TextFieldFormValidation from '../../../../../components/form/TextFieldFormValidation';
 
 interface IMarkDetails {
   mark: IMark;
