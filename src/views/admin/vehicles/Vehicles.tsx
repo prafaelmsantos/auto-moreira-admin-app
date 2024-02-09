@@ -7,7 +7,7 @@ import GetActions from '../../../components/base/Actions';
 import PageHolder from '../../../components/base/PageHolder';
 import { IMode } from '../../../models/enums/Base';
 import { addVehicleNavigate } from './views/utils/Utils';
-import { columns } from './views/utils/VehicleColumns';
+import { columns } from './views/components/VehicleColumns';
 import { vehicles_vehicles_nodes, vehicles } from './queries/types/vehicles';
 
 export default function Vehicles() {

@@ -7,7 +7,7 @@ import { IMode } from '../../../models/enums/Base';
 import GetActions from '../../../components/base/Actions';
 
 import { useNavigate } from 'react-router-dom';
-import { columns } from './views/utils/MarkColumns';
+import { columns } from './views/components/MarkColumns';
 import { addMarkNavigate } from './views/utils/Utils';
 import { useEffect } from 'react';
 import { marks, marks_marks_nodes } from './queries/types/marks';

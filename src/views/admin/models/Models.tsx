@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import PageHolder from '../../../components/base/PageHolder';
 import GetActions from '../../../components/base/Actions';
 import { IMode } from '../../../models/enums/Base';
-import { columns } from './views/utils/ModelColumns';
+import { columns } from './views/components/ModelColumns';
 import { models, models_models_nodes } from './queries/types/models';
 
 export default function Models() {
