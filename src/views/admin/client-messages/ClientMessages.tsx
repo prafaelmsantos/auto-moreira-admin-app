@@ -3,7 +3,7 @@ import { useQuery } from '@apollo/client';
 import { CLIENT_MESSAGES } from './queries/ClientMessages';
 import { convertToClientMessage } from './models/ClientMessage';
 import Table from '../../../components/table/Table';
-import { columns } from './utils/ClientMessageColumns';
+import { columns } from './views/components/ClientMessageColumns';
 import { Box } from '@mui/material';
 import {
   clientMessages,

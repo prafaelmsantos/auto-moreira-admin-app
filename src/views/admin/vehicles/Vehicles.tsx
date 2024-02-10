@@ -9,10 +9,11 @@ import { IMode } from '../../../models/enums/Base';
 import { addVehicleNavigate } from './views/utils/Utils';
 import { columns } from './views/components/VehicleColumns';
 import { vehicles_vehicles_nodes, vehicles } from './queries/types/vehicles';
+import { useEffect } from 'react';
 
 export default function Vehicles() {
   const navigate = useNavigate();
-  const { data, loading } = useQuery<vehicles>(VEHICLES);
+  const { data, loading, refetch } = useQuery<vehicles>(VEHICLES);
 
   const rows =
     data?.vehicles?.nodes
@@ -20,6 +21,12 @@ export default function Vehicles() {
       ?.sort((a, b) => a.id - b.id) ?? [];
 
   const handleAdd = () => navigate(addVehicleNavigate);
+
+  useEffect(() => {
+    void refetch();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <main>
       <PageHolder

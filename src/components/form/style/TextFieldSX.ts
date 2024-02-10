@@ -6,7 +6,13 @@ export const TextFieldSX = (error: boolean) => {
   const darkMode = useSelector((state: RootState) => state.darkModeSlice.dark);
   const redColor = '#d32f2f';
   return {
+ 
     '& .MuiInputBase-input.Mui-disabled': {
+      WebkitTextFillColor: error //Altera a cor do disabled
+        ? redColor
+        : darkMode
+        ? 'white'
+        : COLORS.AUTO_MOREIRA_NAVY[700],
       color: error
         ? redColor
         : darkMode

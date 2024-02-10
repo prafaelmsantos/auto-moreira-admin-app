@@ -1,6 +1,6 @@
 import { GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
-import Actions from '../../../../components/table/utils/Actions';
-import { RouteName } from '../../../../models/enums/RouteType';
+import Actions from '../../../../../components/table/utils/Actions';
+import { RouteName } from '../../../../../models/enums/RouteType';
 
 export const columns: GridColDef[] = [
   {
@@ -42,11 +42,13 @@ export const columns: GridColDef[] = [
     headerName: 'Ações',
     width: 100,
     sortable: false,
+    filterable: false,
+    disableExport: true,
     renderCell: (params: GridRenderCellParams<any, Date>) => (
       <Actions
-        onlyDelete={true}
-        deleteTitle={'Apagar Mensagem'}
-        routeName={RouteName.MARKS}
+        editTitle={'Editar mensagem'}
+        deleteTitle={'Apagar mensagem'}
+        routeName={RouteName.CLIENT_MESSAGES}
         id={Number(params.id)}
       />
     )

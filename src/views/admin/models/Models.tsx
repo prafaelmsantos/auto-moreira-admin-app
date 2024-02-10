@@ -9,10 +9,11 @@ import GetActions from '../../../components/base/Actions';
 import { IMode } from '../../../models/enums/Base';
 import { columns } from './views/components/ModelColumns';
 import { models, models_models_nodes } from './queries/types/models';
+import { useEffect } from 'react';
 
 export default function Models() {
   const navigate = useNavigate();
-  const { data, loading } = useQuery<models>(MODELS);
+  const { data, loading, refetch } = useQuery<models>(MODELS);
 
   const rows =
     data?.models?.nodes
@@ -20,6 +21,11 @@ export default function Models() {
       ?.sort((a, b) => a.id - b.id) ?? [];
 
   const handleAdd = () => navigate(addModelNavigate);
+
+  useEffect(() => {
+    void refetch();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <main>

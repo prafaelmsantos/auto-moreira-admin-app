@@ -18,6 +18,8 @@ export const columns: GridColDef[] = [
     headerName: 'Ações',
     width: 150,
     sortable: false,
+    filterable: false,
+    disableExport: true,
     renderCell: (params: GridRenderCellParams<any, Date>) => (
       <Actions
         editTitle={'Editar Marca'}

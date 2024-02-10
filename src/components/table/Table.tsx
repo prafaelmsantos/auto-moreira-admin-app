@@ -1,5 +1,5 @@
-import { DataGrid, GridColDef, ptBR } from '@mui/x-data-grid';
-import { Box, Card } from '@mui/material';
+import { DataGrid, GridColDef, GridToolbar, ptBR } from '@mui/x-data-grid';
+import { Card } from '@mui/material';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
 import { COLORS } from '../../utils/Colors';
@@ -12,6 +12,7 @@ interface ITable {
 
 export default function Table({ rows, loading, columns }: ITable) {
   const darkMode = useSelector((state: RootState) => state.darkModeSlice.dark);
+
   return (
     <Card
       sx={{
@@ -23,6 +24,12 @@ export default function Table({ rows, loading, columns }: ITable) {
     >
       <DataGrid
         sx={{
+          '& .MuiButtonBase-root': {
+            color: darkMode ? 'white' : COLORS.AUTO_MOREIRA_NAVY[700]
+          },
+          '& .MuiInputBase-root.MuiInput-underline': {
+            color: darkMode ? 'white' : COLORS.AUTO_MOREIRA_NAVY[700]
+          },
           color: darkMode ? 'white' : COLORS.AUTO_MOREIRA_NAVY[700],
           '& .MuiCheckbox-root': {
             color: darkMode ? 'white' : COLORS.AUTO_MOREIRA_NAVY[700]
@@ -45,8 +52,12 @@ export default function Table({ rows, loading, columns }: ITable) {
               : COLORS.AUTO_MOREIRA_NAVY[100]
           }
         }}
+        slots={{ toolbar: GridToolbar }}
         disableColumnMenu
         slotProps={{
+          toolbar: {
+            showQuickFilter: true
+          },
           pagination: {
             labelRowsPerPage: 'Items por página'
           }
@@ -60,7 +71,8 @@ export default function Table({ rows, loading, columns }: ITable) {
         }}
         localeText={{
           ...ptBR.components.MuiDataGrid.defaultProps.localeText,
-          noRowsLabel: 'Nenhum resultado encontrado.'
+          noRowsLabel: 'Nenhum resultado encontrado.',
+          toolbarExportCSV: 'Exportar CSV'
         }}
         pageSizeOptions={[5, 10, 15, 20]}
         checkboxSelection
