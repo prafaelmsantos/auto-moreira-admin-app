@@ -3,12 +3,12 @@ import { BASE_API_URL } from '../config/variables';
 import { removeUser, setUser } from '../redux/userSlice';
 import { NavigateFunction } from 'react-router-dom';
 import {
-  IUser,
   IUserLogin,
   IUserRegistration
-} from '../views/auth/models/User';
+} from '../views/auth/models/Auth';
 import { setSnackBar } from '../redux/snackBarSlice';
 import { MessageType } from '../models/enums/MessageTypeEnum';
+import { IUser } from '../views/admin/users/models/User';
 
 class UserService {
   static async registration(

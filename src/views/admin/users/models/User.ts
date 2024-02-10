@@ -1,4 +1,4 @@
-import { ROLE } from '../../../models/enums/Role';
+import { ROLE } from "./enums/Role";
 
 export interface IUser {
   userName: string;
@@ -7,18 +7,6 @@ export interface IUser {
   firstName: string;
   lastName: string;
   token: string;
-}
-
-export interface IUserRegistration {
-  userName: string;
-  password: string;
-  firstName: string;
-  lastName: string;
-}
-
-export interface IUserLogin {
-  userName: string;
-  password: string;
 }
 
 export interface IUserUpdate {

@@ -24,10 +24,10 @@ export default function Table({ rows, loading, columns }: ITable) {
     >
       <DataGrid
         sx={{
-          '& .MuiButtonBase-root': {
+          '& .MuiInput-underline': {
             color: darkMode ? 'white' : COLORS.AUTO_MOREIRA_NAVY[700]
           },
-          '& .MuiInputBase-root.MuiInput-underline': {
+          '& .MuiButton-text': {
             color: darkMode ? 'white' : COLORS.AUTO_MOREIRA_NAVY[700]
           },
           color: darkMode ? 'white' : COLORS.AUTO_MOREIRA_NAVY[700],

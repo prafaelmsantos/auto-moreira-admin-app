@@ -1,12 +1,13 @@
 import InputField from '../../components/fields/InputField';
 import SignInValidationService from './services/SignInValidationService';
-import { IUser, IUserLogin } from './models/User';
+import { IUserLogin } from './models/Auth';
 import { MessageType } from '../../models/enums/MessageTypeEnum';
 import { setModal } from '../../redux/modalSlice';
 import UserService from '../../services/UserService';
 import AuthService from './services/AuthService';
 import { useAppDispatch } from '../../redux/hooks';
 import { useNavigate } from 'react-router-dom';
+import { IUser } from '../admin/users/models/User';
 
 export default function SignIn() {
   const dispatch = useAppDispatch();

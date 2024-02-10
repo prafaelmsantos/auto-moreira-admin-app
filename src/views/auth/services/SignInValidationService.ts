@@ -7,7 +7,7 @@ import {
 } from 'react-hook-form';
 
 import * as Yup from 'yup';
-import { IUserLogin } from '../models/User';
+import { IUserLogin } from '../models/Auth';
 
 const UserLoginValidationSchema: Yup.ObjectSchema<IUserLogin> =
   Yup.object().shape({

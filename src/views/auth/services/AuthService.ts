@@ -4,8 +4,8 @@ import { BASE_API_URL } from '../../../config/variables';
 import { MessageType } from '../../../models/enums/MessageTypeEnum';
 import { setSnackBar } from '../../../redux/snackBarSlice';
 import { setUser, removeUser } from '../../../redux/userSlice';
-import UserService from '../../../services/UserService';
-import { IUserRegistration, IUserLogin, IUser } from '../models/User';
+import { IUserRegistration, IUserLogin } from '../models/Auth';
+import { IUser } from '../../admin/users/models/User';
 
 class AuthService {
   static async Registration(
