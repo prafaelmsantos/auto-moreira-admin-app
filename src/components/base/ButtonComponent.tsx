@@ -1,5 +1,3 @@
-/** @format */
-
 import { Button, Stack } from '@mui/material';
 
 import { MouseEventHandler, ReactNode } from 'react';
@@ -12,14 +10,21 @@ interface ButtonProps<T> {
   icon?: ReactNode;
   disabled?: boolean;
   onClick?: MouseEventHandler<T>;
+  size?: 'small' | 'medium' | 'large';
 }
 
-export default function ButtonComponent(props: ButtonProps<HTMLElement>) {
-  const { variant = 'contained', icon, disabled, onClick } = props;
+export default function ButtonComponent({
+  variant = 'contained',
+  icon,
+  disabled,
+  onClick,
+  size
+}: ButtonProps<HTMLElement>) {
   const darkMode = useSelector((state: RootState) => state.darkModeSlice.dark);
 
   return (
     <Button
+      size={size}
       fullWidth
       variant={variant}
       onClick={onClick}

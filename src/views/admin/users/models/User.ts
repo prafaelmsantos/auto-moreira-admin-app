@@ -1,6 +1,7 @@
 import { ROLE } from "./enums/Role";
 
 export interface IUser {
+  id: number;
   userName: string;
   email: string;
   password: string;
@@ -14,11 +15,10 @@ export interface IUserUpdate {
   userName: string;
   firstName: string;
   lastName: string;
-  email: string;
-  phoneNumber: string;
-  role: ROLE;
-  description: string;
-  imageUrl: string;
-  password: string;
-  token: string;
+  email: string | null;
+  phoneNumber: string | null;
+  role: string | null;
+  imageUrl:string | null;
+  password: string | null;
+  token: string | null;
 }

@@ -6,7 +6,24 @@ export const TextFieldSX = (error: boolean) => {
   const darkMode = useSelector((state: RootState) => state.darkModeSlice.dark);
   const redColor = '#d32f2f';
   return {
- 
+ '& .MuiInput-underline:before': {
+            borderBottomColor: darkMode
+              ? 'white'
+              : COLORS.AUTO_MOREIRA_NAVY[700]
+          },
+          '&:hover .MuiInput-underline:before': {
+            borderBottomColor: darkMode
+              ? 'white'
+              : COLORS.AUTO_MOREIRA_NAVY[700]
+          },
+          '& .MuiInput-underline:after': {
+            borderBottomColor: darkMode
+              ? 'white'
+              : COLORS.AUTO_MOREIRA_NAVY[700]
+          },
+          '& .MuiInput-underline': {
+            color: darkMode ? 'white' : COLORS.AUTO_MOREIRA_NAVY[700]
+          },
     '& .MuiInputBase-input.Mui-disabled': {
       WebkitTextFillColor: error //Altera a cor do disabled
         ? redColor

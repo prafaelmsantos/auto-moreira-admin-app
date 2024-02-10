@@ -3,7 +3,7 @@ import Vehicles from '../views/admin/vehicles/Vehicles';
 import Marks from '../views/admin/marks/Marks';
 import Models from '../views/admin/models/Models';
 import SignIn from '../views/auth/SignIn';
-import Profile from '../views/admin/profile';
+import Profile from '../views/admin/users/views/profile/Profile';
 import Mark from '../views/admin/marks/views/Mark';
 import Dashboard from '../views/admin/default';
 import { RouteName, RouteType } from '../models/enums/RouteType';

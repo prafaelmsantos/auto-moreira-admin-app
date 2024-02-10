@@ -8,14 +8,17 @@ import { TextFieldSX } from './style/TextFieldSX';
 type ITextFieldFormValidation = {
   error?: boolean;
   helperText?: string;
-  label: string;
+  label?: string;
   control: Control<any, any>;
-  defaultValue?: string | number;
+  defaultValue?: string | number | null;
   name: string;
   required?: boolean;
   type?: string;
   multiline?: boolean;
   rows?: number;
+  variant?: 'outlined' | 'standard' | 'filled';
+  disableUnderline?: boolean;
+  disabled?: boolean;
 };
 
 export default function TextFieldFormValidation({
@@ -28,7 +31,10 @@ export default function TextFieldFormValidation({
   required,
   type,
   multiline,
-  rows
+  rows,
+  variant,
+  disableUnderline,
+  disabled
 }: ITextFieldFormValidation) {
   const darkMode = useSelector((state: RootState) => state.darkModeSlice.dark);
   const redColor = '#d32f2f';
@@ -41,6 +47,7 @@ export default function TextFieldFormValidation({
           required={required}
           type={type}
           label={label}
+          disabled={disabled}
           multiline={multiline}
           rows={rows}
           fullWidth
@@ -48,7 +55,9 @@ export default function TextFieldFormValidation({
           error={error}
           helperText={helperText}
           defaultValue={defaultValue}
+          variant={variant}
           InputProps={{
+            disableUnderline: disableUnderline,
             style: {
               color: error
                 ? redColor

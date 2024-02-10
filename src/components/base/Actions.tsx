@@ -1,11 +1,12 @@
 import { FaPlusCircle, FaCheck } from 'react-icons/fa';
-import { FaXmark } from 'react-icons/fa6';
+import { FaPencil, FaXmark } from 'react-icons/fa6';
 import { IAction } from './PageHolder';
 import { IMode } from '../../models/enums/Base';
 
 interface IGetActions {
   mode: IMode;
   handleAdd?: () => void;
+  handleEdit?: () => void;
   handleSumbitAdd?: () => void;
   handleSubmitEdit?: () => void;
   handleClose?: () => void;
@@ -15,7 +16,8 @@ export default function GetActions({
   handleAdd,
   handleSumbitAdd,
   handleSubmitEdit,
-  handleClose
+  handleClose,
+  handleEdit
 }: IGetActions): IAction[] {
   switch (mode) {
     case IMode.LIST:
@@ -47,6 +49,14 @@ export default function GetActions({
         {
           icon: <FaCheck />,
           callback: () => handleSubmitEdit && void handleSubmitEdit()
+        }
+      ];
+
+    case IMode.PREVIEW:
+      return [
+        {
+          icon: <FaPencil />,
+          callback: () => handleEdit && void handleEdit()
         }
       ];
 

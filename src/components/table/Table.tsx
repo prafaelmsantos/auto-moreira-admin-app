@@ -24,6 +24,21 @@ export default function Table({ rows, loading, columns }: ITable) {
     >
       <DataGrid
         sx={{
+          '& .MuiInput-underline:before': {
+            borderBottomColor: darkMode
+              ? 'white'
+              : COLORS.AUTO_MOREIRA_NAVY[700]
+          },
+          '&:hover .MuiInput-underline:before': {
+            borderBottomColor: darkMode
+              ? 'white'
+              : COLORS.AUTO_MOREIRA_NAVY[700]
+          },
+          '& .MuiInput-underline:after': {
+            borderBottomColor: darkMode
+              ? 'white'
+              : COLORS.AUTO_MOREIRA_NAVY[700]
+          },
           '& .MuiInput-underline': {
             color: darkMode ? 'white' : COLORS.AUTO_MOREIRA_NAVY[700]
           },

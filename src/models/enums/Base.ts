@@ -1,5 +1,6 @@
 export enum IMode {
   LIST,
   ADD,
-  EDIT
+  EDIT,
+  PREVIEW
 }

@@ -1,8 +1,13 @@
-import avatar from '../../../../assets/img/avatars/avatar7.png';
-import banner from '../../../../assets/img/auth/back.jpg';
-import Card from '../../../../components/card';
+import avatar from '../../../../../../assets/img/avatars/avatar7.png';
+import banner from '../../../../../../assets/img/auth/back.jpg';
+import Card from '../../../../../../components/card';
 
-const Banner = () => {
+interface IBanner {
+  name: string;
+  role: string;
+}
+
+const Banner = ({ name, role }: IBanner) => {
   return (
     <Card extra={'items-center w-full h-full p-[16px] bg-cover'}>
       {/* Background and profile */}
@@ -18,9 +23,9 @@ const Banner = () => {
       {/* Name and position */}
       <div className="mt-16 flex flex-col items-center">
         <h4 className="text-xl font-bold text-navy-700 dark:text-white">
-          Rafael Santos
+          {name}
         </h4>
-        <p className="text-base font-normal text-gray-600">Product Manager</p>
+        <p className="text-base font-normal text-gray-600">{role}</p>
       </div>
     </Card>
   );

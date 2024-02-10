@@ -6,13 +6,21 @@ export const AutocompleteSX = (error: boolean) => {
   const darkMode = useSelector((state: RootState) => state.darkModeSlice.dark);
   const redColor = '#d32f2f';
   return {
-    /* '& .MuiAutocomplete-endAdornment .MuiSvgIcon-root': {
-      color: error
-        ? redColor
-        : darkMode
-        ? 'white'
-        : COLORS.AUTO_MOREIRA_NAVY[700]
-    }, */
+     '& .MuiInput-underline:before': {
+            borderBottomColor: darkMode
+              ? 'white'
+              : COLORS.AUTO_MOREIRA_NAVY[700]
+          },
+          '&:hover .MuiInput-underline:before': {
+            borderBottomColor: darkMode
+              ? 'white'
+              : COLORS.AUTO_MOREIRA_NAVY[700]
+          },
+          '& .MuiInput-underline:after': {
+            borderBottomColor: darkMode
+              ? 'white'
+              : COLORS.AUTO_MOREIRA_NAVY[700]
+          },
     '& .MuiButtonBase-root': {
       color: error
         ? redColor
@@ -21,7 +29,7 @@ export const AutocompleteSX = (error: boolean) => {
         : COLORS.AUTO_MOREIRA_NAVY[700]
     },
     '& .MuiButtonBase-root.Mui-disabled': {
-      color: error ? redColor : darkMode ? 'gray' : 'gray'
+      color: error ? redColor : darkMode ? COLORS.AUTO_MOREIRA_GRAY[600]: COLORS.AUTO_MOREIRA_GRAY[600]
     },
     '& label.MuiInputLabel-root': {
       color: error
@@ -31,7 +39,7 @@ export const AutocompleteSX = (error: boolean) => {
         : COLORS.AUTO_MOREIRA_NAVY[700]
     },
     '& label.MuiInputLabel-root.Mui-disabled': {
-      color: error ? redColor : darkMode ? 'gray' : 'gray'
+      color: error ? redColor : darkMode ? COLORS.AUTO_MOREIRA_GRAY[600]: COLORS.AUTO_MOREIRA_GRAY[600]
     },
     '& .MuiOutlinedInput-input': {
       color: error
@@ -65,17 +73,17 @@ export const AutocompleteSX = (error: boolean) => {
     },
     '& .MuiOutlinedInput-root.Mui-disabled': {
       '& fieldset': {
-        borderColor: error ? redColor : darkMode ? 'gray' : 'gray'
+        borderColor: error ? redColor : darkMode ? COLORS.AUTO_MOREIRA_GRAY[600] : COLORS.AUTO_MOREIRA_GRAY[600]
       },
       '&:hover fieldset': {
-        borderColor: error ? redColor : darkMode ? 'gray' : 'gray'
+        borderColor: error ? redColor : darkMode ? COLORS.AUTO_MOREIRA_GRAY[600] : COLORS.AUTO_MOREIRA_GRAY[600]
       },
       '& .Mui-focused fieldset': {
         borderColor: error
           ? redColor
           : darkMode
-          ? COLORS.AUTO_MOREIRA_GRAY[900]
-          : COLORS.AUTO_MOREIRA_GRAY[900]
+          ? COLORS.AUTO_MOREIRA_GRAY[600]
+          : COLORS.AUTO_MOREIRA_GRAY[600]
       }
     }
   };
