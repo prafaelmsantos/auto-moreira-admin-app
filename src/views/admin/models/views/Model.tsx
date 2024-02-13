@@ -61,6 +61,7 @@ export default function Model() {
   const [handleSubmit, errors, control] = ModelValidationService(model);
 
   const handleSumbitEdit = async (model: IModel) => {
+    console.log(model);
     dispatch(setLoader(true));
     updateModel(model)
       .then(() => {
