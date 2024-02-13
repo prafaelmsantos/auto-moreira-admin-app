@@ -110,6 +110,21 @@ export interface ComparableInt64OperationFilterInput {
   nlte?: any | null;
 }
 
+export interface ComparableNullableOfDateTimeOffsetOperationFilterInput {
+  eq?: any | null;
+  neq?: any | null;
+  in?: (any | null)[] | null;
+  nin?: (any | null)[] | null;
+  gt?: any | null;
+  ngt?: any | null;
+  gte?: any | null;
+  ngte?: any | null;
+  lt?: any | null;
+  nlt?: any | null;
+  lte?: any | null;
+  nlte?: any | null;
+}
+
 export interface FUELOperationFilterInput {
   eq?: FUEL | null;
   neq?: FUEL | null;
@@ -121,6 +136,20 @@ export interface ListFilterInputTypeOfModelFilterInput {
   all?: ModelFilterInput | null;
   none?: ModelFilterInput | null;
   some?: ModelFilterInput | null;
+  any?: boolean | null;
+}
+
+export interface ListFilterInputTypeOfRoleFilterInput {
+  all?: RoleFilterInput | null;
+  none?: RoleFilterInput | null;
+  some?: RoleFilterInput | null;
+  any?: boolean | null;
+}
+
+export interface ListFilterInputTypeOfUserFilterInput {
+  all?: UserFilterInput | null;
+  none?: UserFilterInput | null;
+  some?: UserFilterInput | null;
   any?: boolean | null;
 }
 
@@ -168,6 +197,23 @@ export interface ModelSortInput {
   id?: SortEnumType | null;
 }
 
+export interface RoleFilterInput {
+  and?: RoleFilterInput[] | null;
+  or?: RoleFilterInput[] | null;
+  users?: ListFilterInputTypeOfUserFilterInput | null;
+  id?: ComparableInt32OperationFilterInput | null;
+  name?: StringOperationFilterInput | null;
+  normalizedName?: StringOperationFilterInput | null;
+  concurrencyStamp?: StringOperationFilterInput | null;
+}
+
+export interface RoleSortInput {
+  id?: SortEnumType | null;
+  name?: SortEnumType | null;
+  normalizedName?: SortEnumType | null;
+  concurrencyStamp?: SortEnumType | null;
+}
+
 export interface StringOperationFilterInput {
   and?: StringOperationFilterInput[] | null;
   or?: StringOperationFilterInput[] | null;
@@ -188,6 +234,53 @@ export interface TRANSMISSIONOperationFilterInput {
   neq?: TRANSMISSION | null;
   in?: TRANSMISSION[] | null;
   nin?: TRANSMISSION[] | null;
+}
+
+export interface UserFilterInput {
+  and?: UserFilterInput[] | null;
+  or?: UserFilterInput[] | null;
+  firstName?: StringOperationFilterInput | null;
+  lastName?: StringOperationFilterInput | null;
+  imageUrl?: StringOperationFilterInput | null;
+  darkMode?: BooleanOperationFilterInput | null;
+  roles?: ListFilterInputTypeOfRoleFilterInput | null;
+  id?: ComparableInt32OperationFilterInput | null;
+  userName?: StringOperationFilterInput | null;
+  normalizedUserName?: StringOperationFilterInput | null;
+  email?: StringOperationFilterInput | null;
+  normalizedEmail?: StringOperationFilterInput | null;
+  emailConfirmed?: BooleanOperationFilterInput | null;
+  passwordHash?: StringOperationFilterInput | null;
+  securityStamp?: StringOperationFilterInput | null;
+  concurrencyStamp?: StringOperationFilterInput | null;
+  phoneNumber?: StringOperationFilterInput | null;
+  phoneNumberConfirmed?: BooleanOperationFilterInput | null;
+  twoFactorEnabled?: BooleanOperationFilterInput | null;
+  lockoutEnd?: ComparableNullableOfDateTimeOffsetOperationFilterInput | null;
+  lockoutEnabled?: BooleanOperationFilterInput | null;
+  accessFailedCount?: ComparableInt32OperationFilterInput | null;
+}
+
+export interface UserSortInput {
+  firstName?: SortEnumType | null;
+  lastName?: SortEnumType | null;
+  imageUrl?: SortEnumType | null;
+  darkMode?: SortEnumType | null;
+  id?: SortEnumType | null;
+  userName?: SortEnumType | null;
+  normalizedUserName?: SortEnumType | null;
+  email?: SortEnumType | null;
+  normalizedEmail?: SortEnumType | null;
+  emailConfirmed?: SortEnumType | null;
+  passwordHash?: SortEnumType | null;
+  securityStamp?: SortEnumType | null;
+  concurrencyStamp?: SortEnumType | null;
+  phoneNumber?: SortEnumType | null;
+  phoneNumberConfirmed?: SortEnumType | null;
+  twoFactorEnabled?: SortEnumType | null;
+  lockoutEnd?: SortEnumType | null;
+  lockoutEnabled?: SortEnumType | null;
+  accessFailedCount?: SortEnumType | null;
 }
 
 export interface VehicleFilterInput {

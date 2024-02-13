@@ -1,4 +1,5 @@
-import { clientMessages_clientMessages_nodes } from '../queries/types/clientMessages';
+import { clientMessages_clientMessages_nodes } from "./graphQL/types/clientMessages";
+
 
 export interface IClientMessage {
   id: number;

@@ -1,82 +1,67 @@
+import { useEffect, useState } from 'react';
 import { useMatch, useNavigate, useParams } from 'react-router-dom';
 import { useAppDispatch } from '../../../../redux/hooks';
-import { useEffect, useState } from 'react';
+import { IRole } from '../models/Role';
+import { addRoleNavigate, roleListNavigate } from './components/utils/Utils';
 import { setLoader, setToInitialLoader } from '../../../../redux/loaderSlice';
+import { createRole, getRole, updateRole } from '../services/RoleService';
 import { IMode } from '../../../../models/enums/Base';
+import RoleValidationService from '../services/RoleValidationService';
+import { setSnackBar } from '../../../../redux/snackBarSlice';
+import { MessageType } from '../../../../models/enums/MessageTypeEnum';
+import { setModal } from '../../../../redux/modalSlice';
 import PageHolder from '../../../../components/base/PageHolder';
 import GetActions from '../../../../components/base/Actions';
+import RoleDetails from './details/RoleDetails';
 
-import { IModel } from '../models/Model';
-import { addModelNavigate, modelListNavigate } from './utils/Utils';
-import ModelDetails from './details/ModelDetails';
-import ModelValidationService from '../services/ModelValidationService';
-import { useQuery } from '@apollo/client';
-import { MARKS } from '../../marks/models/graphQL/Marks';
-import { convertToMark } from '../../marks/models/Mark';
-import { createModel, getModel, updateModel } from '../services/ModelService';
-import { MessageType } from '../../../../models/enums/MessageTypeEnum';
-import { setSnackBar } from '../../../../redux/snackBarSlice';
-import { setModal } from '../../../../redux/modalSlice';
-import {
-  marks_marks_nodes,
-  marks
-} from '../../marks/models/graphQL/types/marks';
-
-export default function Model() {
+export default function Role() {
   const param = useParams();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-
-  const [model, setModel] = useState<IModel>({ id: 0, name: '', markId: 0 });
-  const markId = Number(param.id);
-  const match = useMatch(addModelNavigate);
+  const [role, setRole] = useState<IRole>({ id: 0, name: '' });
+  const roleId = Number(param.id);
+  const match = useMatch(addRoleNavigate);
   const [mode, setMode] = useState<IMode>();
-  const { data } = useQuery<marks>(MARKS);
-  const marks =
-    data?.marks?.nodes?.map((mark) =>
-      convertToMark(mark as marks_marks_nodes)
-    ) ?? [];
 
   useEffect(() => {
-    if (markId) {
+    if (roleId) {
       dispatch(setLoader(true));
-      getModel(markId)
+      getRole(roleId)
         .then((data) => {
-          setModel(data);
+          setRole(data);
           dispatch(setToInitialLoader());
           setMode(IMode.EDIT);
         })
         .catch((e) => {
           console.error(e);
-          navigate(modelListNavigate);
+          navigate(roleListNavigate);
           dispatch(setToInitialLoader());
         });
     } else if (match) {
       setMode(IMode.ADD);
     } else {
-      navigate(modelListNavigate);
+      navigate(roleListNavigate);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [markId]);
+  }, [roleId]);
 
-  const handleClose = () => navigate(modelListNavigate);
+  const handleClose = () => navigate(roleListNavigate);
 
-  const [handleSubmit, errors, control] = ModelValidationService(model);
+  const [handleSubmit, errors, control] = RoleValidationService(role);
 
-  const handleSumbitEdit = async (model: IModel) => {
-    console.log(model);
+  const handleSumbitEdit = async (role: IRole) => {
     dispatch(setLoader(true));
-    updateModel(model)
+    updateRole(role)
       .then(() => {
         dispatch(setToInitialLoader());
         dispatch(
           setSnackBar({
             open: true,
-            message: 'Modelo atualizado com sucesso!',
+            message: 'Cargo atualizado com sucesso!',
             type: MessageType.SUCCESS
           })
         );
-        navigate(modelListNavigate);
+        navigate(roleListNavigate);
       })
       .catch((e: Error) => {
         console.error(e);
@@ -92,19 +77,19 @@ export default function Model() {
       });
   };
 
-  const handleSumbitAdd = async (model: IModel) => {
+  const handleSumbitAdd = async (role: IRole) => {
     dispatch(setLoader(true));
-    createModel(model)
+    createRole(role)
       .then(() => {
         dispatch(setToInitialLoader());
         dispatch(
           setSnackBar({
             open: true,
-            message: 'Modelo criado com sucesso!',
+            message: 'Cargo criado com sucesso!',
             type: MessageType.SUCCESS
           })
         );
-        navigate(modelListNavigate);
+        navigate(roleListNavigate);
       })
       .catch((e: Error) => {
         console.error(e);
@@ -131,7 +116,8 @@ export default function Model() {
               handleSumbitAdd: handleSubmit(handleSumbitAdd)
             })}
           />
-          <ModelDetails {...{ model, errors, marks, control }} />
+
+          <RoleDetails {...{ role, errors, control }} />
         </>
       )}
     </>

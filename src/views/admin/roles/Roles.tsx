@@ -1,26 +1,26 @@
 import { useQuery } from '@apollo/client';
 import { useNavigate } from 'react-router-dom';
+import { ROLES } from './models/graphQL/Roles';
+import { roles, roles_roles_nodes } from './models/graphQL/types/roles';
+import { convertToRole } from './models/Role';
 import { useEffect } from 'react';
 import PageHolder from '../../../components/base/PageHolder';
 import GetActions from '../../../components/base/Actions';
 import { IMode } from '../../../models/enums/Base';
 import Table from '../../../components/table/Table';
-import { USERS } from './models/graphQL/Users';
-import { users, users_users_nodes } from './models/graphQL/types/users';
-import { addUserNavigate } from './views/components/utils/Utils';
-import { convertToUser } from './models/User';
-import { columns } from './views/components/columns/UserColumns';
+import { columns } from './views/components/columns/RoleColumns';
+import { addRoleNavigate } from './views/components/utils/Utils';
 
-export default function Users() {
+export default function Roles() {
   const navigate = useNavigate();
-  const { data, loading, refetch } = useQuery<users>(USERS);
+  const { data, loading, refetch } = useQuery<roles>(ROLES);
 
   const rows =
-    data?.users?.nodes
-      ?.map((user) => convertToUser(user as users_users_nodes))
+    data?.roles?.nodes
+      ?.map((role) => convertToRole(role as roles_roles_nodes))
       ?.sort((a, b) => a.id - b.id) ?? [];
 
-  const handleAdd = () => navigate(addUserNavigate);
+  const handleAdd = () => navigate(addRoleNavigate);
 
   useEffect(() => {
     void refetch();

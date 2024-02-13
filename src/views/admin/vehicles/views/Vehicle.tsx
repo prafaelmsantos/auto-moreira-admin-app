@@ -7,15 +7,13 @@ import PageHolder from '../../../../components/base/PageHolder';
 import GetActions from '../../../../components/base/Actions';
 
 import { useQuery } from '@apollo/client';
-import { MARKS } from '../../marks/queries/Marks';
+import { MARKS } from '../../marks/models/graphQL/Marks';
 import { convertToMark } from '../../marks/models/Mark';
 import { IVehicle } from '../models/Vehicle';
 import { addVehicleNavigate, vehicleListNavigate } from './utils/Utils';
-import { MODELS } from '../../models/queries/Models';
+import { MODELS } from '../../models/models/graphQL/Models';
 import { convertToModel } from '../../models/models/Model';
 import VehicleDetails from './details/VehicleDetails';
-import { marks_marks_nodes, marks } from '../../marks/queries/types/marks';
-import { models_models_nodes, models } from '../../models/queries/types/models';
 import VehicleValidationService from '../services/VehicleValidationService';
 import {
   createVehicle,
@@ -25,6 +23,14 @@ import {
 import { setSnackBar } from '../../../../redux/snackBarSlice';
 import { MessageType } from '../../../../models/enums/MessageTypeEnum';
 import { setModal } from '../../../../redux/modalSlice';
+import {
+  marks_marks_nodes,
+  marks
+} from '../../marks/models/graphQL/types/marks';
+import {
+  models_models_nodes,
+  models
+} from '../../models/models/graphQL/types/models';
 
 export default function Vehicle() {
   const param = useParams();
@@ -99,6 +105,10 @@ export default function Vehicle() {
         model: { ...old.model, markId: value.model?.markId ?? 0 }
       }))
     );
+  }, [watch]);
+
+  useEffect(() => {
+    watch((value) => console.log(value));
   }, [watch]);
 
   const handleSumbitEdit = async (vehicle: IVehicle) => {

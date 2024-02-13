@@ -8,17 +8,17 @@ import {
 } from 'react-hook-form';
 import * as Yup from 'yup';
 
-import { IUserUpdate } from '../models/User';
+import { IUser } from '../models/User';
 
 export default function UserValidationService(
-  user: IUserUpdate
+  user: IUser
 ): [
-  UseFormHandleSubmit<IUserUpdate>,
-  FieldErrors<IUserUpdate>,
-  Control<IUserUpdate>,
-  UseFormReset<IUserUpdate>
+  UseFormHandleSubmit<IUser>,
+  FieldErrors<IUser>,
+  Control<IUser>,
+  UseFormReset<IUser>
 ] {
-  const UserValidationSchema: Yup.ObjectSchema<IUserUpdate> =
+  const UserValidationSchema: Yup.ObjectSchema<IUser> =
     Yup.object().shape({
       userName: Yup.string().default(user.userName),
       firstName: Yup.string()
@@ -31,11 +31,18 @@ export default function UserValidationService(
         .default(user.lastName),
       email: Yup.string().trim().nullable().default(user.email),
       phoneNumber: Yup.string().trim().nullable().default(user.phoneNumber),
-      role: Yup.string().trim().nullable().default(user.role),
       imageUrl: Yup.string().trim().nullable().default(user.imageUrl),
       password: Yup.string().trim().nullable().default(user.password),
       token: Yup.string().trim().nullable().default(user.token),
-      id: Yup.number().default(user.id)
+      id: Yup.number().default(user.id),
+      roles: Yup.array()
+      .of(
+        Yup.object().shape({
+          name: Yup.string().default(''),
+          id: Yup.number().default(0),
+        })
+      )
+      .default([]),
     });
 
   const {
@@ -43,7 +50,7 @@ export default function UserValidationService(
     reset,
     formState: { errors },
     control
-  } = useForm<IUserUpdate>({
+  } = useForm<IUser>({
     resolver: yupResolver(UserValidationSchema)
   });
 

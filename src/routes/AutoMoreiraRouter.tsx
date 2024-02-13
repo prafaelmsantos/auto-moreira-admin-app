@@ -12,6 +12,9 @@ import Vehicle from '../views/admin/vehicles/views/Vehicle';
 import ClientMessages from '../views/admin/client-messages/ClientMessages';
 import Users from '../views/admin/users/Users';
 import ClientMessage from '../views/admin/client-messages/views/ClientMessage';
+import Roles from '../views/admin/roles/Roles';
+import User from '../views/admin/users/views/User';
+import Role from '../views/admin/roles/views/Role';
 
 interface IAutoMoreiraRouter {
   routeType: RouteType;
@@ -35,8 +38,21 @@ export const AdminRoutes = [
   },
   {
     path: '/admin/users',
-    element: <Users />,
-    id: RouteName.USERS
+    id: RouteName.USERS,
+    children: [
+      { index: true, element: <Users /> },
+      { path: ':id', element: <User /> },
+      { path: 'add', element: <User /> }
+    ]
+  },
+  {
+    path: '/admin/roles',
+    id: RouteName.ROLES,
+    children: [
+      { index: true, element: <Roles /> },
+      { path: ':id', element: <Role /> },
+      { path: 'add', element: <Role /> }
+    ]
   },
   {
     path: '/admin/marks',

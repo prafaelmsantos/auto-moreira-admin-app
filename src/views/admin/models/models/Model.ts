@@ -1,5 +1,5 @@
 import { IMark } from '../../marks/models/Mark';
-import { models_models_nodes } from '../queries/types/models';
+import { models_models_nodes } from './graphQL/types/models';
 
 export interface IModel {
   id: number;

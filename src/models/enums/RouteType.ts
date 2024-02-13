@@ -10,6 +10,7 @@ export enum RouteName {
   VEHICLES = 'vehicles',
   CLIENT_MESSAGES = 'client-messages',
   USERS = 'users',
+  ROLES = 'roles',
   PROFILE = 'profile',
   SIGN_IN = 'sign-in'
 }

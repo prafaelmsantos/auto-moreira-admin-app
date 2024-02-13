@@ -5,7 +5,7 @@ import { IClientMessage } from '../models/ClientMessage';
 import { IMode } from '../../../../models/enums/Base';
 import { setLoader, setToInitialLoader } from '../../../../redux/loaderSlice';
 import { getClientMessage } from '../services/ClientMessageService';
-import { clientMessageListNavigate } from '../utils/Utils';
+import { clientMessageListNavigate } from './utils/Utils';
 import GetActions from '../../../../components/base/Actions';
 import PageHolder from '../../../../components/base/PageHolder';
 import ClientMessageDetails from './details/ClientMessageDetails';

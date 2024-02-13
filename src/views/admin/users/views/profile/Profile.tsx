@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-import { IUserUpdate } from '../../models/User';
+import { IUser } from '../../models/User';
 import Banner from './banner/Banner';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../../../../../redux/hooks';
@@ -19,16 +19,17 @@ const Profile = () => {
   const dispatch = useAppDispatch();
   const mainNavigate = '/admin/dashboard';
   const userAuth = useSelector((state: RootState) => state.userSlice.user);
-  const [user, setUser] = useState<IUserUpdate>({
+  const [user, setUser] = useState<IUser>({
     userName: '',
     firstName: '',
     lastName: '',
     token: null,
-    role: null,
     password: null,
     imageUrl: null,
     email: null,
-    phoneNumber: null
+    phoneNumber: null,
+    roles: [],
+    id: 0
   });
 
   const fetchUser = useCallback(() => {
@@ -62,7 +63,7 @@ const Profile = () => {
             <div>
               <Banner
                 name={`${user.firstName} ${user.lastName}`}
-                role={user.role ?? ''}
+                role={user.roles[0]?.name ?? ''}
               />
             </div>
 

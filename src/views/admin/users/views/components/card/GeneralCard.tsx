@@ -1,5 +1,5 @@
 import { Control } from 'react-hook-form';
-import { IUserUpdate } from '../../../models/User';
+import { IUser } from '../../../models/User';
 import TextFieldFormValidation from '../../../../../../components/form/TextFieldFormValidation';
 
 interface IGeneral {
@@ -9,7 +9,7 @@ interface IGeneral {
   required?: boolean;
   error?: boolean;
   helperText?: string;
-  control: Control<IUserUpdate>;
+  control: Control<IUser>;
   disabled?: boolean;
 }
 

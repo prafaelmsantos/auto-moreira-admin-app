@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { VehicleFilterInput, VehicleSortInput, FUEL, TRANSMISSION } from "./../../../../../models/graphql-global-types";
+import { VehicleFilterInput, VehicleSortInput, FUEL, TRANSMISSION } from "./../../../../../../models/graphql-global-types";
 
 // ====================================================
 // GraphQL query operation: vehicles

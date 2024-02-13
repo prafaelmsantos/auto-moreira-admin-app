@@ -1,5 +1,5 @@
 import Card from '../../../../../../components/card';
-import { IUserUpdate } from '../../../models/User';
+import { IUser } from '../../../models/User';
 import GeneralCard from '../../components/card/GeneralCard';
 import { useState } from 'react';
 import ProfilePageHolder from '../../../../../../components/base/ProfilePageHolder';
@@ -18,7 +18,7 @@ import UserValidationService from '../../../services/UserValidationService';
 import { removeEmptyFields } from '../../../../../../utils/Helppers';
 
 interface IGeneral {
-  user: IUserUpdate;
+  user: IUser;
   mode: IMode;
   setMode: React.Dispatch<React.SetStateAction<IMode>>;
 }
@@ -36,7 +36,7 @@ const General = ({ user, mode, setMode }: IGeneral) => {
     void reset();
   };
 
-  const handleSumbitEdit = async (user: IUserUpdate) => {
+  const handleSumbitEdit = async (user: IUser) => {
     void removeEmptyFields(user);
     dispatch(setLoader(true));
     updateUser(user)

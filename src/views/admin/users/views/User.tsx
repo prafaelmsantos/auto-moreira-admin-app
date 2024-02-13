@@ -1,82 +1,78 @@
 import { useMatch, useNavigate, useParams } from 'react-router-dom';
 import { useAppDispatch } from '../../../../redux/hooks';
 import { useEffect, useState } from 'react';
-import { setLoader, setToInitialLoader } from '../../../../redux/loaderSlice';
+import { IUser } from '../models/User';
+import { addUserNavigate, userListNavigate } from './components/utils/Utils';
 import { IMode } from '../../../../models/enums/Base';
+import { setLoader, setToInitialLoader } from '../../../../redux/loaderSlice';
+import { createUser, getUser, updateUser } from '../services/UserService';
+import UserValidationService from '../services/UserValidationService';
+import { setSnackBar } from '../../../../redux/snackBarSlice';
+import { MessageType } from '../../../../models/enums/MessageTypeEnum';
+import { setModal } from '../../../../redux/modalSlice';
 import PageHolder from '../../../../components/base/PageHolder';
 import GetActions from '../../../../components/base/Actions';
+import UserDetails from './details/UserDetails';
 
-import { IModel } from '../models/Model';
-import { addModelNavigate, modelListNavigate } from './utils/Utils';
-import ModelDetails from './details/ModelDetails';
-import ModelValidationService from '../services/ModelValidationService';
-import { useQuery } from '@apollo/client';
-import { MARKS } from '../../marks/models/graphQL/Marks';
-import { convertToMark } from '../../marks/models/Mark';
-import { createModel, getModel, updateModel } from '../services/ModelService';
-import { MessageType } from '../../../../models/enums/MessageTypeEnum';
-import { setSnackBar } from '../../../../redux/snackBarSlice';
-import { setModal } from '../../../../redux/modalSlice';
-import {
-  marks_marks_nodes,
-  marks
-} from '../../marks/models/graphQL/types/marks';
-
-export default function Model() {
+export default function User() {
   const param = useParams();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-
-  const [model, setModel] = useState<IModel>({ id: 0, name: '', markId: 0 });
-  const markId = Number(param.id);
-  const match = useMatch(addModelNavigate);
+  const [user, setUser] = useState<IUser>({
+    userName: '',
+    firstName: '',
+    lastName: '',
+    token: null,
+    password: null,
+    imageUrl: null,
+    email: null,
+    phoneNumber: null,
+    roles: [],
+    id: 0
+  });
+  const userId = Number(param.id);
+  const match = useMatch(addUserNavigate);
   const [mode, setMode] = useState<IMode>();
-  const { data } = useQuery<marks>(MARKS);
-  const marks =
-    data?.marks?.nodes?.map((mark) =>
-      convertToMark(mark as marks_marks_nodes)
-    ) ?? [];
 
   useEffect(() => {
-    if (markId) {
+    if (userId) {
       dispatch(setLoader(true));
-      getModel(markId)
+      getUser(userId)
         .then((data) => {
-          setModel(data);
+          setUser(data);
           dispatch(setToInitialLoader());
           setMode(IMode.EDIT);
         })
         .catch((e) => {
           console.error(e);
-          navigate(modelListNavigate);
+          navigate(userListNavigate);
           dispatch(setToInitialLoader());
         });
     } else if (match) {
       setMode(IMode.ADD);
     } else {
-      navigate(modelListNavigate);
+      navigate(userListNavigate);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [markId]);
+  }, [userId]);
 
-  const handleClose = () => navigate(modelListNavigate);
+  const handleClose = () => navigate(userListNavigate);
 
-  const [handleSubmit, errors, control] = ModelValidationService(model);
+  const [handleSubmit, errors, control] = UserValidationService(user);
 
-  const handleSumbitEdit = async (model: IModel) => {
-    console.log(model);
+  const handleSumbitEdit = async (user: IUser) => {
     dispatch(setLoader(true));
-    updateModel(model)
+    updateUser(user)
       .then(() => {
         dispatch(setToInitialLoader());
         dispatch(
           setSnackBar({
             open: true,
-            message: 'Modelo atualizado com sucesso!',
+            message: 'Utilizador atualizado com sucesso!',
             type: MessageType.SUCCESS
           })
         );
-        navigate(modelListNavigate);
+        navigate(userListNavigate);
       })
       .catch((e: Error) => {
         console.error(e);
@@ -92,19 +88,19 @@ export default function Model() {
       });
   };
 
-  const handleSumbitAdd = async (model: IModel) => {
+  const handleSumbitAdd = async (user: IUser) => {
     dispatch(setLoader(true));
-    createModel(model)
+    createUser(user)
       .then(() => {
         dispatch(setToInitialLoader());
         dispatch(
           setSnackBar({
             open: true,
-            message: 'Modelo criado com sucesso!',
+            message: 'Utilizador criado com sucesso!',
             type: MessageType.SUCCESS
           })
         );
-        navigate(modelListNavigate);
+        navigate(userListNavigate);
       })
       .catch((e: Error) => {
         console.error(e);
@@ -131,7 +127,8 @@ export default function Model() {
               handleSumbitAdd: handleSubmit(handleSumbitAdd)
             })}
           />
-          <ModelDetails {...{ model, errors, marks, control }} />
+
+          <UserDetails {...{ user, errors, control }} />
         </>
       )}
     </>

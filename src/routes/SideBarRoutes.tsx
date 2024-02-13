@@ -1,6 +1,6 @@
 import { IoCarSport } from 'react-icons/io5';
 import { SiMercedes, SiThemodelsresource } from 'react-icons/si';
-import { MdHome, MdPerson } from 'react-icons/md';
+import { MdHome, MdLocalPolice, MdPerson } from 'react-icons/md';
 import { FaUsers } from 'react-icons/fa';
 import { LuMessagesSquare } from 'react-icons/lu';
 import { RouteName } from '../models/enums/RouteType';
@@ -17,6 +17,12 @@ const SideBarRoutes = [
     layout: '/admin',
     path: RouteName.USERS,
     icon: <FaUsers className="h-6 w-6" />
+  },
+  {
+    name: 'Cargos de Utilizador',
+    layout: '/admin',
+    path: RouteName.ROLES,
+    icon: <MdLocalPolice className="h-6 w-6" />
   },
   {
     name: 'Marcas',
