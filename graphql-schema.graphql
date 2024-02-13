@@ -1,7 +1,36 @@
-"The `Long` scalar type represents non-fractional signed whole 64-bit numeric values. Long can represent values between -(2^63) and 2^63 - 1."
-scalar Long
 "The `DateTime` scalar represents an ISO-8601 compliant date time type."
 scalar DateTime
+"The `Long` scalar type represents non-fractional signed whole 64-bit numeric values. Long can represent values between -(2^63) and 2^63 - 1."
+scalar Long
+type User {
+  firstName: String
+  lastName: String
+  imageUrl: String
+  darkMode: Boolean!
+  roles: [Role]
+  id: Int!
+  userName: String
+  normalizedUserName: String
+  email: String
+  normalizedEmail: String
+  emailConfirmed: Boolean!
+  passwordHash: String
+  securityStamp: String
+  concurrencyStamp: String
+  phoneNumber: String
+  phoneNumberConfirmed: Boolean!
+  twoFactorEnabled: Boolean!
+  lockoutEnd: DateTime
+  lockoutEnabled: Boolean!
+  accessFailedCount: Int!
+}
+type Role {
+  users: [User]
+  id: Int!
+  name: String
+  normalizedName: String
+  concurrencyStamp: String
+}
 type Mark {
   name: String
   models: [Model]
@@ -39,9 +68,28 @@ type ClientMessage {
   phoneNumber: Long!
   message: String
   dateTime: DateTime!
+  open: Boolean!
   id: Int!
 }
 type Query {
+  users(
+    "Returns the first _n_ elements from the list."
+    first: Int,
+    "Returns the elements in the list that come after the specified cursor."
+    after: String,
+    "Returns the last _n_ elements from the list."
+    last: Int,
+    "Returns the elements in the list that come before the specified cursor."
+    before: String,where: UserFilterInput, order: [UserSortInput!]  ): UsersConnection
+  roles(
+    "Returns the first _n_ elements from the list."
+    first: Int,
+    "Returns the elements in the list that come after the specified cursor."
+    after: String,
+    "Returns the last _n_ elements from the list."
+    last: Int,
+    "Returns the elements in the list that come before the specified cursor."
+    before: String,where: RoleFilterInput, order: [RoleSortInput!]  ): RolesConnection
   vehicles(
     "Returns the first _n_ elements from the list."
     first: Int,
@@ -84,6 +132,26 @@ type VehicleImage {
   vehicleId: Int!
   vehicle: Vehicle
   id: Int!
+}
+"A connection to a list of items."
+type UsersConnection {
+  "Information to aid in pagination."
+  pageInfo: PageInfo!
+  "A list of edges."
+  edges: [UsersEdge!]
+  "A flattened list of the nodes."
+  nodes: [User]
+  totalCount: Int!
+}
+"A connection to a list of items."
+type RolesConnection {
+  "Information to aid in pagination."
+  pageInfo: PageInfo!
+  "A list of edges."
+  edges: [RolesEdge!]
+  "A flattened list of the nodes."
+  nodes: [Role]
+  totalCount: Int!
 }
 "A connection to a list of items."
 type VehiclesConnection {
@@ -137,6 +205,20 @@ type PageInfo {
   endCursor: String
 }
 "An edge in a connection."
+type UsersEdge {
+  "A cursor for use in pagination."
+  cursor: String!
+  "The item at the end of the edge."
+  node: User
+}
+"An edge in a connection."
+type RolesEdge {
+  "A cursor for use in pagination."
+  cursor: String!
+  "The item at the end of the edge."
+  node: Role
+}
+"An edge in a connection."
 type VehiclesEdge {
   "A cursor for use in pagination."
   cursor: String!
@@ -176,6 +258,66 @@ enum TRANSMISSION {
 enum SortEnumType {
   ASC
   DESC
+}
+input UserFilterInput {
+  and: [UserFilterInput!]
+  or: [UserFilterInput!]
+  firstName: StringOperationFilterInput
+  lastName: StringOperationFilterInput
+  imageUrl: StringOperationFilterInput
+  darkMode: BooleanOperationFilterInput
+  roles: ListFilterInputTypeOfRoleFilterInput
+  id: ComparableInt32OperationFilterInput
+  userName: StringOperationFilterInput
+  normalizedUserName: StringOperationFilterInput
+  email: StringOperationFilterInput
+  normalizedEmail: StringOperationFilterInput
+  emailConfirmed: BooleanOperationFilterInput
+  passwordHash: StringOperationFilterInput
+  securityStamp: StringOperationFilterInput
+  concurrencyStamp: StringOperationFilterInput
+  phoneNumber: StringOperationFilterInput
+  phoneNumberConfirmed: BooleanOperationFilterInput
+  twoFactorEnabled: BooleanOperationFilterInput
+  lockoutEnd: ComparableNullableOfDateTimeOffsetOperationFilterInput
+  lockoutEnabled: BooleanOperationFilterInput
+  accessFailedCount: ComparableInt32OperationFilterInput
+}
+input UserSortInput {
+  firstName: SortEnumType
+  lastName: SortEnumType
+  imageUrl: SortEnumType
+  darkMode: SortEnumType
+  id: SortEnumType
+  userName: SortEnumType
+  normalizedUserName: SortEnumType
+  email: SortEnumType
+  normalizedEmail: SortEnumType
+  emailConfirmed: SortEnumType
+  passwordHash: SortEnumType
+  securityStamp: SortEnumType
+  concurrencyStamp: SortEnumType
+  phoneNumber: SortEnumType
+  phoneNumberConfirmed: SortEnumType
+  twoFactorEnabled: SortEnumType
+  lockoutEnd: SortEnumType
+  lockoutEnabled: SortEnumType
+  accessFailedCount: SortEnumType
+}
+input RoleFilterInput {
+  and: [RoleFilterInput!]
+  or: [RoleFilterInput!]
+  users: ListFilterInputTypeOfUserFilterInput
+  id: ComparableInt32OperationFilterInput
+  name: StringOperationFilterInput
+  normalizedName: StringOperationFilterInput
+  concurrencyStamp: StringOperationFilterInput
+}
+input RoleSortInput {
+  id: SortEnumType
+  name: SortEnumType
+  normalizedName: SortEnumType
+  concurrencyStamp: SortEnumType
 }
 input VehicleFilterInput {
   and: [VehicleFilterInput!]
@@ -250,6 +392,7 @@ input ClientMessageFilterInput {
   phoneNumber: ComparableInt64OperationFilterInput
   message: StringOperationFilterInput
   dateTime: ComparableDateTimeOperationFilterInput
+  open: BooleanOperationFilterInput
   id: ComparableInt32OperationFilterInput
 }
 input ClientMessageSortInput {
@@ -258,7 +401,32 @@ input ClientMessageSortInput {
   phoneNumber: SortEnumType
   message: SortEnumType
   dateTime: SortEnumType
+  open: SortEnumType
   id: SortEnumType
+}
+input StringOperationFilterInput {
+  and: [StringOperationFilterInput!]
+  or: [StringOperationFilterInput!]
+  eq: String
+  neq: String
+  contains: String
+  ncontains: String
+  in: [String]
+  nin: [String]
+  startsWith: String
+  nstartsWith: String
+  endsWith: String
+  nendsWith: String
+}
+input BooleanOperationFilterInput {
+  eq: Boolean
+  neq: Boolean
+}
+input ListFilterInputTypeOfRoleFilterInput {
+  all: RoleFilterInput
+  none: RoleFilterInput
+  some: RoleFilterInput
+  any: Boolean
 }
 input ComparableInt32OperationFilterInput {
   eq: Int
@@ -274,19 +442,25 @@ input ComparableInt32OperationFilterInput {
   lte: Int
   nlte: Int
 }
-input StringOperationFilterInput {
-  and: [StringOperationFilterInput!]
-  or: [StringOperationFilterInput!]
-  eq: String
-  neq: String
-  contains: String
-  ncontains: String
-  in: [String]
-  nin: [String]
-  startsWith: String
-  nstartsWith: String
-  endsWith: String
-  nendsWith: String
+input ComparableNullableOfDateTimeOffsetOperationFilterInput {
+  eq: DateTime
+  neq: DateTime
+  in: [DateTime]
+  nin: [DateTime]
+  gt: DateTime
+  ngt: DateTime
+  gte: DateTime
+  ngte: DateTime
+  lt: DateTime
+  nlt: DateTime
+  lte: DateTime
+  nlte: DateTime
+}
+input ListFilterInputTypeOfUserFilterInput {
+  all: UserFilterInput
+  none: UserFilterInput
+  some: UserFilterInput
+  any: Boolean
 }
 input FUELOperationFilterInput {
   eq: FUEL
@@ -313,10 +487,6 @@ input TRANSMISSIONOperationFilterInput {
   neq: TRANSMISSION
   in: [TRANSMISSION!]
   nin: [TRANSMISSION!]
-}
-input BooleanOperationFilterInput {
-  eq: Boolean
-  neq: Boolean
 }
 input ListFilterInputTypeOfVehicleImageFilterInput {
   all: VehicleImageFilterInput

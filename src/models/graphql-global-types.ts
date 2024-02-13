@@ -36,6 +36,7 @@ export interface ClientMessageFilterInput {
   phoneNumber?: ComparableInt64OperationFilterInput | null;
   message?: StringOperationFilterInput | null;
   dateTime?: ComparableDateTimeOperationFilterInput | null;
+  open?: BooleanOperationFilterInput | null;
   id?: ComparableInt32OperationFilterInput | null;
 }
 
@@ -45,6 +46,7 @@ export interface ClientMessageSortInput {
   phoneNumber?: SortEnumType | null;
   message?: SortEnumType | null;
   dateTime?: SortEnumType | null;
+  open?: SortEnumType | null;
   id?: SortEnumType | null;
 }
 
