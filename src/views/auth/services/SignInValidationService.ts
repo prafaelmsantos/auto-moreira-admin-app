@@ -19,7 +19,7 @@ const UserLoginValidationSchema: Yup.ObjectSchema<IUserLogin> =
 
 export default function SignInValidationService(): [
   UseFormRegister<IUserLogin>,
-  UseFormHandleSubmit<IUserLogin, undefined>,
+  UseFormHandleSubmit<IUserLogin>,
   FieldErrors<IUserLogin>
 ] {
   const {

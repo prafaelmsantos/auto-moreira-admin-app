@@ -13,6 +13,13 @@ import { setModal } from '../../../../redux/modalSlice';
 import PageHolder from '../../../../components/base/PageHolder';
 import GetActions from '../../../../components/base/Actions';
 import UserDetails from './details/UserDetails';
+import { useQuery } from '@apollo/client';
+import {
+  roles,
+  roles_roles_nodes
+} from '../../roles/models/graphQL/types/roles';
+import { ROLES } from '../../roles/models/graphQL/Roles';
+import { convertToRole } from '../../roles/models/Role';
 
 export default function User() {
   const param = useParams();
@@ -33,6 +40,12 @@ export default function User() {
   const userId = Number(param.id);
   const match = useMatch(addUserNavigate);
   const [mode, setMode] = useState<IMode>();
+
+  const { data } = useQuery<roles>(ROLES);
+  const roles =
+    data?.roles?.nodes?.map((role) =>
+      convertToRole(role as roles_roles_nodes)
+    ) ?? [];
 
   useEffect(() => {
     if (userId) {
@@ -128,7 +141,7 @@ export default function User() {
             })}
           />
 
-          <UserDetails {...{ user, errors, control }} />
+          <UserDetails {...{ user, errors, control, roles }} />
         </>
       )}
     </>

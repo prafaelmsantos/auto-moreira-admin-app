@@ -35,14 +35,15 @@ export default function UserValidationService(
       password: Yup.string().trim().nullable().default(user.password),
       token: Yup.string().trim().nullable().default(user.token),
       id: Yup.number().default(user.id),
-      roles: Yup.array()
+      //roles: Yup.array().default([]),
+       roles: Yup.array()
       .of(
         Yup.object().shape({
           name: Yup.string().default(''),
           id: Yup.number().default(0),
         })
       )
-      .default([]),
+      .default([]), 
     });
 
   const {
