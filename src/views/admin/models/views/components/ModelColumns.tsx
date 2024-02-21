@@ -2,20 +2,21 @@ import { GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
 
 import { RouteName } from '../../../../../models/enums/RouteType';
 import Actions from '../../../../../components/table/utils/Actions';
+import { ModelKeys } from '../../models/Model';
 
 export const columns: GridColDef[] = [
   {
-    field: 'id',
+    field: ModelKeys.id,
     headerName: '#',
     width: 50
   },
   {
-    field: 'name',
+    field: ModelKeys.name,
     headerName: 'Nome',
     width: 200
   },
   {
-    field: 'mark',
+    field: ModelKeys.mark,
     headerName: 'Marca',
     width: 150,
     valueFormatter: (params) => params.value.name

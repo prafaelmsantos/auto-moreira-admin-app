@@ -9,7 +9,7 @@ import GetActions from '../../../../components/base/Actions';
 import { IModel } from '../models/Model';
 import { addModelNavigate, modelListNavigate } from './utils/Utils';
 import ModelDetails from './details/ModelDetails';
-import ModelValidationService from '../services/ModelValidationService';
+import { ModelValidationSchema } from '../services/ModelValidationSchema';
 import { useQuery } from '@apollo/client';
 import { MARKS } from '../../marks/models/graphQL/Marks';
 import { convertToMark } from '../../marks/models/Mark';
@@ -21,14 +21,21 @@ import {
   marks_marks_nodes,
   marks
 } from '../../marks/models/graphQL/types/marks';
+import { FormProvider, useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
 
 export default function Model() {
+  const methods = useForm<IModel>({
+    resolver: yupResolver(ModelValidationSchema)
+  });
+
+  const { reset, handleSubmit } = methods;
   const param = useParams();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
   const [model, setModel] = useState<IModel>({ id: 0, name: '', markId: 0 });
-  const markId = Number(param.id);
+  const modelId = Number(param.id);
   const match = useMatch(addModelNavigate);
   const [mode, setMode] = useState<IMode>();
   const { data } = useQuery<marks>(MARKS);
@@ -38,9 +45,9 @@ export default function Model() {
     ) ?? [];
 
   useEffect(() => {
-    if (markId) {
+    if (modelId) {
       dispatch(setLoader(true));
-      getModel(markId)
+      getModel(modelId)
         .then((data) => {
           setModel(data);
           dispatch(setToInitialLoader());
@@ -57,11 +64,14 @@ export default function Model() {
       navigate(modelListNavigate);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [markId]);
+  }, [modelId]);
+
+  useEffect(() => {
+    void reset(model);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [model]);
 
   const handleClose = () => navigate(modelListNavigate);
-
-  const [handleSubmit, errors, control] = ModelValidationService(model);
 
   const handleSumbitEdit = async (model: IModel) => {
     console.log(model);
@@ -122,18 +132,20 @@ export default function Model() {
 
   return (
     <>
-      {mode && (
-        <>
-          <PageHolder
-            actions={GetActions({
-              ...{ mode, handleClose },
-              handleSubmitEdit: handleSubmit(handleSumbitEdit),
-              handleSumbitAdd: handleSubmit(handleSumbitAdd)
-            })}
-          />
-          <ModelDetails {...{ model, errors, marks, control }} />
-        </>
-      )}
+      <FormProvider {...methods}>
+        {mode && (
+          <>
+            <PageHolder
+              actions={GetActions({
+                ...{ mode, handleClose },
+                handleSubmitEdit: handleSubmit(handleSumbitEdit),
+                handleSumbitAdd: handleSubmit(handleSumbitAdd)
+              })}
+            />
+            <ModelDetails {...{ marks }} />
+          </>
+        )}
+      </FormProvider>
     </>
   );
 }

@@ -15,7 +15,7 @@ export const CLIENT_MESSAGES = gql`
         email
         message
         phoneNumber
-        dateTime
+        createdDate
       }
     }
   }

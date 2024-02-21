@@ -5,8 +5,10 @@ scalar Long
 type User {
   firstName: String
   lastName: String
-  imageUrl: String
+  image: String
   darkMode: Boolean!
+  createdDate: DateTime!
+  lastModifiedDate: DateTime!
   roles: [Role]
   id: Int!
   userName: String
@@ -26,6 +28,9 @@ type User {
 }
 type Role {
   users: [User]
+  createdDate: DateTime
+  lastModifiedDate: DateTime
+  isDefault: Boolean!
   id: Int!
   name: String
   normalizedName: String
@@ -34,6 +39,8 @@ type Role {
 type Mark {
   name: String
   models: [Model]
+  createdDate: DateTime
+  lastModifiedDate: DateTime
   id: Int!
 }
 type Model {
@@ -41,6 +48,8 @@ type Model {
   markId: Int!
   mark: Mark
   vehicles: [Vehicle]
+  createdDate: DateTime
+  lastModifiedDate: DateTime
   id: Int!
 }
 type Vehicle {
@@ -59,7 +68,10 @@ type Vehicle {
   observations: String
   opportunity: Boolean!
   sold: Boolean!
+  soldDate: DateTime
   vehicleImages: [VehicleImage]
+  createdDate: DateTime
+  lastModifiedDate: DateTime
   id: Int!
 }
 type ClientMessage {
@@ -67,8 +79,9 @@ type ClientMessage {
   email: String
   phoneNumber: Long!
   message: String
-  dateTime: DateTime!
   open: Boolean!
+  createdDate: DateTime
+  lastModifiedDate: DateTime
   id: Int!
 }
 type Query {
@@ -131,6 +144,8 @@ type VehicleImage {
   url: String
   vehicleId: Int!
   vehicle: Vehicle
+  createdDate: DateTime
+  lastModifiedDate: DateTime
   id: Int!
 }
 "A connection to a list of items."
@@ -264,8 +279,10 @@ input UserFilterInput {
   or: [UserFilterInput!]
   firstName: StringOperationFilterInput
   lastName: StringOperationFilterInput
-  imageUrl: StringOperationFilterInput
+  image: StringOperationFilterInput
   darkMode: BooleanOperationFilterInput
+  createdDate: ComparableDateTimeOperationFilterInput
+  lastModifiedDate: ComparableDateTimeOperationFilterInput
   roles: ListFilterInputTypeOfRoleFilterInput
   id: ComparableInt32OperationFilterInput
   userName: StringOperationFilterInput
@@ -286,8 +303,10 @@ input UserFilterInput {
 input UserSortInput {
   firstName: SortEnumType
   lastName: SortEnumType
-  imageUrl: SortEnumType
+  image: SortEnumType
   darkMode: SortEnumType
+  createdDate: SortEnumType
+  lastModifiedDate: SortEnumType
   id: SortEnumType
   userName: SortEnumType
   normalizedUserName: SortEnumType
@@ -308,12 +327,18 @@ input RoleFilterInput {
   and: [RoleFilterInput!]
   or: [RoleFilterInput!]
   users: ListFilterInputTypeOfUserFilterInput
+  createdDate: ComparableNullableOfDateTimeOperationFilterInput
+  lastModifiedDate: ComparableNullableOfDateTimeOperationFilterInput
+  isDefault: BooleanOperationFilterInput
   id: ComparableInt32OperationFilterInput
   name: StringOperationFilterInput
   normalizedName: StringOperationFilterInput
   concurrencyStamp: StringOperationFilterInput
 }
 input RoleSortInput {
+  createdDate: SortEnumType
+  lastModifiedDate: SortEnumType
+  isDefault: SortEnumType
   id: SortEnumType
   name: SortEnumType
   normalizedName: SortEnumType
@@ -337,7 +362,10 @@ input VehicleFilterInput {
   observations: StringOperationFilterInput
   opportunity: BooleanOperationFilterInput
   sold: BooleanOperationFilterInput
+  soldDate: ComparableNullableOfDateTimeOperationFilterInput
   vehicleImages: ListFilterInputTypeOfVehicleImageFilterInput
+  createdDate: ComparableNullableOfDateTimeOperationFilterInput
+  lastModifiedDate: ComparableNullableOfDateTimeOperationFilterInput
   id: ComparableInt32OperationFilterInput
 }
 input VehicleSortInput {
@@ -356,6 +384,9 @@ input VehicleSortInput {
   observations: SortEnumType
   opportunity: SortEnumType
   sold: SortEnumType
+  soldDate: SortEnumType
+  createdDate: SortEnumType
+  lastModifiedDate: SortEnumType
   id: SortEnumType
 }
 input MarkFilterInput {
@@ -363,10 +394,14 @@ input MarkFilterInput {
   or: [MarkFilterInput!]
   name: StringOperationFilterInput
   models: ListFilterInputTypeOfModelFilterInput
+  createdDate: ComparableNullableOfDateTimeOperationFilterInput
+  lastModifiedDate: ComparableNullableOfDateTimeOperationFilterInput
   id: ComparableInt32OperationFilterInput
 }
 input MarkSortInput {
   name: SortEnumType
+  createdDate: SortEnumType
+  lastModifiedDate: SortEnumType
   id: SortEnumType
 }
 input ModelFilterInput {
@@ -376,12 +411,16 @@ input ModelFilterInput {
   markId: ComparableInt32OperationFilterInput
   mark: MarkFilterInput
   vehicles: ListFilterInputTypeOfVehicleFilterInput
+  createdDate: ComparableNullableOfDateTimeOperationFilterInput
+  lastModifiedDate: ComparableNullableOfDateTimeOperationFilterInput
   id: ComparableInt32OperationFilterInput
 }
 input ModelSortInput {
   name: SortEnumType
   markId: SortEnumType
   mark: MarkSortInput
+  createdDate: SortEnumType
+  lastModifiedDate: SortEnumType
   id: SortEnumType
 }
 input ClientMessageFilterInput {
@@ -391,8 +430,9 @@ input ClientMessageFilterInput {
   email: StringOperationFilterInput
   phoneNumber: ComparableInt64OperationFilterInput
   message: StringOperationFilterInput
-  dateTime: ComparableDateTimeOperationFilterInput
   open: BooleanOperationFilterInput
+  createdDate: ComparableNullableOfDateTimeOperationFilterInput
+  lastModifiedDate: ComparableNullableOfDateTimeOperationFilterInput
   id: ComparableInt32OperationFilterInput
 }
 input ClientMessageSortInput {
@@ -400,8 +440,9 @@ input ClientMessageSortInput {
   email: SortEnumType
   phoneNumber: SortEnumType
   message: SortEnumType
-  dateTime: SortEnumType
   open: SortEnumType
+  createdDate: SortEnumType
+  lastModifiedDate: SortEnumType
   id: SortEnumType
 }
 input StringOperationFilterInput {
@@ -421,6 +462,20 @@ input StringOperationFilterInput {
 input BooleanOperationFilterInput {
   eq: Boolean
   neq: Boolean
+}
+input ComparableDateTimeOperationFilterInput {
+  eq: DateTime
+  neq: DateTime
+  in: [DateTime!]
+  nin: [DateTime!]
+  gt: DateTime
+  ngt: DateTime
+  gte: DateTime
+  ngte: DateTime
+  lt: DateTime
+  nlt: DateTime
+  lte: DateTime
+  nlte: DateTime
 }
 input ListFilterInputTypeOfRoleFilterInput {
   all: RoleFilterInput
@@ -461,6 +516,20 @@ input ListFilterInputTypeOfUserFilterInput {
   none: UserFilterInput
   some: UserFilterInput
   any: Boolean
+}
+input ComparableNullableOfDateTimeOperationFilterInput {
+  eq: DateTime
+  neq: DateTime
+  in: [DateTime]
+  nin: [DateTime]
+  gt: DateTime
+  ngt: DateTime
+  gte: DateTime
+  ngte: DateTime
+  lt: DateTime
+  nlt: DateTime
+  lte: DateTime
+  nlte: DateTime
 }
 input FUELOperationFilterInput {
   eq: FUEL
@@ -520,26 +589,14 @@ input ComparableInt64OperationFilterInput {
   lte: Long
   nlte: Long
 }
-input ComparableDateTimeOperationFilterInput {
-  eq: DateTime
-  neq: DateTime
-  in: [DateTime!]
-  nin: [DateTime!]
-  gt: DateTime
-  ngt: DateTime
-  gte: DateTime
-  ngte: DateTime
-  lt: DateTime
-  nlt: DateTime
-  lte: DateTime
-  nlte: DateTime
-}
 input VehicleImageFilterInput {
   and: [VehicleImageFilterInput!]
   or: [VehicleImageFilterInput!]
   url: StringOperationFilterInput
   vehicleId: ComparableInt32OperationFilterInput
   vehicle: VehicleFilterInput
+  createdDate: ComparableNullableOfDateTimeOperationFilterInput
+  lastModifiedDate: ComparableNullableOfDateTimeOperationFilterInput
   id: ComparableInt32OperationFilterInput
 }
 "The `@defer` directive may be provided for fragment spreads and inline fragments to inform the executor to delay the execution of the current fragment to indicate deprioritization of the current fragment. A query with `@defer` directive will cause the request to potentially return multiple responses, where non-deferred data is delivered in the initial response and data deferred is delivered in a subsequent response. `@include` and `@skip` take precedence over `@defer`."

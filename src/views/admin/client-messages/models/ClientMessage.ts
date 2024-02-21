@@ -7,7 +7,7 @@ export interface IClientMessage {
   email: string;
   phoneNumber: number;
   message: string;
-  dateTime: Date;
+  createdDate: Date;
 }
 
 export function convertToClientMessage(
@@ -19,6 +19,6 @@ export function convertToClientMessage(
     email: String(clientMessage.email),
     phoneNumber: Number(clientMessage.phoneNumber),
     message: String(clientMessage.message),
-    dateTime: new Date(clientMessage.dateTime)
+    createdDate: new Date(clientMessage.createdDate)
   };
 }

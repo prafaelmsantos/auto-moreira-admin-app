@@ -11,7 +11,7 @@ import {
   getVehicleCounters,
   getVisitorCounters
 } from '../../../services/DashboardService';
-import { ptCurrencyFormatter } from '../../../../../../utils/Helppers';
+import { CurrencyFormatter } from '../../../../../../utils/Helppers';
 
 const CarWidget = () => {
   const dispatch = useAppDispatch();
@@ -61,7 +61,7 @@ const CarWidget = () => {
       <Widget
         icon={<MdBarChart className="h-7 w-7" />}
         title={'Total Vendas (€ este mês)'}
-        subtitle={ptCurrencyFormatter.format(
+        subtitle={CurrencyFormatter.format(
           vehicleCounter.totalSalesMonth.values
         )}
       />
@@ -75,7 +75,7 @@ const CarWidget = () => {
       <Widget
         icon={<MdBarChart className="h-7 w-7" />}
         title={'Total Vendas (€)'}
-        subtitle={ptCurrencyFormatter.format(vehicleCounter.totalSales.values)}
+        subtitle={CurrencyFormatter.format(vehicleCounter.totalSales.values)}
       />
 
       <Widget
@@ -87,7 +87,7 @@ const CarWidget = () => {
       <Widget
         icon={<MdBarChart className="h-7 w-7" />}
         title={'Total Stock (€)'}
-        subtitle={ptCurrencyFormatter.format(vehicleCounter.totalStock.values)}
+        subtitle={CurrencyFormatter.format(vehicleCounter.totalStock.values)}
       />
 
       <Widget

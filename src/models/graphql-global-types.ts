@@ -35,8 +35,9 @@ export interface ClientMessageFilterInput {
   email?: StringOperationFilterInput | null;
   phoneNumber?: ComparableInt64OperationFilterInput | null;
   message?: StringOperationFilterInput | null;
-  dateTime?: ComparableDateTimeOperationFilterInput | null;
   open?: BooleanOperationFilterInput | null;
+  createdDate?: ComparableNullableOfDateTimeOperationFilterInput | null;
+  lastModifiedDate?: ComparableNullableOfDateTimeOperationFilterInput | null;
   id?: ComparableInt32OperationFilterInput | null;
 }
 
@@ -45,8 +46,9 @@ export interface ClientMessageSortInput {
   email?: SortEnumType | null;
   phoneNumber?: SortEnumType | null;
   message?: SortEnumType | null;
-  dateTime?: SortEnumType | null;
   open?: SortEnumType | null;
+  createdDate?: SortEnumType | null;
+  lastModifiedDate?: SortEnumType | null;
   id?: SortEnumType | null;
 }
 
@@ -125,6 +127,21 @@ export interface ComparableNullableOfDateTimeOffsetOperationFilterInput {
   nlte?: any | null;
 }
 
+export interface ComparableNullableOfDateTimeOperationFilterInput {
+  eq?: any | null;
+  neq?: any | null;
+  in?: (any | null)[] | null;
+  nin?: (any | null)[] | null;
+  gt?: any | null;
+  ngt?: any | null;
+  gte?: any | null;
+  ngte?: any | null;
+  lt?: any | null;
+  nlt?: any | null;
+  lte?: any | null;
+  nlte?: any | null;
+}
+
 export interface FUELOperationFilterInput {
   eq?: FUEL | null;
   neq?: FUEL | null;
@@ -172,11 +189,15 @@ export interface MarkFilterInput {
   or?: MarkFilterInput[] | null;
   name?: StringOperationFilterInput | null;
   models?: ListFilterInputTypeOfModelFilterInput | null;
+  createdDate?: ComparableNullableOfDateTimeOperationFilterInput | null;
+  lastModifiedDate?: ComparableNullableOfDateTimeOperationFilterInput | null;
   id?: ComparableInt32OperationFilterInput | null;
 }
 
 export interface MarkSortInput {
   name?: SortEnumType | null;
+  createdDate?: SortEnumType | null;
+  lastModifiedDate?: SortEnumType | null;
   id?: SortEnumType | null;
 }
 
@@ -187,6 +208,8 @@ export interface ModelFilterInput {
   markId?: ComparableInt32OperationFilterInput | null;
   mark?: MarkFilterInput | null;
   vehicles?: ListFilterInputTypeOfVehicleFilterInput | null;
+  createdDate?: ComparableNullableOfDateTimeOperationFilterInput | null;
+  lastModifiedDate?: ComparableNullableOfDateTimeOperationFilterInput | null;
   id?: ComparableInt32OperationFilterInput | null;
 }
 
@@ -194,6 +217,8 @@ export interface ModelSortInput {
   name?: SortEnumType | null;
   markId?: SortEnumType | null;
   mark?: MarkSortInput | null;
+  createdDate?: SortEnumType | null;
+  lastModifiedDate?: SortEnumType | null;
   id?: SortEnumType | null;
 }
 
@@ -201,6 +226,9 @@ export interface RoleFilterInput {
   and?: RoleFilterInput[] | null;
   or?: RoleFilterInput[] | null;
   users?: ListFilterInputTypeOfUserFilterInput | null;
+  createdDate?: ComparableNullableOfDateTimeOperationFilterInput | null;
+  lastModifiedDate?: ComparableNullableOfDateTimeOperationFilterInput | null;
+  isDefault?: BooleanOperationFilterInput | null;
   id?: ComparableInt32OperationFilterInput | null;
   name?: StringOperationFilterInput | null;
   normalizedName?: StringOperationFilterInput | null;
@@ -208,6 +236,9 @@ export interface RoleFilterInput {
 }
 
 export interface RoleSortInput {
+  createdDate?: SortEnumType | null;
+  lastModifiedDate?: SortEnumType | null;
+  isDefault?: SortEnumType | null;
   id?: SortEnumType | null;
   name?: SortEnumType | null;
   normalizedName?: SortEnumType | null;
@@ -241,8 +272,10 @@ export interface UserFilterInput {
   or?: UserFilterInput[] | null;
   firstName?: StringOperationFilterInput | null;
   lastName?: StringOperationFilterInput | null;
-  imageUrl?: StringOperationFilterInput | null;
+  image?: StringOperationFilterInput | null;
   darkMode?: BooleanOperationFilterInput | null;
+  createdDate?: ComparableDateTimeOperationFilterInput | null;
+  lastModifiedDate?: ComparableDateTimeOperationFilterInput | null;
   roles?: ListFilterInputTypeOfRoleFilterInput | null;
   id?: ComparableInt32OperationFilterInput | null;
   userName?: StringOperationFilterInput | null;
@@ -264,8 +297,10 @@ export interface UserFilterInput {
 export interface UserSortInput {
   firstName?: SortEnumType | null;
   lastName?: SortEnumType | null;
-  imageUrl?: SortEnumType | null;
+  image?: SortEnumType | null;
   darkMode?: SortEnumType | null;
+  createdDate?: SortEnumType | null;
+  lastModifiedDate?: SortEnumType | null;
   id?: SortEnumType | null;
   userName?: SortEnumType | null;
   normalizedUserName?: SortEnumType | null;
@@ -301,7 +336,10 @@ export interface VehicleFilterInput {
   observations?: StringOperationFilterInput | null;
   opportunity?: BooleanOperationFilterInput | null;
   sold?: BooleanOperationFilterInput | null;
+  soldDate?: ComparableNullableOfDateTimeOperationFilterInput | null;
   vehicleImages?: ListFilterInputTypeOfVehicleImageFilterInput | null;
+  createdDate?: ComparableNullableOfDateTimeOperationFilterInput | null;
+  lastModifiedDate?: ComparableNullableOfDateTimeOperationFilterInput | null;
   id?: ComparableInt32OperationFilterInput | null;
 }
 
@@ -311,6 +349,8 @@ export interface VehicleImageFilterInput {
   url?: StringOperationFilterInput | null;
   vehicleId?: ComparableInt32OperationFilterInput | null;
   vehicle?: VehicleFilterInput | null;
+  createdDate?: ComparableNullableOfDateTimeOperationFilterInput | null;
+  lastModifiedDate?: ComparableNullableOfDateTimeOperationFilterInput | null;
   id?: ComparableInt32OperationFilterInput | null;
 }
 
@@ -330,6 +370,9 @@ export interface VehicleSortInput {
   observations?: SortEnumType | null;
   opportunity?: SortEnumType | null;
   sold?: SortEnumType | null;
+  soldDate?: SortEnumType | null;
+  createdDate?: SortEnumType | null;
+  lastModifiedDate?: SortEnumType | null;
   id?: SortEnumType | null;
 }
 

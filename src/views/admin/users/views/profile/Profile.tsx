@@ -25,7 +25,7 @@ const Profile = () => {
     lastName: '',
     token: null,
     password: null,
-    imageUrl: null,
+    image: null,
     email: null,
     phoneNumber: null,
     roles: [],

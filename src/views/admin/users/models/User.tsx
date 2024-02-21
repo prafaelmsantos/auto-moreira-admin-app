@@ -9,7 +9,7 @@ export interface IUser {
   lastName: string;
   email: string | null;
   phoneNumber: string | null;
-  imageUrl: string | null;
+  image: string | null;
   password: string | null;
   token: string | null;
   roles: IRole[];
@@ -23,10 +23,15 @@ export function convertToUser(user: users_users_nodes): IUser {
     lastName: String(user.lastName),
     email: String(user.email),
     phoneNumber: String(user.phoneNumber),
-    imageUrl: String(user.imageUrl),
+    image: String(user.image),
     password: null,
     token: null,
     roles:
       user.roles?.map((role) => convertToRole(role as roles_roles_nodes)) ?? []
   };
+}
+
+export enum UserKeys {
+  id = 'id',
+  name = 'name'
 }

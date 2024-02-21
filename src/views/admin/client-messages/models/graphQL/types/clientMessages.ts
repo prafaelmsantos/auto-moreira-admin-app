@@ -16,7 +16,7 @@ export interface clientMessages_clientMessages_nodes {
   email: string | null;
   message: string | null;
   phoneNumber: any;
-  dateTime: any;
+  createdDate: any | null;
 }
 
 export interface clientMessages_clientMessages {

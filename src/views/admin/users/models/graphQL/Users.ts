@@ -14,7 +14,7 @@ export const USERS = gql`
         userName
         firstName
         lastName
-        imageUrl
+        image
         phoneNumber
         email
         roles {

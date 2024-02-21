@@ -16,3 +16,10 @@ export function convertToModel(model: models_models_nodes): IModel {
     mark: { id: model.markId, name: model.mark?.name ?? '' }
   };
 }
+
+export enum ModelKeys {
+    id = "id",
+    name= "name",
+    mark= "mark",
+    markId = "markId"
+}

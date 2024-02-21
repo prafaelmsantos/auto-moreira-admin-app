@@ -12,3 +12,8 @@ export function convertToMark(mark: marks_marks_nodes): IMark {
     name: String(mark.name)
   };
 }
+
+export enum MarkKeys {
+    id = "id",
+    name= "name"
+}

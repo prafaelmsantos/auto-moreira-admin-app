@@ -21,7 +21,7 @@ export interface users_users_nodes {
   userName: string | null;
   firstName: string | null;
   lastName: string | null;
-  imageUrl: string | null;
+  image: string | null;
   phoneNumber: string | null;
   email: string | null;
   roles: (users_users_nodes_roles | null)[] | null;

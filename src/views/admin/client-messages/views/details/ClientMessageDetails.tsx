@@ -1,6 +1,4 @@
-import {
-  Grid,
-  TextField} from '@mui/material';
+import { Grid, TextField } from '@mui/material';
 import { IClientMessage } from '../../models/ClientMessage';
 import { TextFieldSX } from '../../../../../components/form/style/TextFieldSX';
 import ClientMessageLabel from '../components/label/ClientMessageLabel';
@@ -12,7 +10,6 @@ interface IClientMessageDetails {
 export default function ClientMessageDetails({
   clientMessage
 }: IClientMessageDetails) {
-  
   return (
     <>
       <Grid container spacing={3} mt={5} px={5}>
@@ -42,9 +39,9 @@ export default function ClientMessageDetails({
             <Grid item xs={6}>
               {ClientMessageLabel(
                 `${new Date(
-                  clientMessage.dateTime
+                  clientMessage.createdDate
                 ).toLocaleDateString()} ${new Date(
-                  clientMessage.dateTime
+                  clientMessage.createdDate
                 ).toLocaleTimeString()}`
               )}
             </Grid>

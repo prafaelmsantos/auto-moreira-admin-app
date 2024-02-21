@@ -18,7 +18,7 @@ import { useAppDispatch } from '../../../redux/hooks';
 import { setLoader, setToInitialLoader } from '../../../redux/loaderSlice';
 import CarWidget from './views/components/car-widget/CarWidget';
 import LineChart from './views/components/line-chart/LineChart';
-import { ptCurrencyFormatter } from '../../../utils/Helppers';
+import { CurrencyFormatter } from '../../../utils/Helppers';
 import BarChart from './views/components/bar-chart/BarChart';
 import PieChart from './views/components/pie-chart/PieChart';
 
@@ -138,7 +138,7 @@ const Dashboard = () => {
 
       <div className="mt-5 grid grid-cols-1 gap-5 md:grid-cols-2">
         <LineChart
-          value={ptCurrencyFormatter.format(vehicleLineChart.value)}
+          value={CurrencyFormatter.format(vehicleLineChart.value)}
           valuePerc={vehicleLineChart.valuePerc}
           title={'Vendas'}
           statistics={
@@ -199,7 +199,7 @@ const Dashboard = () => {
                 ? vehicleBarChart.statistics[0].year.toString()
                 : ''
             }
-            value={ptCurrencyFormatter.format(vehicleBarChart.value)}
+            value={CurrencyFormatter.format(vehicleBarChart.value)}
             valuePerc={vehicleBarChart.valuePerc}
             statistics={vehicleBarChart.statistics.map((x) => x.value)}
           />

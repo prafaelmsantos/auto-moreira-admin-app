@@ -6,7 +6,7 @@ export function removeEmptyFields(data: any) {
     });
   }
 
-  export const ptCurrencyFormatter = new Intl.NumberFormat('pt-PT', {
+  export const CurrencyFormatter = new Intl.NumberFormat('pt-PT', {
     style: 'currency',
     currency: 'EUR'
   });

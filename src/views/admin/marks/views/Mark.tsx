@@ -9,13 +9,20 @@ import PageHolder from '../../../../components/base/PageHolder';
 import GetActions from '../../../../components/base/Actions';
 import { addMarkNavigate, markListNavigate } from './utils/Utils';
 
-import MarkValidationService from '../services/MarkValidationService';
+import { MarkValidationSchema } from '../services/MarkValidationSchema';
 import { createMark, getMark, updateMark } from '../services/MarkService';
 import { setModal } from '../../../../redux/modalSlice';
 import { MessageType } from '../../../../models/enums/MessageTypeEnum';
 import { setSnackBar } from '../../../../redux/snackBarSlice';
+import { FormProvider, useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
 
 export default function Mark() {
+  const methods = useForm<IMark>({
+    resolver: yupResolver(MarkValidationSchema)
+  });
+  const { reset, handleSubmit } = methods;
+
   const param = useParams();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
@@ -46,9 +53,12 @@ export default function Mark() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [markId]);
 
-  const handleClose = () => navigate(markListNavigate);
+  useEffect(() => {
+    void reset(mark);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [mark]);
 
-  const [handleSubmit, errors, control] = MarkValidationService(mark);
+  const handleClose = () => navigate(markListNavigate);
 
   const handleSumbitEdit = async (mark: IMark) => {
     dispatch(setLoader(true));
@@ -108,19 +118,21 @@ export default function Mark() {
 
   return (
     <>
-      {mode && (
-        <>
-          <PageHolder
-            actions={GetActions({
-              ...{ mode, handleClose },
-              handleSubmitEdit: handleSubmit(handleSumbitEdit),
-              handleSumbitAdd: handleSubmit(handleSumbitAdd)
-            })}
-          />
+      <FormProvider {...methods}>
+        {mode && (
+          <>
+            <PageHolder
+              actions={GetActions({
+                ...{ mode, handleClose },
+                handleSubmitEdit: handleSubmit(handleSumbitEdit),
+                handleSumbitAdd: handleSubmit(handleSumbitAdd)
+              })}
+            />
 
-          <MarkDetails {...{ mark, errors, control }} />
-        </>
-      )}
+            <MarkDetails />
+          </>
+        )}
+      </FormProvider>
     </>
   );
 }

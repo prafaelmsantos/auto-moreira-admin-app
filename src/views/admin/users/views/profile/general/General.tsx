@@ -14,8 +14,11 @@ import { setSnackBar } from '../../../../../../redux/snackBarSlice';
 import { MessageType } from '../../../../../../models/enums/MessageTypeEnum';
 import { updateUser } from '../../../services/UserService';
 import { setModal } from '../../../../../../redux/modalSlice';
-import UserValidationService from '../../../services/UserValidationService';
+
 import { removeEmptyFields } from '../../../../../../utils/Helppers';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { FormProvider, useForm } from 'react-hook-form';
+import { UserValidationSchema } from '../../../services/UserValidationSchema';
 
 interface IGeneral {
   user: IUser;
@@ -25,7 +28,16 @@ interface IGeneral {
 
 const General = ({ user, mode, setMode }: IGeneral) => {
   const dispatch = useAppDispatch();
-  const [handleSubmit, errors, control, reset] = UserValidationService(user);
+  const methods = useForm<IUser>({
+    resolver: yupResolver(UserValidationSchema)
+  });
+
+  const {
+    reset,
+    handleSubmit,
+    formState: { errors },
+    control
+  } = methods;
 
   const [showPassword, setShowPassword] = useState(false);
   const handleClickShowPassword = () => setShowPassword((show) => !show);
@@ -67,76 +79,77 @@ const General = ({ user, mode, setMode }: IGeneral) => {
 
   return (
     <>
-      <Card extra={'w-full h-full p-3'}>
-        {/* Header */}
-        <div className="mb-8 mt-2 w-full">
-          <div className="grid grid-cols-2">
-            <h4 className="px-2 text-xl font-bold text-navy-700 dark:text-white">
-              Informação Geral
-            </h4>
-            <div className="flex justify-end">
-              <ProfilePageHolder
-                actions={GetActions({
-                  ...{ mode, handleClose, handleEdit },
-                  handleSubmitEdit: handleSubmit(handleSumbitEdit)
-                })}
-              />
+      <FormProvider {...methods}>
+        <Card extra={'w-full h-full p-3'}>
+          {/* Header */}
+          <div className="mb-8 mt-2 w-full">
+            <div className="grid grid-cols-2">
+              <h4 className="px-2 text-xl font-bold text-navy-700 dark:text-white">
+                Informação Geral
+              </h4>
+              <div className="flex justify-end">
+                <ProfilePageHolder
+                  actions={GetActions({
+                    ...{ mode, handleClose, handleEdit },
+                    handleSubmitEdit: handleSubmit(handleSumbitEdit)
+                  })}
+                />
+              </div>
             </div>
           </div>
-        </div>
-        {/* Cards */}
-        <div className="xs:grid-cols-1 grid gap-4 px-2 md:grid-cols-2">
-          <GeneralCard
-            disabled={mode === IMode.PREVIEW}
-            error={!!errors.firstName}
-            helperText={errors.firstName?.message}
-            name={'firstName'}
-            required
-            label={'Primeiro Nome'}
-            value={user.firstName}
-            {...{ control }}
-          />
-          <GeneralCard
-            disabled={mode === IMode.PREVIEW}
-            error={!!errors.lastName}
-            helperText={errors.lastName?.message}
-            name={'lastName'}
-            required
-            label={'Ultimo Nome'}
-            value={user.lastName}
-            {...{ errors, control }}
-          />
-          <GeneralCard
-            disabled={mode === IMode.PREVIEW}
-            name={'email'}
-            label={'Email'}
-            value={user.email ?? ''}
-            {...{ errors, control }}
-          />
-          <GeneralCard
-            disabled={mode === IMode.PREVIEW}
-            name={'phoneNumber'}
-            label={'Contacto'}
-            value={user.phoneNumber}
-            {...{ errors, control }}
-          />
-        </div>
-      </Card>
-      <Card extra={'w-full h-full p-3 mt-4'}>
-        {/* Header */}
-        <div className="mb-8 mt-2 w-full">
-          <h4 className="px-2 text-xl font-bold text-navy-700 dark:text-white">
-            Palavra-passe
-          </h4>
-          <p className="mt-2 px-2 text-base text-gray-600">
-            Pode alterar aqui a palavra-chave que utiliza para aceder ao
-            sistema. Selecione no mínimo 6 caracteres. Não utilize uma
-            palavra-chave de outro site ou que seja fácil de adivinhar.
-          </p>
-        </div>
-        {/* Cards */}
-        <div className="xs:grid-cols-1 grid gap-4 px-2 md:grid-cols-2">
-          {/* <TextField
+          {/* Cards */}
+          <div className="xs:grid-cols-1 grid gap-4 px-2 md:grid-cols-2">
+            <GeneralCard
+              disabled={mode === IMode.PREVIEW}
+              error={!!errors.firstName}
+              helperText={errors.firstName?.message}
+              name={'firstName'}
+              required
+              label={'Primeiro Nome'}
+              value={user.firstName}
+              {...{ control }}
+            />
+            <GeneralCard
+              disabled={mode === IMode.PREVIEW}
+              error={!!errors.lastName}
+              helperText={errors.lastName?.message}
+              name={'lastName'}
+              required
+              label={'Ultimo Nome'}
+              value={user.lastName}
+              {...{ errors, control }}
+            />
+            <GeneralCard
+              disabled={mode === IMode.PREVIEW}
+              name={'email'}
+              label={'Email'}
+              value={user.email ?? ''}
+              {...{ errors, control }}
+            />
+            <GeneralCard
+              disabled={mode === IMode.PREVIEW}
+              name={'phoneNumber'}
+              label={'Contacto'}
+              value={user.phoneNumber}
+              {...{ errors, control }}
+            />
+          </div>
+        </Card>
+        <Card extra={'w-full h-full p-3 mt-4'}>
+          {/* Header */}
+          <div className="mb-8 mt-2 w-full">
+            <h4 className="px-2 text-xl font-bold text-navy-700 dark:text-white">
+              Palavra-passe
+            </h4>
+            <p className="mt-2 px-2 text-base text-gray-600">
+              Pode alterar aqui a palavra-chave que utiliza para aceder ao
+              sistema. Selecione no mínimo 6 caracteres. Não utilize uma
+              palavra-chave de outro site ou que seja fácil de adivinhar.
+            </p>
+          </div>
+          {/* Cards */}
+          <div className="xs:grid-cols-1 grid gap-4 px-2 md:grid-cols-2">
+            {/* <TextField
             fullWidth
             type={showPassword ? 'text' : 'password'}
             InputProps={{
@@ -160,20 +173,21 @@ const General = ({ user, mode, setMode }: IGeneral) => {
             variant="standard"
             sx={AutocompleteSX(false)}
           /> */}
-          <GeneralCard
-            name={'password'}
-            label={'Nova Palavra-passe'}
-            value={user.password}
-            {...{ errors, control }}
-          />
-          <GeneralCard
-            name={'password'}
-            label={'Comfirmar Palavra-passe'}
-            value={user.password}
-            {...{ errors, control }}
-          />
-        </div>
-      </Card>
+            <GeneralCard
+              name={'password'}
+              label={'Nova Palavra-passe'}
+              value={user.password}
+              {...{ errors, control }}
+            />
+            <GeneralCard
+              name={'password'}
+              label={'Comfirmar Palavra-passe'}
+              value={user.password}
+              {...{ errors, control }}
+            />
+          </div>
+        </Card>
+      </FormProvider>
     </>
   );
 };

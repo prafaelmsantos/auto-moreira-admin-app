@@ -6,7 +6,7 @@ import { addUserNavigate, userListNavigate } from './components/utils/Utils';
 import { IMode } from '../../../../models/enums/Base';
 import { setLoader, setToInitialLoader } from '../../../../redux/loaderSlice';
 import { createUser, getUser, updateUser } from '../services/UserService';
-import UserValidationService from '../services/UserValidationService';
+import { UserValidationSchema } from '../services/UserValidationSchema';
 import { setSnackBar } from '../../../../redux/snackBarSlice';
 import { MessageType } from '../../../../models/enums/MessageTypeEnum';
 import { setModal } from '../../../../redux/modalSlice';
@@ -20,8 +20,15 @@ import {
 } from '../../roles/models/graphQL/types/roles';
 import { ROLES } from '../../roles/models/graphQL/Roles';
 import { convertToRole } from '../../roles/models/Role';
+import { FormProvider, useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
 
 export default function User() {
+  const methods = useForm<IUser>({
+    resolver: yupResolver(UserValidationSchema)
+  });
+
+  const { reset, handleSubmit } = methods;
   const param = useParams();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
@@ -31,7 +38,7 @@ export default function User() {
     lastName: '',
     token: null,
     password: null,
-    imageUrl: null,
+    image: null,
     email: null,
     phoneNumber: null,
     roles: [],
@@ -69,9 +76,12 @@ export default function User() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userId]);
 
-  const handleClose = () => navigate(userListNavigate);
+  useEffect(() => {
+    void reset(user);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user]);
 
-  const [handleSubmit, errors, control] = UserValidationService(user);
+  const handleClose = () => navigate(userListNavigate);
 
   const handleSumbitEdit = async (user: IUser) => {
     dispatch(setLoader(true));
@@ -131,19 +141,21 @@ export default function User() {
 
   return (
     <>
-      {mode && (
-        <>
-          <PageHolder
-            actions={GetActions({
-              ...{ mode, handleClose },
-              handleSubmitEdit: handleSubmit(handleSumbitEdit),
-              handleSumbitAdd: handleSubmit(handleSumbitAdd)
-            })}
-          />
+      <FormProvider {...methods}>
+        {mode && (
+          <>
+            <PageHolder
+              actions={GetActions({
+                ...{ mode, handleClose },
+                handleSubmitEdit: handleSubmit(handleSumbitEdit),
+                handleSumbitAdd: handleSubmit(handleSumbitAdd)
+              })}
+            />
 
-          <UserDetails {...{ user, errors, control, roles }} />
-        </>
-      )}
+            <UserDetails {...{ roles }} />
+          </>
+        )}
+      </FormProvider>
     </>
   );
 }

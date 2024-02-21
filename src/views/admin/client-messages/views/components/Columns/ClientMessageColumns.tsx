@@ -24,7 +24,7 @@ export const columns: GridColDef[] = [
     width: 150
   },
   {
-    field: 'dateTime',
+    field: 'createdDate',
     headerName: 'Data/Hora',
     width: 200,
     valueFormatter: (params) =>

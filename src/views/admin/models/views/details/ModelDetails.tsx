@@ -1,63 +1,46 @@
-import { Autocomplete, Grid, TextField } from '@mui/material';
-import { Control, Controller, FieldErrors } from 'react-hook-form';
-import { IModel } from '../../models/Model';
+import { Grid } from '@mui/material';
+import { useFormContext } from 'react-hook-form';
+import { ModelKeys } from '../../models/Model';
 import { IMark } from '../../../marks/models/Mark';
-import TextFieldFormValidation from '../../../../../components/form/TextFieldFormValidation';
-import { AutocompleteSX } from '../../../../../components/form/style/AutocompleteSX';
+import { IModelValidationSchema } from '../../services/ModelValidationSchema';
+import GeneralCard from '../../../users/views/components/card/GeneralCard';
+import AutoCompleteFormValidation from '../../../../../components/form/AutoCompleteFormValidation';
 
 interface IModelDetails {
-  model: IModel;
-  errors: FieldErrors<IModel>;
   marks: IMark[];
-  control: Control<IModel>;
 }
-export default function ModelDetails({
-  model,
-  errors,
-  marks,
-  control
-}: IModelDetails) {
+
+export default function ModelDetails({ marks }: IModelDetails) {
+  const {
+    control,
+    formState: { errors }
+  } = useFormContext<IModelValidationSchema>();
+
   return (
     <Grid container mt={5} px={5} spacing={2}>
       <Grid item md={6} xs={12}>
-        <TextFieldFormValidation
+        <GeneralCard
+          {...{ errors }}
+          control={control}
+          required
+          name={ModelKeys.name}
           label={'Nome'}
           error={!!errors.name}
           helperText={errors.name?.message}
-          control={control}
-          defaultValue={model.name}
-          name={'name'}
-          required
+          value={''}
         />
       </Grid>
       <Grid item md={6} xs={12}>
-        <Controller
-          render={({ field }) => (
-            <Autocomplete
-              {...field}
-              sx={{ mt: 1 }}
-              isOptionEqualToValue={(option, value) => option === value}
-              options={marks.map((x) => x.id)}
-              getOptionLabel={(option) =>
-                marks.find((x) => x.id === option)?.name ?? ''
-              }
-              renderInput={(params) => (
-                <TextField
-                  {...params}
-                  required
-                  label={'Marca'}
-                  variant="outlined"
-                  error={!!errors.markId}
-                  helperText={errors.markId?.message}
-                  sx={AutocompleteSX(!!errors.markId)}
-                />
-              )}
-              onChange={(_, data) => field.onChange(data)}
-            />
-          )}
-          name={'markId'}
+        <AutoCompleteFormValidation
+          {...{ errors }}
           control={control}
-          defaultValue={marks.find((x) => x.id === model.markId)?.id}
+          required
+          name={ModelKeys.markId}
+          label={'Marca'}
+          error={!!errors.markId}
+          helperText={errors.markId?.message}
+          defaultValue={''}
+          options={marks}
         />
       </Grid>
     </Grid>

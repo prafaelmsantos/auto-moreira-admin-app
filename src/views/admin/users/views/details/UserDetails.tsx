@@ -1,22 +1,19 @@
-import { Control, Controller, FieldErrors } from 'react-hook-form';
-import { IUser } from '../../models/User';
+import { Controller, useFormContext } from 'react-hook-form';
 import { Autocomplete, Grid, TextField } from '@mui/material';
 import GeneralCard from '../components/card/GeneralCard';
 import { AutocompleteSX } from '../../../../../components/form/style/AutocompleteSX';
 import { IRole } from '../../../roles/models/Role';
+import { IUserValidationSchema } from '../../services/UserValidationSchema';
 
 interface IUserDetails {
-  user: IUser;
-  errors: FieldErrors<IUser>;
-  control: Control<IUser>;
   roles: IRole[];
 }
-export default function UserDetails({
-  user,
-  errors,
-  control,
-  roles
-}: IUserDetails) {
+export default function UserDetails({ roles }: IUserDetails) {
+  const {
+    control,
+    formState: { errors }
+  } = useFormContext<IUserValidationSchema>();
+
   return (
     <Grid container mt={5} px={5} spacing={3}>
       <Grid item md={6} xs={12}>
@@ -26,7 +23,7 @@ export default function UserDetails({
           label={'Primeiro Nome'}
           error={!!errors.firstName}
           helperText={errors.firstName?.message}
-          value={user.firstName ?? ''}
+          value={''}
           {...{ errors, control }}
         />
       </Grid>
@@ -38,7 +35,7 @@ export default function UserDetails({
           label={'Ultimo Nome'}
           error={!!errors.lastName}
           helperText={errors.lastName?.message}
-          value={user.lastName ?? ''}
+          value={''}
           {...{ errors, control }}
         />
       </Grid>
@@ -50,7 +47,7 @@ export default function UserDetails({
           label={'Nome de Utilizador'}
           error={!!errors.userName}
           helperText={errors.userName?.message}
-          value={user.userName ?? ''}
+          value={''}
           {...{ errors, control }}
         />
       </Grid>
@@ -62,7 +59,7 @@ export default function UserDetails({
           label={'Email'}
           error={!!errors.email}
           helperText={errors.email?.message}
-          value={user.email ?? ''}
+          value={''}
           {...{ errors, control }}
         />
       </Grid>
@@ -74,7 +71,7 @@ export default function UserDetails({
           label={'Telemóvel'}
           error={!!errors.phoneNumber}
           helperText={errors.phoneNumber?.message}
-          value={user.phoneNumber ?? ''}
+          value={''}
           {...{ errors, control }}
         />
       </Grid>
@@ -109,7 +106,7 @@ export default function UserDetails({
               )}
               name={'roles'}
               control={control}
-              defaultValue={user.roles}
+              //defaultValue={user.roles}
             />
           </p>
         </div>

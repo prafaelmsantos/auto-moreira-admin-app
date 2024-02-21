@@ -1,8 +1,8 @@
 import { Grid } from '@mui/material';
 import { useFormContext } from 'react-hook-form';
-import TextFieldFormValidation from '../../../../../components/form/TextFieldFormValidation';
 import { IRoleValidationSchema } from '../../services/RoleValidationSchema';
 import { RoleKeys } from '../../models/Role';
+import GeneralCard from '../../../users/views/components/card/GeneralCard';
 
 export default function RoleDetails() {
   const {
@@ -13,13 +13,15 @@ export default function RoleDetails() {
   return (
     <Grid container mt={5} px={5}>
       <Grid item xs={12}>
-        <TextFieldFormValidation
+        <GeneralCard
+          {...{ errors }}
+          control={control}
+          required
+          name={RoleKeys.name}
           label={'Nome'}
           error={!!errors.name}
           helperText={errors.name?.message}
-          control={control}
-          name={RoleKeys.name}
-          required
+          value={''}
         />
       </Grid>
     </Grid>
