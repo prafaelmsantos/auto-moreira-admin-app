@@ -6,15 +6,22 @@ import { addRoleNavigate, roleListNavigate } from './components/utils/Utils';
 import { setLoader, setToInitialLoader } from '../../../../redux/loaderSlice';
 import { createRole, getRole, updateRole } from '../services/RoleService';
 import { IMode } from '../../../../models/enums/Base';
-import RoleValidationService from '../services/RoleValidationService';
 import { setSnackBar } from '../../../../redux/snackBarSlice';
 import { MessageType } from '../../../../models/enums/MessageTypeEnum';
 import { setModal } from '../../../../redux/modalSlice';
 import PageHolder from '../../../../components/base/PageHolder';
 import GetActions from '../../../../components/base/Actions';
 import RoleDetails from './details/RoleDetails';
+import { FormProvider, useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { RoleValidationSchema } from '../services/RoleValidationSchema';
 
 export default function Role() {
+  const methods = useForm<IRole>({
+    resolver: yupResolver(RoleValidationSchema)
+  });
+
+  const { reset, handleSubmit } = methods;
   const param = useParams();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
@@ -45,9 +52,12 @@ export default function Role() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [roleId]);
 
-  const handleClose = () => navigate(roleListNavigate);
+  useEffect(() => {
+    void reset(role);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [role]);
 
-  const [handleSubmit, errors, control] = RoleValidationService(role);
+  const handleClose = () => navigate(roleListNavigate);
 
   const handleSumbitEdit = async (role: IRole) => {
     dispatch(setLoader(true));
@@ -107,19 +117,20 @@ export default function Role() {
 
   return (
     <>
-      {mode && (
-        <>
-          <PageHolder
-            actions={GetActions({
-              ...{ mode, handleClose },
-              handleSubmitEdit: handleSubmit(handleSumbitEdit),
-              handleSumbitAdd: handleSubmit(handleSumbitAdd)
-            })}
-          />
-
-          <RoleDetails {...{ role, errors, control }} />
-        </>
-      )}
+      <FormProvider {...methods}>
+        {mode && (
+          <>
+            <PageHolder
+              actions={GetActions({
+                ...{ mode, handleClose },
+                handleSubmitEdit: handleSubmit(handleSumbitEdit),
+                handleSumbitAdd: handleSubmit(handleSumbitAdd)
+              })}
+            />
+            <RoleDetails />
+          </>
+        )}
+      </FormProvider>
     </>
   );
 }

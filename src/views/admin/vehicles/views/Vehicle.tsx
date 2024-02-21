@@ -107,10 +107,6 @@ export default function Vehicle() {
     );
   }, [watch]);
 
-  useEffect(() => {
-    watch((value) => console.log(value));
-  }, [watch]);
-
   const handleSumbitEdit = async (vehicle: IVehicle) => {
     dispatch(setLoader(true));
     updateVehicle(vehicle)

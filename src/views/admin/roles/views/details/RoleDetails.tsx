@@ -1,14 +1,15 @@
 import { Grid } from '@mui/material';
-import { Control, FieldErrors } from 'react-hook-form';
+import { useFormContext } from 'react-hook-form';
 import TextFieldFormValidation from '../../../../../components/form/TextFieldFormValidation';
-import { IRole } from '../../models/Role';
+import { IRoleValidationSchema } from '../../services/RoleValidationSchema';
+import { RoleKeys } from '../../models/Role';
 
-interface IRoleDetails {
-  role: IRole;
-  errors: FieldErrors<IRole>;
-  control: Control<IRole>;
-}
-export default function RoleDetails({ role, errors, control }: IRoleDetails) {
+export default function RoleDetails() {
+  const {
+    control,
+    formState: { errors }
+  } = useFormContext<IRoleValidationSchema>();
+
   return (
     <Grid container mt={5} px={5}>
       <Grid item xs={12}>
@@ -17,8 +18,7 @@ export default function RoleDetails({ role, errors, control }: IRoleDetails) {
           error={!!errors.name}
           helperText={errors.name?.message}
           control={control}
-          defaultValue={role.name}
-          name={'name'}
+          name={RoleKeys.name}
           required
         />
       </Grid>

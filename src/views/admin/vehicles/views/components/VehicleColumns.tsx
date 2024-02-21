@@ -7,7 +7,7 @@ import { FuelTypeConverted } from '../../models/enums/FuelEnum';
 export const columns: GridColDef[] = [
   {
     field: 'id',
-    headerName: 'ID',
+    headerName: '#',
     width: 50
   },
   {

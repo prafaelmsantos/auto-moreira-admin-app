@@ -11,3 +11,8 @@ export function convertToRole(role: roles_roles_nodes): IRole {
     name: String(role.name)
   };
 }
+
+export enum RoleKeys {
+    id = "id",
+    name= "name"
+}

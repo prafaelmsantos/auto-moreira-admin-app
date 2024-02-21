@@ -1,25 +1,26 @@
 import { GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
 import Actions from '../../../../../../components/table/utils/Actions';
 import { RouteName } from '../../../../../../models/enums/RouteType';
+import { RoleKeys } from '../../../models/Role';
 export const columns: GridColDef[] = [
   {
-    field: 'id',
-    headerName: 'ID',
+    field: RoleKeys.id,
+    headerName: '#',
     width: 50
   },
   {
-    field: 'name',
+    field: RoleKeys.name,
     headerName: 'Nome',
     width: 200
   },
   {
     field: 'actions',
     headerName: 'Ações',
-    width: 150,
+    width: 100,
     sortable: false,
     filterable: false,
     disableExport: true,
-    renderCell: (params: GridRenderCellParams<any, Date>) => (
+    renderCell: (params: GridRenderCellParams<Date>) => (
       <Actions
         editTitle={'Editar cargo'}
         deleteTitle={'Apagar cargo'}

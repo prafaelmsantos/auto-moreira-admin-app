@@ -6,7 +6,7 @@ import Actions from '../../../../../components/table/utils/Actions';
 export const columns: GridColDef[] = [
   {
     field: 'id',
-    headerName: 'ID',
+    headerName: '#',
     width: 50
   },
   {

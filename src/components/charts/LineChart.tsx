@@ -28,6 +28,7 @@ class LineChart extends React.Component<ChartProps, ChartState> {
   }
 
   render() {
+    console.log(this.state.chartData);
     return (
       <ReactApexChart
         options={this.state.chartOptions}

@@ -5,7 +5,7 @@ import { RouteName } from '../../../../../../models/enums/RouteType';
 export const columns: GridColDef[] = [
   {
     field: 'id',
-    headerName: 'ID',
+    headerName: '#',
     width: 50
   },
   {

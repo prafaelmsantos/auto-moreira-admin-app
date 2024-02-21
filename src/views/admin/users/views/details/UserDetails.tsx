@@ -1,9 +1,7 @@
 import { Control, Controller, FieldErrors } from 'react-hook-form';
 import { IUser } from '../../models/User';
 import { Autocomplete, Grid, TextField } from '@mui/material';
-import TextFieldFormValidation from '../../../../../components/form/TextFieldFormValidation';
 import GeneralCard from '../components/card/GeneralCard';
-import { IMode } from '../../../../../models/enums/Base';
 import { AutocompleteSX } from '../../../../../components/form/style/AutocompleteSX';
 import { IRole } from '../../../roles/models/Role';
 
@@ -20,7 +18,7 @@ export default function UserDetails({
   roles
 }: IUserDetails) {
   return (
-    <Grid container mt={5} px={5} spacing={2}>
+    <Grid container mt={5} px={5} spacing={3}>
       <Grid item md={6} xs={12}>
         <GeneralCard
           required

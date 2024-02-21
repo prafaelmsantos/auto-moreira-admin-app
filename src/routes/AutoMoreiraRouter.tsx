@@ -5,7 +5,7 @@ import Models from '../views/admin/models/Models';
 import SignIn from '../views/auth/SignIn';
 import Profile from '../views/admin/users/views/profile/Profile';
 import Mark from '../views/admin/marks/views/Mark';
-import Dashboard from '../views/admin/default';
+import Dashboard from '../views/admin/dashboard/Dashboard';
 import { RouteName, RouteType } from '../models/enums/RouteType';
 import Model from '../views/admin/models/views/Model';
 import Vehicle from '../views/admin/vehicles/views/Vehicle';
