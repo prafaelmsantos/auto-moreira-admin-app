@@ -1,267 +1,307 @@
 import { Autocomplete, Grid, TextField } from '@mui/material';
 import TextFieldFormValidation from '../../../../../components/form/TextFieldFormValidation';
 
-import { IVehicle } from '../../models/Vehicle';
 import { IMark } from '../../../marks/models/Mark';
 import { IModel } from '../../../models/models/Model';
 import { fuels } from '../../models/enums/FuelEnum';
 import { transmissions } from '../../models/enums/TransmissionEnum';
-import {
-  Control,
-  Controller,
-  FieldErrors,
-  UseFormSetValue
-} from 'react-hook-form';
+import { Controller, useFormContext } from 'react-hook-form';
 import { AutocompleteSX } from '../../../../../components/form/style/AutocompleteSX';
 import SwitchFormValidation from '../../../../../components/form/SwitchFormValidation';
+import { IVehicleValidationSchema } from '../../services/VehicleValidationSchema';
+import AutoCompleteFormValidation from '../../../../../components/form/AutoCompleteFormValidation';
+import { useEffect } from 'react';
+import AutoMoreiraLabel from '../../../../../components/form/AutoMoreiraLabel';
+import GeneralCard from '../../../users/views/components/card/GeneralCard';
+import { VehicleKeys } from '../../models/Vehicle';
 
 interface IVehicleDetails {
-  vehicle: IVehicle;
   marks: IMark[];
   models: IModel[];
-  errors: FieldErrors<IVehicle>;
-  control: Control<IVehicle>;
-  setValue: UseFormSetValue<IVehicle>;
 }
-export default function VehicleDetails({
-  vehicle,
-  models,
-  marks,
-  errors,
-  control,
-  setValue
-}: IVehicleDetails) {
+export default function VehicleDetails({ models, marks }: IVehicleDetails) {
+  const {
+    control,
+    setValue,
+    watch,
+    formState: { errors }
+  } = useFormContext<IVehicleValidationSchema>();
+  const markId = Number(watch(VehicleKeys.modelMarkId));
+
   return (
     <Grid container mt={4} px={5} spacing={2} rowSpacing={4}>
       <Grid item md={4} xs={12}>
-        <Controller
-          render={({ field }) => (
-            <Autocomplete
-              {...field}
-              sx={{ mt: 1 }}
-              isOptionEqualToValue={(option, value) => option === value}
-              options={marks.map((x) => x.id)}
-              getOptionLabel={(option) =>
-                marks.find((x) => x.id === option)?.name ?? ''
-              }
-              renderInput={(params) => (
-                <TextField
-                  {...params}
-                  required
-                  label={'Marca'}
-                  variant="outlined"
-                  error={!!errors.model?.markId}
-                  helperText={errors.model?.markId?.message}
-                  sx={AutocompleteSX(!!errors.model?.markId)}
+        <AutoMoreiraLabel
+          children={
+            <Controller
+              render={({ field: { onChange, ...others } }) => (
+                <Autocomplete
+                  {...others}
+                  sx={{ mt: 1 }}
+                  isOptionEqualToValue={(option, value) => option === value}
+                  options={marks.map((x) => x.id)}
+                  getOptionLabel={(option) =>
+                    marks.find((x) => x.id === option)?.name ?? ''
+                  }
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      required
+                      variant="standard"
+                      error={!!errors.model?.markId}
+                      helperText={errors.model?.markId?.message}
+                      sx={AutocompleteSX(!!errors.model?.markId)}
+                    />
+                  )}
+                  onChange={(_, data) => {
+                    setValue<any>(VehicleKeys.modelId, 0);
+                    onChange(data);
+                  }}
                 />
               )}
-              onChange={(_, data) => {
-                setValue('modelId', 0);
-                field.onChange(data);
-              }}
+              name={VehicleKeys.modelMarkId}
+              control={control}
             />
-          )}
-          name={'model.markId'}
-          control={control}
-          defaultValue={marks.find((x) => x.id === vehicle.model.markId)?.id}
+          }
+          label={'Marca'}
+          error={!!errors.model?.markId}
+          required
         />
       </Grid>
       <Grid item md={4} xs={12}>
-        <Controller
-          render={({ field }) => (
-            <Autocomplete
-              {...field}
-              sx={{ mt: 1 }}
-              isOptionEqualToValue={(option, value) => option === value}
-              options={models.map((x) => x.id)}
-              getOptionLabel={(option) =>
-                models.find((x) => x.id === option)?.name ?? ''
-              }
-              renderInput={(params) => (
-                <TextField
-                  {...params}
-                  required
-                  label={'Modelo'}
-                  variant="outlined"
-                  error={!!errors.modelId}
-                  helperText={errors.modelId?.message}
-                  sx={AutocompleteSX(!!errors.modelId)}
+        <AutoMoreiraLabel
+          children={
+            <Controller
+              render={({ field: { onChange, ...others } }) => (
+                <Autocomplete
+                  {...others}
+                  disabled={markId === 0}
+                  sx={{ mt: 1 }}
+                  isOptionEqualToValue={(option, value) => option === value}
+                  options={models
+                    ?.filter((x) => x.markId === markId)
+                    ?.map((x) => x.id)}
+                  getOptionLabel={(option) =>
+                    models
+                      ?.filter((x) => x.markId === markId)
+                      ?.find((x) => x.id === option)?.name ?? ''
+                  }
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      required
+                      variant="standard"
+                      error={!!errors.modelId}
+                      helperText={errors.modelId?.message}
+                      sx={AutocompleteSX(!!errors.modelId)}
+                    />
+                  )}
+                  onChange={(_, data) => onChange(data)}
                 />
               )}
-              onChange={(_, data) => field.onChange(data)}
+              name={VehicleKeys.modelId}
+              control={control}
             />
-          )}
-          disabled={vehicle.model.markId === 0}
-          name={'modelId'}
-          control={control}
-          defaultValue={models.find((x) => x.id === vehicle.modelId)?.id}
+          }
+          label={'Modelo'}
+          error={!!errors.modelId}
+          required
         />
       </Grid>
       <Grid item md={4} xs={12}>
-        <TextFieldFormValidation
+        <GeneralCard
+          {...{ errors }}
+          control={control}
+          required
+          name={VehicleKeys.version}
           label={'Versão'}
           error={!!errors.version}
           helperText={errors.version?.message}
-          control={control}
-          defaultValue={vehicle.version}
-          name={'version'}
+          value={''}
+        />
+      </Grid>
+      <Grid item md={4} xs={12}>
+        <AutoMoreiraLabel
+          children={
+            <Controller
+              render={({ field: { onChange, ...others } }) => (
+                <Autocomplete
+                  {...others}
+                  sx={{ mt: 1 }}
+                  isOptionEqualToValue={(option, value) => option === value}
+                  options={fuels.map((x) => x.id)}
+                  getOptionLabel={(option) =>
+                    fuels.find((x) => x.id === option)?.name ?? ''
+                  }
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      required
+                      variant="standard"
+                      error={!!errors.fuelType}
+                      helperText={errors.fuelType?.message}
+                      sx={AutocompleteSX(!!errors.fuelType)}
+                    />
+                  )}
+                  onChange={(_, data) => onChange(data)}
+                />
+              )}
+              name={VehicleKeys.fuelType}
+              control={control}
+            />
+          }
+          label={'Combustível'}
+          error={!!errors.fuelType}
           required
         />
       </Grid>
       <Grid item md={4} xs={12}>
-        <Controller
-          render={({ field }) => (
-            <Autocomplete
-              {...field}
-              sx={{ mt: 1 }}
-              isOptionEqualToValue={(option, value) => option === value}
-              options={fuels.map((x) => x.id)}
-              getOptionLabel={(option) =>
-                fuels.find((x) => x.id === option)?.name ?? ''
-              }
-              renderInput={(params) => (
-                <TextField
-                  {...params}
-                  required
-                  label={'Combustível'}
-                  variant="outlined"
-                  error={!!errors.fuelType}
-                  helperText={errors.fuelType?.message}
-                  sx={AutocompleteSX(!!errors.fuelType)}
-                />
-              )}
-              onChange={(_, data) => field.onChange(data)}
-            />
-          )}
-          name={'fuelType'}
+        <GeneralCard
+          {...{ errors }}
           control={control}
-          defaultValue={fuels.find((x) => x.id === vehicle.fuelType)?.id}
-        />
-      </Grid>
-      <Grid item md={4} xs={12}>
-        <TextFieldFormValidation
+          required
+          name={VehicleKeys.color}
           label={'Cor'}
           error={!!errors.color}
           helperText={errors.color?.message}
-          control={control}
-          defaultValue={vehicle.color}
-          name={'color'}
-          required
+          value={''}
         />
       </Grid>
       <Grid item md={2} xs={6}>
-        <TextFieldFormValidation
-          label={'Ano'}
+        <GeneralCard
+          {...{ errors }}
           control={control}
-          defaultValue={vehicle.year}
-          name={'year'}
+          name={VehicleKeys.year}
+          label={'Ano'}
+          error={!!errors.year}
+          helperText={errors.year?.message}
           type="number"
         />
       </Grid>
       <Grid item md={2} xs={6}>
-        <TextFieldFormValidation
-          label={'Preço'}
+        <GeneralCard
+          {...{ errors }}
           control={control}
-          defaultValue={vehicle.price}
-          name={'price'}
+          name={VehicleKeys.price}
+          label={'Preço'}
+          error={!!errors.price}
+          helperText={errors.price?.message}
           type="number"
         />
       </Grid>
       <Grid item md={4} xs={12}>
-        <Controller
-          render={({ field }) => (
-            <Autocomplete
-              {...field}
-              sx={{ mt: 1 }}
-              isOptionEqualToValue={(option, value) => option === value}
-              options={transmissions.map((x) => x.id)}
-              getOptionLabel={(option) =>
-                transmissions.find((x) => x.id === option)?.name ?? ''
-              }
-              renderInput={(params) => (
-                <TextField
-                  {...params}
-                  required
-                  label={'Transmissão'}
-                  variant="outlined"
-                  error={!!errors.fuelType}
-                  helperText={errors.fuelType?.message}
-                  sx={AutocompleteSX(!!errors.fuelType)}
+        <AutoMoreiraLabel
+          children={
+            <Controller
+              render={({ field: { onChange, ...others } }) => (
+                <Autocomplete
+                  {...others}
+                  sx={{ mt: 1 }}
+                  isOptionEqualToValue={(option, value) => option === value}
+                  options={transmissions.map((x) => x.id)}
+                  getOptionLabel={(option) =>
+                    transmissions.find((x) => x.id === option)?.name ?? ''
+                  }
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      required
+                      variant="standard"
+                      error={!!errors.transmission}
+                      helperText={errors.transmission?.message}
+                      sx={AutocompleteSX(!!errors.fuelType)}
+                    />
+                  )}
+                  onChange={(_, data) => onChange(data)}
                 />
               )}
-              onChange={(_, data) => field.onChange(data)}
+              name={VehicleKeys.transmission}
+              control={control}
             />
-          )}
-          name={'transmission'}
+          }
+          label={'Combustível'}
+          error={!!errors.fuelType}
+          required
+        />
+      </Grid>
+      <Grid item md={2} xs={6}>
+        <GeneralCard
+          {...{ errors }}
           control={control}
-          defaultValue={
-            transmissions.find((x) => x.id === vehicle.transmission)?.id
+          name={VehicleKeys.mileage}
+          label={'Nº de Kms'}
+          error={!!errors.mileage}
+          helperText={errors.mileage?.message}
+          type="number"
+        />
+      </Grid>
+      <Grid item md={2} xs={6}>
+        <GeneralCard
+          {...{ errors }}
+          control={control}
+          name={VehicleKeys.doors}
+          label={'Nº de portas'}
+          error={!!errors.doors}
+          helperText={errors.doors?.message}
+          type="number"
+        />
+      </Grid>
+      <Grid item md={2} xs={6}>
+        <GeneralCard
+          {...{ errors }}
+          control={control}
+          name={VehicleKeys.engineSize}
+          label={'Tamanho do motor'}
+          error={!!errors.engineSize}
+          helperText={errors.engineSize?.message}
+          type="number"
+        />
+      </Grid>
+      <Grid item md={2} xs={6}>
+        <GeneralCard
+          {...{ errors }}
+          control={control}
+          name={VehicleKeys.power}
+          label={'Potência'}
+          error={!!errors.power}
+          helperText={errors.power?.message}
+          type="number"
+        />
+      </Grid>
+      <Grid item md={2} xs={6}>
+        <AutoMoreiraLabel
+          label="Oportunidade"
+          children={
+            <SwitchFormValidation
+              {...{ control }}
+              label="Não"
+              label1="Sim"
+              name="opportunity"
+            />
           }
         />
       </Grid>
       <Grid item md={2} xs={6}>
-        <TextFieldFormValidation
-          label={'Nº de Kms'}
-          control={control}
-          defaultValue={vehicle.mileage}
-          name={'mileage'}
-          type="number"
-        />
-      </Grid>
-      <Grid item md={2} xs={6}>
-        <TextFieldFormValidation
-          label={'Nº de portas'}
-          control={control}
-          defaultValue={vehicle.doors}
-          name={'doors'}
-          type="number"
-        />
-      </Grid>
-      <Grid item md={2} xs={6}>
-        <TextFieldFormValidation
-          label={'Tamanho do motor'}
-          control={control}
-          defaultValue={vehicle.engineSize}
-          name={'engineSize'}
-          type="number"
-        />
-      </Grid>
-      <Grid item md={2} xs={6}>
-        <TextFieldFormValidation
-          label={'Potência'}
-          control={control}
-          defaultValue={vehicle.power}
-          name={'power'}
-          type="number"
-        />
-      </Grid>
-      <Grid item md={2} xs={6}>
-        <SwitchFormValidation
-          {...{ control }}
-          label="Não"
-          label1="Sim"
-          title="Oportunidade"
-          checked={vehicle.opportunity}
-          name="opportunity"
-        />
-      </Grid>
-      <Grid item md={2} xs={6}>
-        <SwitchFormValidation
-          {...{ control }}
-          label="Não"
-          label1="Sim"
-          title="Vendido"
-          checked={vehicle.sold}
-          name="sold"
+        <AutoMoreiraLabel
+          label="Vendido"
+          children={
+            <SwitchFormValidation
+              {...{ control }}
+              label="Não"
+              label1="Sim"
+              name="sold"
+            />
+          }
         />
       </Grid>
       <Grid item md={12} xs={12}>
-        <TextFieldFormValidation
-          label={'Observações'}
+        <GeneralCard
+          {...{ errors }}
           control={control}
-          defaultValue={vehicle.observations}
-          name={'observations'}
-          type="string"
+          name={VehicleKeys.observations}
+          label={'Observações'}
+          error={!!errors.observations}
+          helperText={errors.observations?.message}
           multiline
           rows={6}
         />

@@ -5,6 +5,11 @@ import { setLoader, setToInitialLoader } from '../../../../redux/loaderSlice';
 import { IMode } from '../../../../models/enums/Base';
 import PageHolder from '../../../../components/base/PageHolder';
 import GetActions from '../../../../components/base/Actions';
+import Box from '@mui/material/Box';
+import Tabs from '@mui/material/Tabs';
+import Tab from '@mui/material/Tab';
+import TabList from '@mui/lab/TabList';
+import TabPanel from '@mui/lab/TabPanel';
 
 import { useQuery } from '@apollo/client';
 import { MARKS } from '../../marks/models/graphQL/Marks';
@@ -14,7 +19,8 @@ import { addVehicleNavigate, vehicleListNavigate } from './utils/Utils';
 import { MODELS } from '../../models/models/graphQL/Models';
 import { convertToModel } from '../../models/models/Model';
 import VehicleDetails from './details/VehicleDetails';
-import VehicleValidationService from '../services/VehicleValidationService';
+import TabContext from '@mui/lab/TabContext';
+import { VehicleValidationSchema } from '../services/VehicleValidationSchema';
 import {
   createVehicle,
   getVehicle,
@@ -31,8 +37,16 @@ import {
   models_models_nodes,
   models
 } from '../../models/models/graphQL/types/models';
+import { FormProvider, useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { Typography } from '@mui/material';
 
 export default function Vehicle() {
+  const methods = useForm<IVehicle>({
+    resolver: yupResolver(VehicleValidationSchema)
+  });
+
+  const { reset, handleSubmit } = methods;
   const param = useParams();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
@@ -66,7 +80,7 @@ export default function Vehicle() {
 
   const models =
     modelsData?.models?.nodes
-      ?.filter((x) => x?.id === vehicle.model.markId)
+
       ?.map((model) => convertToModel(model as models_models_nodes))
       ?.sort((a, b) => a.id - b.id) ?? [];
 
@@ -92,20 +106,14 @@ export default function Vehicle() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [vehicleId]);
 
-  const handleClose = () => navigate(vehicleListNavigate);
-
-  const [handleSubmit, errors, control, watch, setValue] =
-    VehicleValidationService(vehicle);
+  const [value, setValue] = useState('1');
 
   useEffect(() => {
-    watch((value) =>
-      setVehicle((old) => ({
-        ...old,
-        modelId: value?.modelId ?? 0,
-        model: { ...old.model, markId: value.model?.markId ?? 0 }
-      }))
-    );
-  }, [watch]);
+    void reset(vehicle);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [vehicle, value]);
+
+  const handleClose = () => navigate(vehicleListNavigate);
 
   const handleSumbitEdit = async (vehicle: IVehicle) => {
     dispatch(setLoader(true));
@@ -163,22 +171,43 @@ export default function Vehicle() {
       });
   };
 
+  const handleChange = (event: React.SyntheticEvent, newValue: string) => {
+    setValue(newValue);
+  };
+
   return (
     <>
-      {mode && (
-        <>
-          <PageHolder
-            actions={GetActions({
-              ...{ mode, handleClose },
-              handleSubmitEdit: handleSubmit(handleSumbitEdit),
-              handleSumbitAdd: handleSubmit(handleSumbitAdd)
-            })}
-          />
-          <VehicleDetails
-            {...{ vehicle, marks, models, errors, control, setValue }}
-          />
-        </>
-      )}
+      <FormProvider {...methods}>
+        {mode && (
+          <>
+            <Box sx={{ width: '100%', typography: 'body1' }}></Box>
+            <PageHolder
+              actions={GetActions({
+                ...{ mode, handleClose },
+                handleSubmitEdit: handleSubmit(handleSumbitEdit),
+                handleSumbitAdd: handleSubmit(handleSumbitAdd)
+              })}
+            />
+            <TabContext value={value}>
+              <Box>
+                <TabList
+                  onChange={handleChange}
+                  textColor="secondary"
+                  indicatorColor="secondary"
+                >
+                  <Tab label={'Informação'} value="1" />
+                  <Tab label={<Typography>Imagens</Typography>} value="2" />
+                </TabList>
+              </Box>
+              <TabPanel value="1">
+                <VehicleDetails {...{ vehicle, marks, models }} />
+              </TabPanel>
+              <TabPanel value="2">Item Two</TabPanel>
+              <TabPanel value="3">Item Three</TabPanel>
+            </TabContext>
+          </>
+        )}
+      </FormProvider>
     </>
   );
 }

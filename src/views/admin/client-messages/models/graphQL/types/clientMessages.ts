@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { ClientMessageFilterInput, ClientMessageSortInput } from "./../../../../../../models/graphql-global-types";
+import { ClientMessageFilterInput, ClientMessageSortInput, STATUS } from "./../../../../../../models/graphql-global-types";
 
 // ====================================================
 // GraphQL query operation: clientMessages
@@ -12,11 +12,12 @@ import { ClientMessageFilterInput, ClientMessageSortInput } from "./../../../../
 export interface clientMessages_clientMessages_nodes {
   __typename: "ClientMessage";
   id: number;
-  name: string | null;
-  email: string | null;
-  message: string | null;
+  name: string;
+  email: string;
+  message: string;
   phoneNumber: any;
-  createdDate: any | null;
+  status: STATUS;
+  createdDate: any;
 }
 
 export interface clientMessages_clientMessages {
@@ -25,7 +26,7 @@ export interface clientMessages_clientMessages {
   /**
    * A flattened list of the nodes.
    */
-  nodes: (clientMessages_clientMessages_nodes | null)[] | null;
+  nodes: clientMessages_clientMessages_nodes[] | null;
 }
 
 export interface clientMessages {

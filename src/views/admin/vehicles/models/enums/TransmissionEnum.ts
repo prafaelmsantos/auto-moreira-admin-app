@@ -1,8 +1,8 @@
 import { TRANSMISSION } from '../../../../../models/graphql-global-types';
 
 export enum Transmission {
-  MANUAL = 'Manual',
-  AUTOMATIC = 'Automatic'
+  MANUAL = 1,
+  AUTOMATIC = 2
 }
 
 export function TransmissionConverted(transmission: Transmission) {

@@ -57,3 +57,21 @@ export function convertToVehicle(vehicle: vehicles_vehicles_nodes): IVehicle {
 export function convertBoolean(value: boolean): string {
   return value ? 'Sim' : 'Não';
 }
+
+export enum VehicleKeys {
+    id = "id",
+    modelMarkId= "model.markId",
+    modelId= "modelId",
+    version= "version",
+    fuelType = "fuelType",
+    color="color",
+    year= "year",
+    price = "price",
+    transmission = "transmission",
+    mileage = "mileage",
+    doors = "doors",
+    engineSize = "engineSize",
+    power="power",
+    observations = "observations"
+
+}

@@ -21,7 +21,7 @@ export interface roles_roles {
   /**
    * A flattened list of the nodes.
    */
-  nodes: (roles_roles_nodes | null)[] | null;
+  nodes: roles_roles_nodes[] | null;
 }
 
 export interface roles {

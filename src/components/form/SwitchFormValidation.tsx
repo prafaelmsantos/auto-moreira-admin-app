@@ -8,7 +8,6 @@ import { SwitchSX } from './style/SwitchSX';
 type ISwitchFormValidation = {
   checked?: boolean;
   control: Control<any, any>;
-  title: string;
   name: string;
   label: string;
   label1: string;
@@ -17,7 +16,6 @@ type ISwitchFormValidation = {
 export default function SwitchFormValidation({
   control,
   checked,
-  title,
   name,
   label,
   label1
@@ -25,26 +23,26 @@ export default function SwitchFormValidation({
   const darkMode = useSelector((state: RootState) => state.darkModeSlice.dark);
 
   return (
-    <>
+    <Stack
+      direction="row"
+      spacing={1}
+      alignItems="center"
+      sx={{ mx: 1, mt: 1 }}
+    >
       <Typography color={darkMode ? 'white' : COLORS.AUTO_MOREIRA_NAVY[700]}>
-        {title}
+        {label}
       </Typography>
-      <Stack direction="row" spacing={1} alignItems="center">
-        <Typography color={darkMode ? 'white' : COLORS.AUTO_MOREIRA_NAVY[700]}>
-          {label}
-        </Typography>
-        <Controller
-          name={name}
-          control={control}
-          render={({ field }) => (
-            <Switch defaultChecked={checked} {...field} sx={SwitchSX()} />
-          )}
-        />
+      <Controller
+        name={name}
+        control={control}
+        render={({ field }) => (
+          <Switch defaultChecked={checked} {...field} sx={SwitchSX()} />
+        )}
+      />
 
-        <Typography color={darkMode ? 'white' : COLORS.AUTO_MOREIRA_NAVY[700]}>
-          {label1}
-        </Typography>
-      </Stack>
-    </>
+      <Typography color={darkMode ? 'white' : COLORS.AUTO_MOREIRA_NAVY[700]}>
+        {label1}
+      </Typography>
+    </Stack>
   );
 }

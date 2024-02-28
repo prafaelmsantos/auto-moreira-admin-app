@@ -12,12 +12,13 @@ import {
 import { getUser } from '../../services/UserService';
 import General from './general/General';
 import { IMode } from '../../../../../models/enums/Base';
+import { mainNavigate } from '../../../../auth/views/utils/Utils';
 
 const Profile = () => {
   const [mode, setMode] = useState<IMode>(IMode.PREVIEW);
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const mainNavigate = '/admin/dashboard';
+
   const userAuth = useSelector((state: RootState) => state.userSlice.user);
   const [user, setUser] = useState<IUser>({
     userName: '',
@@ -51,7 +52,6 @@ const Profile = () => {
 
   useEffect(() => {
     void fetchUser();
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [mode, userAuth]);
 

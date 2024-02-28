@@ -19,12 +19,12 @@ export interface users_users_nodes {
   __typename: "User";
   id: number;
   userName: string | null;
-  firstName: string | null;
-  lastName: string | null;
+  firstName: string;
+  lastName: string;
   image: string | null;
   phoneNumber: string | null;
   email: string | null;
-  roles: (users_users_nodes_roles | null)[] | null;
+  roles: users_users_nodes_roles[];
 }
 
 export interface users_users {
@@ -33,7 +33,7 @@ export interface users_users {
   /**
    * A flattened list of the nodes.
    */
-  nodes: (users_users_nodes | null)[] | null;
+  nodes: users_users_nodes[] | null;
 }
 
 export interface users {

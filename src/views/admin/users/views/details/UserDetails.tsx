@@ -4,6 +4,7 @@ import GeneralCard from '../components/card/GeneralCard';
 import { AutocompleteSX } from '../../../../../components/form/style/AutocompleteSX';
 import { IRole } from '../../../roles/models/Role';
 import { IUserValidationSchema } from '../../services/UserValidationSchema';
+import AutoMoreiraLabel from '../../../../../components/form/AutoMoreiraLabel';
 
 interface IUserDetails {
   roles: IRole[];
@@ -77,9 +78,9 @@ export default function UserDetails({ roles }: IUserDetails) {
       </Grid>
 
       <Grid item md={6} xs={12}>
-        <div className="items-start justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 shadow-3xl shadow-shadow-500 dark:!bg-navy-700 dark:shadow-none">
-          <p className="text-sm text-gray-600">{'Cargos*'}</p>
-          <p className="text-base font-medium text-navy-700 dark:text-white">
+        <AutoMoreiraLabel
+          label="Cargo"
+          children={
             <Controller
               render={({ field: { value, ...field } }) => (
                 <Autocomplete
@@ -108,8 +109,8 @@ export default function UserDetails({ roles }: IUserDetails) {
               control={control}
               //defaultValue={user.roles}
             />
-          </p>
-        </div>
+          }
+        />
       </Grid>
     </Grid>
   );

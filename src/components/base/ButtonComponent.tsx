@@ -49,7 +49,7 @@ export default function ButtonComponent({
         direction="row"
         justifyContent="center"
         alignItems="center"
-        sx={{ py: 0.5 }}
+        sx={{ py: 0.5, color: 'primary.secondary' }}
       >
         {icon && <>{icon}</>}
       </Stack>

@@ -1,7 +1,19 @@
-import { Grid, TextField } from '@mui/material';
+import {
+  FormControl,
+  Grid,
+  InputLabel,
+  MenuItem,
+  Select,
+  TextField
+} from '@mui/material';
 import { IClientMessage } from '../../models/ClientMessage';
 import { TextFieldSX } from '../../../../../components/form/style/TextFieldSX';
 import ClientMessageLabel from '../components/label/ClientMessageLabel';
+import {
+  AutocompleteSX,
+  SelectSX
+} from '../../../../../components/form/style/AutocompleteSX';
+import { StatusConverted, StatusMenu } from '../../models/enums/StatusEnum';
 
 interface IClientMessageDetails {
   clientMessage: IClientMessage;
@@ -45,6 +57,24 @@ export default function ClientMessageDetails({
                 ).toLocaleTimeString()}`
               )}
             </Grid>
+            <Grid item xs={6}>
+              {ClientMessageLabel('Estado', true)}
+            </Grid>
+            <Grid item xs={6}>
+              <FormControl fullWidth>
+                <Select
+                  variant="standard"
+                  color="secondary"
+                  value={clientMessage.status}
+                  sx={SelectSX(false)}
+                  //onChange={handleChange}
+                >
+                  {StatusMenu.map((x) => (
+                    <MenuItem value={x.id}>{x.name}</MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            </Grid>
           </Grid>
         </Grid>
 
@@ -52,7 +82,7 @@ export default function ClientMessageDetails({
           <TextField
             multiline
             disabled
-            rows={6}
+            rows={8}
             fullWidth
             margin="dense"
             defaultValue={clientMessage.message}

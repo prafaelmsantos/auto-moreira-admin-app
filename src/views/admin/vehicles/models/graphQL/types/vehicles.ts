@@ -12,24 +12,24 @@ import { VehicleFilterInput, VehicleSortInput, FUEL, TRANSMISSION } from "./../.
 export interface vehicles_vehicles_nodes_model_mark {
   __typename: "Mark";
   id: number;
-  name: string | null;
+  name: string;
 }
 
 export interface vehicles_vehicles_nodes_model {
   __typename: "Model";
   id: number;
-  name: string | null;
+  name: string;
   markId: number;
-  mark: vehicles_vehicles_nodes_model_mark | null;
+  mark: vehicles_vehicles_nodes_model_mark;
 }
 
 export interface vehicles_vehicles_nodes {
   __typename: "Vehicle";
   id: number;
   modelId: number;
-  model: vehicles_vehicles_nodes_model | null;
+  model: vehicles_vehicles_nodes_model;
   year: number;
-  color: string | null;
+  color: string;
   observations: string | null;
   mileage: number;
   price: number;
@@ -49,7 +49,7 @@ export interface vehicles_vehicles {
   /**
    * A flattened list of the nodes.
    */
-  nodes: (vehicles_vehicles_nodes | null)[] | null;
+  nodes: vehicles_vehicles_nodes[] | null;
 }
 
 export interface vehicles {

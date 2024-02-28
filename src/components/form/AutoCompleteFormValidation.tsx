@@ -1,9 +1,5 @@
 import { Autocomplete, TextField } from '@mui/material';
 import { Control, Controller } from 'react-hook-form';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../redux/store';
-import { COLORS } from '../../utils/Colors';
-import { TextFieldSX } from './style/TextFieldSX';
 import { AutocompleteSX } from './style/AutocompleteSX';
 
 type IAutoCompleteFormValidation = {
@@ -27,11 +23,8 @@ export default function AutoCompleteFormValidation({
   options,
   required
 }: IAutoCompleteFormValidation) {
-  const darkMode = useSelector((state: RootState) => state.darkModeSlice.dark);
-  const redColor = '#d32f2f';
-
   return (
-    <div className="items-start justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 shadow-3xl shadow-shadow-500 dark:!bg-navy-700 dark:shadow-none">
+    <div className="items-start justify-center rounded-2xl bg-white bg-clip-border px-3 py-5 shadow-3xl shadow-shadow-500 dark:!bg-navy-700 dark:shadow-none">
       <p
         className={`${'text-sm'} ${error ? 'text-red-600' : 'text-gray-600'}`}
       >{`${label}${required ? '*' : ''}`}</p>
@@ -40,7 +33,8 @@ export default function AutoCompleteFormValidation({
           render={({ field }) => (
             <Autocomplete
               {...field}
-              sx={{ mt: 1 }}
+              sx={{ mt: 0.5 }}
+              color="red"
               isOptionEqualToValue={(option, value) => option === value}
               options={options.map((x) => x.id)}
               getOptionLabel={(option) =>
@@ -53,15 +47,6 @@ export default function AutoCompleteFormValidation({
                   error={error}
                   helperText={helperText}
                   sx={AutocompleteSX(error ?? false)}
-                  InputProps={{
-                    style: {
-                      color: error
-                        ? redColor
-                        : darkMode
-                        ? 'white'
-                        : COLORS.AUTO_MOREIRA_NAVY[700]
-                    }
-                  }}
                 />
               )}
               onChange={(_, data) => field.onChange(data)}

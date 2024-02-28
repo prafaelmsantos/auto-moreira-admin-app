@@ -1,0 +1,1 @@
+export const mainNavigate = '/admin/dashboard';

@@ -1,10 +1,13 @@
 import { FUEL } from '../../../../../models/graphql-global-types';
 
+
+
 export enum Fuel {
-  PETROL = 'Petrol',
-  DIESEL = 'Diesel',
-  HYBRID = 'Hybrid'
+  PETROL = 1,
+  DIESEL = 2,
+  HYBRID = 3
 }
+
 
 export function FuelTypeConverted(fuelType: Fuel) {
   return fuelType === Fuel.PETROL

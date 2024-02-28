@@ -10,4 +10,7 @@ export interface IUserLogin {
   password: string;
 }
 
-
+export enum IResetPasswordMode {
+  START,
+  END
+}

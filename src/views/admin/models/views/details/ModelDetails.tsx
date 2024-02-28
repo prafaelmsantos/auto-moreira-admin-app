@@ -1,10 +1,12 @@
-import { Grid } from '@mui/material';
-import { useFormContext } from 'react-hook-form';
+import { Autocomplete, Grid, TextField } from '@mui/material';
+import { Controller, useFormContext } from 'react-hook-form';
 import { ModelKeys } from '../../models/Model';
 import { IMark } from '../../../marks/models/Mark';
 import { IModelValidationSchema } from '../../services/ModelValidationSchema';
 import GeneralCard from '../../../users/views/components/card/GeneralCard';
 import AutoCompleteFormValidation from '../../../../../components/form/AutoCompleteFormValidation';
+import { AutocompleteSX } from '../../../../../components/form/style/AutocompleteSX';
+import { InputPropsSX } from '../../../../../components/form/style/InputPropsSX';
 
 interface IModelDetails {
   marks: IMark[];

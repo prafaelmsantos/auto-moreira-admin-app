@@ -3,13 +3,11 @@ scalar DateTime
 "The `Long` scalar type represents non-fractional signed whole 64-bit numeric values. Long can represent values between -(2^63) and 2^63 - 1."
 scalar Long
 type User {
-  firstName: String
-  lastName: String
+  firstName: String!
+  lastName: String!
   image: String
   darkMode: Boolean!
-  createdDate: DateTime!
-  lastModifiedDate: DateTime!
-  roles: [Role]
+  roles: [Role!]!
   id: Int!
   userName: String
   normalizedUserName: String
@@ -27,9 +25,7 @@ type User {
   accessFailedCount: Int!
 }
 type Role {
-  users: [User]
-  createdDate: DateTime
-  lastModifiedDate: DateTime
+  users: [User!]!
   isDefault: Boolean!
   id: Int!
   name: String
@@ -37,30 +33,26 @@ type Role {
   concurrencyStamp: String
 }
 type Mark {
-  name: String
-  models: [Model]
-  createdDate: DateTime
-  lastModifiedDate: DateTime
+  name: String!
+  models: [Model!]!
   id: Int!
 }
 type Model {
-  name: String
+  name: String!
   markId: Int!
-  mark: Mark
-  vehicles: [Vehicle]
-  createdDate: DateTime
-  lastModifiedDate: DateTime
+  mark: Mark!
+  vehicles: [Vehicle!]!
   id: Int!
 }
 type Vehicle {
   modelId: Int!
-  model: Model
+  model: Model!
   version: String
   fuelType: FUEL!
   price: Float!
   mileage: Float!
   year: Int!
-  color: String
+  color: String!
   doors: Int!
   transmission: TRANSMISSION!
   engineSize: Int!
@@ -69,19 +61,16 @@ type Vehicle {
   opportunity: Boolean!
   sold: Boolean!
   soldDate: DateTime
-  vehicleImages: [VehicleImage]
-  createdDate: DateTime
-  lastModifiedDate: DateTime
+  vehicleImages: [VehicleImage!]!
   id: Int!
 }
 type ClientMessage {
-  name: String
-  email: String
+  name: String!
+  email: String!
   phoneNumber: Long!
-  message: String
-  open: Boolean!
-  createdDate: DateTime
-  lastModifiedDate: DateTime
+  message: String!
+  status: STATUS!
+  createdDate: DateTime!
   id: Int!
 }
 type Query {
@@ -141,11 +130,9 @@ type Query {
     before: String,where: ClientMessageFilterInput, order: [ClientMessageSortInput!]  ): ClientMessagesConnection
 }
 type VehicleImage {
-  url: String
+  url: String!
   vehicleId: Int!
-  vehicle: Vehicle
-  createdDate: DateTime
-  lastModifiedDate: DateTime
+  vehicle: Vehicle!
   id: Int!
 }
 "A connection to a list of items."
@@ -155,7 +142,7 @@ type UsersConnection {
   "A list of edges."
   edges: [UsersEdge!]
   "A flattened list of the nodes."
-  nodes: [User]
+  nodes: [User!]
   totalCount: Int!
 }
 "A connection to a list of items."
@@ -165,7 +152,7 @@ type RolesConnection {
   "A list of edges."
   edges: [RolesEdge!]
   "A flattened list of the nodes."
-  nodes: [Role]
+  nodes: [Role!]
   totalCount: Int!
 }
 "A connection to a list of items."
@@ -175,7 +162,7 @@ type VehiclesConnection {
   "A list of edges."
   edges: [VehiclesEdge!]
   "A flattened list of the nodes."
-  nodes: [Vehicle]
+  nodes: [Vehicle!]
   totalCount: Int!
 }
 "A connection to a list of items."
@@ -185,7 +172,7 @@ type MarksConnection {
   "A list of edges."
   edges: [MarksEdge!]
   "A flattened list of the nodes."
-  nodes: [Mark]
+  nodes: [Mark!]
   totalCount: Int!
 }
 "A connection to a list of items."
@@ -195,7 +182,7 @@ type ModelsConnection {
   "A list of edges."
   edges: [ModelsEdge!]
   "A flattened list of the nodes."
-  nodes: [Model]
+  nodes: [Model!]
   totalCount: Int!
 }
 "A connection to a list of items."
@@ -205,7 +192,7 @@ type ClientMessagesConnection {
   "A list of edges."
   edges: [ClientMessagesEdge!]
   "A flattened list of the nodes."
-  nodes: [ClientMessage]
+  nodes: [ClientMessage!]
   totalCount: Int!
 }
 "Information about pagination in a connection."
@@ -224,42 +211,42 @@ type UsersEdge {
   "A cursor for use in pagination."
   cursor: String!
   "The item at the end of the edge."
-  node: User
+  node: User!
 }
 "An edge in a connection."
 type RolesEdge {
   "A cursor for use in pagination."
   cursor: String!
   "The item at the end of the edge."
-  node: Role
+  node: Role!
 }
 "An edge in a connection."
 type VehiclesEdge {
   "A cursor for use in pagination."
   cursor: String!
   "The item at the end of the edge."
-  node: Vehicle
+  node: Vehicle!
 }
 "An edge in a connection."
 type MarksEdge {
   "A cursor for use in pagination."
   cursor: String!
   "The item at the end of the edge."
-  node: Mark
+  node: Mark!
 }
 "An edge in a connection."
 type ModelsEdge {
   "A cursor for use in pagination."
   cursor: String!
   "The item at the end of the edge."
-  node: Model
+  node: Model!
 }
 "An edge in a connection."
 type ClientMessagesEdge {
   "A cursor for use in pagination."
   cursor: String!
   "The item at the end of the edge."
-  node: ClientMessage
+  node: ClientMessage!
 }
 enum FUEL {
   PETROL
@@ -269,6 +256,10 @@ enum FUEL {
 enum TRANSMISSION {
   MANUAL
   AUTOMATIC
+}
+enum STATUS {
+  OPEN
+  CLOSED
 }
 enum SortEnumType {
   ASC
@@ -281,8 +272,6 @@ input UserFilterInput {
   lastName: StringOperationFilterInput
   image: StringOperationFilterInput
   darkMode: BooleanOperationFilterInput
-  createdDate: ComparableDateTimeOperationFilterInput
-  lastModifiedDate: ComparableDateTimeOperationFilterInput
   roles: ListFilterInputTypeOfRoleFilterInput
   id: ComparableInt32OperationFilterInput
   userName: StringOperationFilterInput
@@ -305,8 +294,6 @@ input UserSortInput {
   lastName: SortEnumType
   image: SortEnumType
   darkMode: SortEnumType
-  createdDate: SortEnumType
-  lastModifiedDate: SortEnumType
   id: SortEnumType
   userName: SortEnumType
   normalizedUserName: SortEnumType
@@ -327,8 +314,6 @@ input RoleFilterInput {
   and: [RoleFilterInput!]
   or: [RoleFilterInput!]
   users: ListFilterInputTypeOfUserFilterInput
-  createdDate: ComparableNullableOfDateTimeOperationFilterInput
-  lastModifiedDate: ComparableNullableOfDateTimeOperationFilterInput
   isDefault: BooleanOperationFilterInput
   id: ComparableInt32OperationFilterInput
   name: StringOperationFilterInput
@@ -336,8 +321,6 @@ input RoleFilterInput {
   concurrencyStamp: StringOperationFilterInput
 }
 input RoleSortInput {
-  createdDate: SortEnumType
-  lastModifiedDate: SortEnumType
   isDefault: SortEnumType
   id: SortEnumType
   name: SortEnumType
@@ -364,8 +347,6 @@ input VehicleFilterInput {
   sold: BooleanOperationFilterInput
   soldDate: ComparableNullableOfDateTimeOperationFilterInput
   vehicleImages: ListFilterInputTypeOfVehicleImageFilterInput
-  createdDate: ComparableNullableOfDateTimeOperationFilterInput
-  lastModifiedDate: ComparableNullableOfDateTimeOperationFilterInput
   id: ComparableInt32OperationFilterInput
 }
 input VehicleSortInput {
@@ -385,8 +366,6 @@ input VehicleSortInput {
   opportunity: SortEnumType
   sold: SortEnumType
   soldDate: SortEnumType
-  createdDate: SortEnumType
-  lastModifiedDate: SortEnumType
   id: SortEnumType
 }
 input MarkFilterInput {
@@ -394,14 +373,10 @@ input MarkFilterInput {
   or: [MarkFilterInput!]
   name: StringOperationFilterInput
   models: ListFilterInputTypeOfModelFilterInput
-  createdDate: ComparableNullableOfDateTimeOperationFilterInput
-  lastModifiedDate: ComparableNullableOfDateTimeOperationFilterInput
   id: ComparableInt32OperationFilterInput
 }
 input MarkSortInput {
   name: SortEnumType
-  createdDate: SortEnumType
-  lastModifiedDate: SortEnumType
   id: SortEnumType
 }
 input ModelFilterInput {
@@ -411,16 +386,12 @@ input ModelFilterInput {
   markId: ComparableInt32OperationFilterInput
   mark: MarkFilterInput
   vehicles: ListFilterInputTypeOfVehicleFilterInput
-  createdDate: ComparableNullableOfDateTimeOperationFilterInput
-  lastModifiedDate: ComparableNullableOfDateTimeOperationFilterInput
   id: ComparableInt32OperationFilterInput
 }
 input ModelSortInput {
   name: SortEnumType
   markId: SortEnumType
   mark: MarkSortInput
-  createdDate: SortEnumType
-  lastModifiedDate: SortEnumType
   id: SortEnumType
 }
 input ClientMessageFilterInput {
@@ -430,9 +401,8 @@ input ClientMessageFilterInput {
   email: StringOperationFilterInput
   phoneNumber: ComparableInt64OperationFilterInput
   message: StringOperationFilterInput
-  open: BooleanOperationFilterInput
-  createdDate: ComparableNullableOfDateTimeOperationFilterInput
-  lastModifiedDate: ComparableNullableOfDateTimeOperationFilterInput
+  status: STATUSOperationFilterInput
+  createdDate: ComparableDateTimeOperationFilterInput
   id: ComparableInt32OperationFilterInput
 }
 input ClientMessageSortInput {
@@ -440,9 +410,8 @@ input ClientMessageSortInput {
   email: SortEnumType
   phoneNumber: SortEnumType
   message: SortEnumType
-  open: SortEnumType
+  status: SortEnumType
   createdDate: SortEnumType
-  lastModifiedDate: SortEnumType
   id: SortEnumType
 }
 input StringOperationFilterInput {
@@ -462,20 +431,6 @@ input StringOperationFilterInput {
 input BooleanOperationFilterInput {
   eq: Boolean
   neq: Boolean
-}
-input ComparableDateTimeOperationFilterInput {
-  eq: DateTime
-  neq: DateTime
-  in: [DateTime!]
-  nin: [DateTime!]
-  gt: DateTime
-  ngt: DateTime
-  gte: DateTime
-  ngte: DateTime
-  lt: DateTime
-  nlt: DateTime
-  lte: DateTime
-  nlte: DateTime
 }
 input ListFilterInputTypeOfRoleFilterInput {
   all: RoleFilterInput
@@ -517,20 +472,6 @@ input ListFilterInputTypeOfUserFilterInput {
   some: UserFilterInput
   any: Boolean
 }
-input ComparableNullableOfDateTimeOperationFilterInput {
-  eq: DateTime
-  neq: DateTime
-  in: [DateTime]
-  nin: [DateTime]
-  gt: DateTime
-  ngt: DateTime
-  gte: DateTime
-  ngte: DateTime
-  lt: DateTime
-  nlt: DateTime
-  lte: DateTime
-  nlte: DateTime
-}
 input FUELOperationFilterInput {
   eq: FUEL
   neq: FUEL
@@ -556,6 +497,20 @@ input TRANSMISSIONOperationFilterInput {
   neq: TRANSMISSION
   in: [TRANSMISSION!]
   nin: [TRANSMISSION!]
+}
+input ComparableNullableOfDateTimeOperationFilterInput {
+  eq: DateTime
+  neq: DateTime
+  in: [DateTime]
+  nin: [DateTime]
+  gt: DateTime
+  ngt: DateTime
+  gte: DateTime
+  ngte: DateTime
+  lt: DateTime
+  nlt: DateTime
+  lte: DateTime
+  nlte: DateTime
 }
 input ListFilterInputTypeOfVehicleImageFilterInput {
   all: VehicleImageFilterInput
@@ -589,14 +544,32 @@ input ComparableInt64OperationFilterInput {
   lte: Long
   nlte: Long
 }
+input STATUSOperationFilterInput {
+  eq: STATUS
+  neq: STATUS
+  in: [STATUS!]
+  nin: [STATUS!]
+}
+input ComparableDateTimeOperationFilterInput {
+  eq: DateTime
+  neq: DateTime
+  in: [DateTime!]
+  nin: [DateTime!]
+  gt: DateTime
+  ngt: DateTime
+  gte: DateTime
+  ngte: DateTime
+  lt: DateTime
+  nlt: DateTime
+  lte: DateTime
+  nlte: DateTime
+}
 input VehicleImageFilterInput {
   and: [VehicleImageFilterInput!]
   or: [VehicleImageFilterInput!]
   url: StringOperationFilterInput
   vehicleId: ComparableInt32OperationFilterInput
   vehicle: VehicleFilterInput
-  createdDate: ComparableNullableOfDateTimeOperationFilterInput
-  lastModifiedDate: ComparableNullableOfDateTimeOperationFilterInput
   id: ComparableInt32OperationFilterInput
 }
 "The `@defer` directive may be provided for fragment spreads and inline fragments to inform the executor to delay the execution of the current fragment to indicate deprioritization of the current fragment. A query with `@defer` directive will cause the request to potentially return multiple responses, where non-deferred data is delivered in the initial response and data deferred is delivered in a subsequent response. `@include` and `@skip` take precedence over `@defer`."

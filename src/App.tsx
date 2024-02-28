@@ -13,6 +13,8 @@ import Auth from './layouts/auth';
 import Admin from './layouts/admin';
 import AlertModal from './components/modal/AlertModal';
 import { closeSnackBar } from './redux/snackBarSlice';
+import { ThemeProvider, createTheme } from '@mui/material';
+import { COLORS } from './utils/Colors';
 
 const App = () => {
   const dispatch = useAppDispatch();
@@ -32,25 +34,43 @@ const App = () => {
   const currentSnackBar = useSelector(
     (state: RootState) => state.snackBarSlice
   );
+  const darkMode = useSelector((state: RootState) => state.darkModeSlice.dark);
+  const theme = createTheme({
+    palette: {
+      primary: {
+        main: COLORS.AUTO_MOREIRA_NAVY[700]
+      },
+      secondary: {
+        light: darkMode ? '#ffffff' : COLORS.AUTO_MOREIRA_NAVY[700],
+        dark: darkMode ? '#ffffff' : COLORS.AUTO_MOREIRA_NAVY[700],
+        contrastText: darkMode ? '#ffffff' : COLORS.AUTO_MOREIRA_NAVY[700],
+        main: darkMode ? '#ffffff' : COLORS.AUTO_MOREIRA_NAVY[700]
+      }
+    },
+    typography: {
+      fontFamily: ['Poppins', 'sans-serif'].join(',')
+    }
+  });
 
   return (
     <>
-      <AutoMoreiraLoader open={currentLoader} />
-      <AlertModal
-        title={currentModal.modal.title}
-        message={currentModal.modal.message}
-        isOpen={currentModal.modal.open}
-        onOk={() => dispatch(closeModal())}
-        type={currentModal.modal.type}
-      />
-      <AutoMoreiraSnackbar
-        type={currentSnackBar.snackBar.type}
-        message={currentSnackBar.snackBar.message}
-        open={currentSnackBar.snackBar.open}
-        onClose={() => dispatch(closeSnackBar())}
-      />
-
-      {user ? <Admin /> : <Auth />}
+      <ThemeProvider theme={theme}>
+        <AutoMoreiraLoader open={currentLoader} />
+        <AlertModal
+          title={currentModal.modal.title}
+          message={currentModal.modal.message}
+          isOpen={currentModal.modal.open}
+          onOk={() => dispatch(closeModal())}
+          type={currentModal.modal.type}
+        />
+        <AutoMoreiraSnackbar
+          type={currentSnackBar.snackBar.type}
+          message={currentSnackBar.snackBar.message}
+          open={currentSnackBar.snackBar.open}
+          onClose={() => dispatch(closeSnackBar())}
+        />
+        {user ? <Admin /> : <Auth />}
+      </ThemeProvider>
     </>
   );
 };

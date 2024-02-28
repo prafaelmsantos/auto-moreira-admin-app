@@ -1,3 +1,5 @@
+
+import { Status, StatusGraphQLConverted } from "./enums/StatusEnum";
 import { clientMessages_clientMessages_nodes } from "./graphQL/types/clientMessages";
 
 
@@ -7,6 +9,7 @@ export interface IClientMessage {
   email: string;
   phoneNumber: number;
   message: string;
+  status: Status;
   createdDate: Date;
 }
 
@@ -19,6 +22,7 @@ export function convertToClientMessage(
     email: String(clientMessage.email),
     phoneNumber: Number(clientMessage.phoneNumber),
     message: String(clientMessage.message),
+    status: StatusGraphQLConverted(clientMessage.status),
     createdDate: new Date(clientMessage.createdDate)
   };
 }

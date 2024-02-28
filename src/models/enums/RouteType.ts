@@ -12,5 +12,6 @@ export enum RouteName {
   USERS = 'users',
   ROLES = 'roles',
   PROFILE = 'profile',
-  SIGN_IN = 'sign-in'
+  SIGN_IN = 'sign-in',
+  RESET_PASSWORD = 'reset-password'
 }

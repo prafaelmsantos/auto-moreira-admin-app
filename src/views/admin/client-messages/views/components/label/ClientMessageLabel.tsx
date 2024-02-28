@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import { COLORS } from '../../../../../../utils/Colors';
 
 export default function ClientMessageLabel(
-  field: string | number,
+  field: string | number | boolean,
   isLabel: boolean = false
 ) {
   const darkMode = useSelector((state: RootState) => state.darkModeSlice.dark);

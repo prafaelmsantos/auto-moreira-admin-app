@@ -12,7 +12,7 @@ import { MarkFilterInput, MarkSortInput } from "./../../../../../../models/graph
 export interface marks_marks_nodes {
   __typename: "Mark";
   id: number;
-  name: string | null;
+  name: string;
 }
 
 export interface marks_marks {
@@ -21,7 +21,7 @@ export interface marks_marks {
   /**
    * A flattened list of the nodes.
    */
-  nodes: (marks_marks_nodes | null)[] | null;
+  nodes: marks_marks_nodes[] | null;
 }
 
 export interface marks {

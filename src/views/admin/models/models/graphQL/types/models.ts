@@ -12,15 +12,15 @@ import { ModelFilterInput, ModelSortInput } from "./../../../../../../models/gra
 export interface models_models_nodes_mark {
   __typename: "Mark";
   id: number;
-  name: string | null;
+  name: string;
 }
 
 export interface models_models_nodes {
   __typename: "Model";
   id: number;
-  name: string | null;
+  name: string;
   markId: number;
-  mark: models_models_nodes_mark | null;
+  mark: models_models_nodes_mark;
 }
 
 export interface models_models {
@@ -29,7 +29,7 @@ export interface models_models {
   /**
    * A flattened list of the nodes.
    */
-  nodes: (models_models_nodes | null)[] | null;
+  nodes: models_models_nodes[] | null;
 }
 
 export interface models {

@@ -2,7 +2,7 @@ interface IErrorResponse {
   message?: string;
 }
 
-async function getErrorMessage(response: Response): Promise<string> {
+export async function getErrorMessage(response: Response): Promise<string> {
   try {
     return (
       (await (response.json() as Promise<IErrorResponse>)).message ||

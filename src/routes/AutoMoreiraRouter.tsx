@@ -2,7 +2,7 @@ import { Navigate, useRoutes } from 'react-router-dom';
 import Vehicles from '../views/admin/vehicles/Vehicles';
 import Marks from '../views/admin/marks/Marks';
 import Models from '../views/admin/models/Models';
-import SignIn from '../views/auth/SignIn';
+import SignIn from '../views/auth/views/SignIn';
 import Profile from '../views/admin/users/views/profile/Profile';
 import Mark from '../views/admin/marks/views/Mark';
 import Dashboard from '../views/admin/dashboard/Dashboard';
@@ -15,10 +15,7 @@ import ClientMessage from '../views/admin/client-messages/views/ClientMessage';
 import Roles from '../views/admin/roles/Roles';
 import User from '../views/admin/users/views/User';
 import Role from '../views/admin/roles/views/Role';
-
-interface IAutoMoreiraRouter {
-  routeType: RouteType;
-}
+import ResetPassword from '../views/auth/views/reset-password/ResetPassword';
 
 export const AdminRoutes = [
   {
@@ -104,9 +101,18 @@ const AuthRoutes = [
     path: '/auth/sign-in',
     element: <SignIn />,
     id: RouteName.SIGN_IN
+  },
+  {
+    path: '/auth/reset-password',
+    element: <ResetPassword />,
+    id: RouteName.RESET_PASSWORD
   }
 ];
 
-export default function AutoMoreiraRouter({ routeType }: IAutoMoreiraRouter) {
+export default function AutoMoreiraRouter({
+  routeType
+}: {
+  routeType: RouteType;
+}) {
   return useRoutes(routeType === RouteType.ADMIN ? AdminRoutes : AuthRoutes);
 }

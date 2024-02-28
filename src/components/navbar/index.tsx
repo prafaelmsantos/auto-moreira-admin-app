@@ -1,10 +1,7 @@
-import { useState } from 'react';
-
 import { FiAlignJustify } from 'react-icons/fi';
 import { Link, useNavigate } from 'react-router-dom';
 import navbarimage from '../../assets/img/auth/back.jpg';
 import { BsArrowBarUp } from 'react-icons/bs';
-import { FiSearch } from 'react-icons/fi';
 import { RiMoonFill, RiSunFill } from 'react-icons/ri';
 import {
   IoMdNotificationsOutline,
@@ -17,7 +14,7 @@ import { useAppDispatch } from '../../redux/hooks';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
 import { setDarkMode } from '../../redux/darkModeSlice';
-import AuthService from '../../views/auth/services/AuthService';
+import { logout } from '../../views/auth/services/AuthService';
 
 const Navbar = (props: {
   currentRoute: ICurrentRoute;
@@ -28,9 +25,7 @@ const Navbar = (props: {
   const { currentRoute, setOpen, open } = props;
 
   const dispatch = useAppDispatch();
-
-  //const [darkmode, setDarkmode] = useState(false);
-
+  const navigate = useNavigate();
   const darkMode = useSelector((state: RootState) => state.darkModeSlice.dark);
   const user = useSelector((state: RootState) => state.userSlice.user);
 
@@ -208,7 +203,7 @@ const Navbar = (props: {
                 </Link>
 
                 <Link
-                  onClick={() => AuthService.Logout(dispatch)}
+                  onClick={() => logout(dispatch, navigate)}
                   to={'/auth/sign-in'}
                   className="mt-3 text-sm font-medium text-red-500 hover:text-red-500"
                 >

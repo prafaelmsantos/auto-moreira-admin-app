@@ -4,12 +4,15 @@ import TextFieldFormValidation from '../../../../../../components/form/TextField
 interface IGeneral {
   name: string;
   label: string;
-  value: string | null;
+  value?: string | null;
   required?: boolean;
   error?: boolean;
   helperText?: string;
   control: Control<any>;
   disabled?: boolean;
+  type?: string;
+  multiline?: boolean;
+  rows?: number;
 }
 
 const GeneralCard = ({
@@ -20,7 +23,10 @@ const GeneralCard = ({
   helperText,
   control,
   name,
-  disabled
+  disabled,
+  type,
+  multiline,
+  rows
 }: IGeneral) => {
   return (
     <div className="items-start justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 shadow-3xl shadow-shadow-500 dark:!bg-navy-700 dark:shadow-none">
@@ -37,6 +43,9 @@ const GeneralCard = ({
           variant="standard"
           disabled={disabled}
           disableUnderline={disabled}
+          type={type}
+          multiline={multiline}
+          rows={rows}
         />
       </p>
     </div>
