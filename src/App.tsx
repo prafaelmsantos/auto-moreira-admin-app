@@ -1,20 +1,24 @@
 import { useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { useAppDispatch } from './redux/hooks';
-import { setUser } from './redux/userSlice';
 import { closeModal } from './redux/modalSlice';
 
 import { RootState } from './redux/store';
 import AutoMoreiraSnackbar from './components/snackBar/AutoMoreiraSnackbar';
 import AutoMoreiraLoader from './components/loader/AutoMoreiraLoader';
 
-import { getCurrentUser } from './config/localStorage';
 import Auth from './layouts/auth';
 import Admin from './layouts/admin';
 import AlertModal from './components/modal/AlertModal';
 import { closeSnackBar } from './redux/snackBarSlice';
 import { ThemeProvider, createTheme } from '@mui/material';
 import { COLORS } from './utils/Colors';
+import { getUser } from './views/admin/users/services/UserService';
+import { setLoader, setToInitialLoader } from './redux/loaderSlice';
+import {
+  getCurrentUser,
+  setCurrentUser
+} from './views/auth/services/AuthService';
 
 const App = () => {
   const dispatch = useAppDispatch();
@@ -22,10 +26,24 @@ const App = () => {
   const user = getCurrentUser();
 
   useEffect(() => {
-    user && dispatch(setUser(user));
+    if (user) {
+      dispatch(setLoader(true));
+      getUser(user.id)
+        .then((data) => {
+          setCurrentUser(data, dispatch);
+          dispatch(setToInitialLoader());
+        })
+        .catch((e) => {
+          dispatch(setToInitialLoader());
+        });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const currentUser = useSelector((state: RootState) => state.userSlice.user);
+  /*   useEffect(() => {
+    user && dispatch(setUser(user));
+  }, []); */
+
   const currentLoader = useSelector(
     (state: RootState) => state.loaderSlice.loader
   );
@@ -51,6 +69,16 @@ const App = () => {
       fontFamily: ['Poppins', 'sans-serif'].join(',')
     }
   });
+
+  useEffect(() => {
+    if (!darkMode) {
+      document.body.classList.remove('dark');
+    } else {
+      document.body.classList.add('dark');
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [darkMode]);
 
   return (
     <>

@@ -1,16 +1,16 @@
-import InputField from '../../../components/fields/InputField';
-import { IUserLogin } from '../models/Auth';
-import { MessageType } from '../../../models/enums/MessageTypeEnum';
-import { setModal } from '../../../redux/modalSlice';
-import { useAppDispatch } from '../../../redux/hooks';
+import InputField from '../../../../components/fields/InputField';
+import { IUserLogin } from '../../models/Auth';
+import { MessageType } from '../../../../models/enums/MessageTypeEnum';
+import { setModal } from '../../../../redux/modalSlice';
+import { useAppDispatch } from '../../../../redux/hooks';
 import { useNavigate } from 'react-router-dom';
-import { login, setCurrentUser } from '../services/AuthService';
-import { setSnackBar } from '../../../redux/snackBarSlice';
-import { setLoader, setToInitialLoader } from '../../../redux/loaderSlice';
-import { mainNavigate } from './utils/Utils';
+import { login, setCurrentUser } from '../../services/AuthService';
+import { setSnackBar } from '../../../../redux/snackBarSlice';
+import { setLoader, setToInitialLoader } from '../../../../redux/loaderSlice';
+import { mainNavigate } from '../utils/Utils';
 import { FormProvider, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { SignInValidationSchema } from '../services/SignInValidationSchema';
+import { SignInValidationSchema } from '../../services/SignInValidationSchema';
 
 export default function SignIn() {
   const dispatch = useAppDispatch();
@@ -20,7 +20,6 @@ export default function SignIn() {
     resolver: yupResolver(SignInValidationSchema)
   });
   const {
-    reset,
     handleSubmit,
     register,
     formState: { errors }
@@ -35,7 +34,7 @@ export default function SignIn() {
         dispatch(
           setSnackBar({
             open: true,
-            message: `Bem-vindo ${user.userName}`,
+            message: `Bem-vindo ${user.email}`,
             type: MessageType.SUCCESS
           })
         );
@@ -63,20 +62,20 @@ export default function SignIn() {
         <div className="mt-[10vh] w-full max-w-full flex-col items-center md:pl-4 lg:pl-0 xl:max-w-[420px]">
           <h4 className="mb-2.5 text-4xl font-bold text-white">Entrar</h4>
           <p className="mb-9 ml-1 text-base text-gray-600">
-            Insira o seu nome de utilizador e a sua palavra-passe
+            Insira o seu email e a sua palavra-passe
           </p>
 
           {/* Email */}
           <InputField
             variant="auth"
             extra="mb-3"
-            label="Nome de Utilizador*"
+            label="Email*"
             placeholder="cr7master"
-            id="username"
+            id="email"
             type="text"
-            register={register('userName')}
-            error={!!errors.userName}
-            helperText={errors.userName?.message}
+            register={register('email')}
+            error={!!errors.email}
+            helperText={errors.email?.message}
           />
 
           {/* Password */}

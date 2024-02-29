@@ -21,7 +21,6 @@ const Profile = () => {
 
   const userAuth = useSelector((state: RootState) => state.userSlice.user);
   const [user, setUser] = useState<IUser>({
-    userName: '',
     firstName: '',
     lastName: '',
     token: null,

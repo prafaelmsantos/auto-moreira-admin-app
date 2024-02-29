@@ -9,11 +9,6 @@ export const columns: GridColDef[] = [
     width: 50
   },
   {
-    field: 'userName',
-    headerName: 'Nome de Utilizador',
-    width: 200
-  },
-  {
     field: 'email',
     headerName: 'Email',
     width: 200
@@ -37,7 +32,7 @@ export const columns: GridColDef[] = [
     field: 'roles',
     headerName: 'Cargo',
     width: 200,
-    valueFormatter: (params) => (params.value as IRole[])[0] ?? 'Sem cargo'
+    valueFormatter: (params) => (params.value as IRole[])[0].name ?? 'Sem cargo'
   },
   {
     field: 'actions',

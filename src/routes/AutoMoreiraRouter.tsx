@@ -2,7 +2,7 @@ import { Navigate, useRoutes } from 'react-router-dom';
 import Vehicles from '../views/admin/vehicles/Vehicles';
 import Marks from '../views/admin/marks/Marks';
 import Models from '../views/admin/models/Models';
-import SignIn from '../views/auth/views/SignIn';
+import SignIn from '../views/auth/views/sign-in/SignIn';
 import Profile from '../views/admin/users/views/profile/Profile';
 import Mark from '../views/admin/marks/views/Mark';
 import Dashboard from '../views/admin/dashboard/Dashboard';

@@ -1,12 +1,12 @@
 export interface IUserRegistration {
-  userName: string;
+  email: string;
   password: string;
   firstName: string;
   lastName: string;
 }
 
 export interface IUserLogin {
-  userName: string;
+  email: string;
   password: string;
 }
 

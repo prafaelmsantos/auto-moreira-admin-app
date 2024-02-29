@@ -17,14 +17,14 @@ export default function ResetPassword() {
     IResetPasswordMode.START
   );
 
-  const methods = useForm<{ userName: string }>({
+  const methods = useForm<{ email: string }>({
     resolver: yupResolver(ResetPasswordValidationSchema)
   });
   const { handleSubmit } = methods;
 
-  const onSubmit = async (user: { userName: string }) => {
+  const onSubmit = async (user: { email: string }) => {
     dispatch(setLoader(true));
-    await resetPassword(user.userName)
+    await resetPassword(user.email)
       .then(() => {
         dispatch(setToInitialLoader());
         setMode(IResetPasswordMode.END);

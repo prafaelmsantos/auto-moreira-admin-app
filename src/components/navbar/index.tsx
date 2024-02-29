@@ -14,7 +14,12 @@ import { useAppDispatch } from '../../redux/hooks';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
 import { setDarkMode } from '../../redux/darkModeSlice';
-import { logout } from '../../views/auth/services/AuthService';
+import {
+  logout,
+  setCurrentUser,
+  setUserDarkMode
+} from '../../views/auth/services/AuthService';
+import { useCallback } from 'react';
 
 const Navbar = (props: {
   currentRoute: ICurrentRoute;
@@ -28,6 +33,19 @@ const Navbar = (props: {
   const navigate = useNavigate();
   const darkMode = useSelector((state: RootState) => state.darkModeSlice.dark);
   const user = useSelector((state: RootState) => state.userSlice.user);
+
+  const fetchUserDarkMode = useCallback(
+    (darkMode: boolean) => {
+      if (user) {
+        setUserDarkMode(user.id, darkMode).then((data) => {
+          dispatch(setDarkMode(!!data.darkMode));
+          setCurrentUser(data, dispatch);
+        });
+      }
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [user]
+  );
 
   return (
     <nav className="sticky top-4 z-40 flex flex-row flex-wrap items-center justify-between rounded-xl bg-white/10 p-2 backdrop-blur-xl dark:bg-[#0b14374d]">
@@ -152,15 +170,7 @@ const Navbar = (props: {
         />
         <div
           className="cursor-pointer text-gray-600"
-          onClick={() => {
-            if (darkMode) {
-              document.body.classList.remove('dark');
-              dispatch(setDarkMode(false));
-            } else {
-              document.body.classList.add('dark');
-              dispatch(setDarkMode(true));
-            }
-          }}
+          onClick={() => fetchUserDarkMode(!darkMode)}
         >
           {darkMode ? (
             <RiSunFill className="h-4 w-4 text-gray-600 dark:text-white" />
@@ -174,7 +184,7 @@ const Navbar = (props: {
             <img
               className="h-10 w-10 rounded-full"
               src={avatar}
-              alt="Rafael Santos"
+              alt={`${user?.firstName} ${user?.lastName}`}
             />
           }
           children={
@@ -182,7 +192,7 @@ const Navbar = (props: {
               <div className="ml-4 mt-3">
                 <div className="flex items-center gap-2">
                   <p className="text-sm font-bold text-navy-700 dark:text-white">
-                    {'👋 Olá, ' + user?.userName}
+                    {`👋 Olá, ${user?.firstName} ${user?.lastName}`}
                   </p>
                 </div>
               </div>

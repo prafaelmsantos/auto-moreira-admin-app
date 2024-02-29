@@ -4,7 +4,6 @@ import { users_users_nodes } from './graphQL/types/users';
 
 export interface IUser {
   id: number;
-  userName: string;
   firstName: string;
   lastName: string;
   email: string | null;
@@ -13,12 +12,12 @@ export interface IUser {
   password: string | null;
   token: string | null;
   roles: IRole[];
+  darkMode?: boolean;
 }
 
 export function convertToUser(user: users_users_nodes): IUser {
   return {
     id: user.id,
-    userName: String(user.userName),
     firstName: String(user.firstName),
     lastName: String(user.lastName),
     email: String(user.email),

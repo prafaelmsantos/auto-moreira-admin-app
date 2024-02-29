@@ -11,7 +11,6 @@ export const USERS = gql`
       totalCount
       nodes {
         id
-        userName
         firstName
         lastName
         image

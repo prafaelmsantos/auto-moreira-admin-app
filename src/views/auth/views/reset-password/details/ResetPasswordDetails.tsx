@@ -30,8 +30,8 @@ export default function ResetPasswordDetails({
             Recuperar Palavra-passe
           </h4>
           <p className="mb-9 ml-1 text-base text-gray-600">
-            Insira o seu nome de utilizador ou email e enviaremos uma nova
-            palavra-passe para o email registado.
+            Insira o seu email e enviaremos uma nova palavra-passe para o email
+            registado.
           </p>
 
           {/* Email */}
@@ -39,13 +39,13 @@ export default function ResetPasswordDetails({
           <InputField
             variant="auth"
             extra="mb-3"
-            label="Nome de Utilizador/Email*"
+            label="Email*"
             placeholder="cr7master"
-            id="username"
+            id="email"
             type="text"
-            register={register('userName')}
-            error={!!errors.userName}
-            helperText={errors.userName?.message}
+            register={register('email')}
+            error={!!errors.email}
+            helperText={errors.email?.message}
           />
 
           <button

@@ -4,7 +4,7 @@ import { IUser } from '../models/User';
 
 export const UserValidationSchema: Yup.ObjectSchema<IUser> =
     Yup.object().shape({
-      userName: Yup.string().default(''),
+      darkMode: Yup.boolean(),
       firstName: Yup.string()
         .trim()
         .required('O primeiro nome é obrigatório!')
@@ -19,7 +19,6 @@ export const UserValidationSchema: Yup.ObjectSchema<IUser> =
       password: Yup.string().trim().nullable().default(null),
       token: Yup.string().trim().nullable().default(null),
       id: Yup.number().default(0),
-      //roles: Yup.array().default([]),
        roles: Yup.array()
       .of(
         Yup.object().shape({

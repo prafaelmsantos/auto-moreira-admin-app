@@ -44,18 +44,6 @@ export default function UserDetails({ roles }: IUserDetails) {
       <Grid item md={6} xs={12}>
         <GeneralCard
           required
-          name={'userName'}
-          label={'Nome de Utilizador'}
-          error={!!errors.userName}
-          helperText={errors.userName?.message}
-          value={''}
-          {...{ errors, control }}
-        />
-      </Grid>
-
-      <Grid item md={6} xs={12}>
-        <GeneralCard
-          required
           name={'email'}
           label={'Email'}
           error={!!errors.email}
@@ -65,7 +53,7 @@ export default function UserDetails({ roles }: IUserDetails) {
         />
       </Grid>
 
-      <Grid item md={6} xs={12}>
+      <Grid item md={3} xs={12}>
         <GeneralCard
           required
           name={'phoneNumber'}
@@ -77,7 +65,7 @@ export default function UserDetails({ roles }: IUserDetails) {
         />
       </Grid>
 
-      <Grid item md={6} xs={12}>
+      <Grid item md={3} xs={12}>
         <AutoMoreiraLabel
           label="Cargo"
           children={

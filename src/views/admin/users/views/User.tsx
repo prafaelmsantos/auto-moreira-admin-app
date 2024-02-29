@@ -33,7 +33,6 @@ export default function User() {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const [user, setUser] = useState<IUser>({
-    userName: '',
     firstName: '',
     lastName: '',
     token: null,
