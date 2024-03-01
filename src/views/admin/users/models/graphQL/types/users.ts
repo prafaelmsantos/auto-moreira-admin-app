@@ -18,7 +18,6 @@ export interface users_users_nodes_roles {
 export interface users_users_nodes {
   __typename: "User";
   id: number;
-  userName: string | null;
   firstName: string;
   lastName: string;
   image: string | null;

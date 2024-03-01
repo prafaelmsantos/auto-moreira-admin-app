@@ -38,8 +38,8 @@ export default function User() {
     token: null,
     password: null,
     image: null,
-    email: null,
-    phoneNumber: null,
+    email: '',
+    phoneNumber: '',
     roles: [],
     id: 0
   });

@@ -13,8 +13,8 @@ export const UserValidationSchema: Yup.ObjectSchema<IUser> =
         .trim()
         .required('O ultimo nome é obrigatório!')
         .default(''),
-      email: Yup.string().trim().default(''),
-      phoneNumber: Yup.string().trim().nullable().default(null),
+      email: Yup.string().trim().required('O email é obrigatório!').default(''),
+      phoneNumber: Yup.string().trim().required('O telémovel é obrigatório!').default(null),
       image: Yup.string().trim().nullable().default(null),
       password: Yup.string().trim().nullable().default(null),
       token: Yup.string().trim().nullable().default(null),
@@ -24,9 +24,10 @@ export const UserValidationSchema: Yup.ObjectSchema<IUser> =
         Yup.object().shape({
           name: Yup.string().default(''),
           id: Yup.number().default(0),
+          isDefault: Yup.boolean().default(false),
         })
       )
-      .default([]), 
+      .default([]).min(1, 'O cargo é obrigatório!'), 
     });
 
     export type IUserValidationSchema = Yup.InferType<typeof UserValidationSchema>;

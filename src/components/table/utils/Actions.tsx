@@ -11,13 +11,15 @@ interface IActions {
   routeName: RouteName;
   id: number;
   onlyDelete?: boolean;
+  disabled?: boolean;
 }
 
 export default function Actions({
   editTitle,
   deleteTitle,
   routeName,
-  id
+  id,
+  disabled
 }: IActions) {
   const navigate = useNavigate();
 
@@ -41,6 +43,7 @@ export default function Actions({
 
       <Tooltip title={deleteTitle} arrow>
         <IconButton
+          disabled={disabled}
           sx={{
             '&:hover': { background: red[100] },
             color: red[500]

@@ -12,6 +12,7 @@ export const ROLES = gql`
       nodes {
         id
         name
+        isDefault
       }
     }
   }

@@ -74,7 +74,6 @@ export default function Model() {
   const handleClose = () => navigate(modelListNavigate);
 
   const handleSumbitEdit = async (model: IModel) => {
-    console.log(model);
     dispatch(setLoader(true));
     updateModel(model)
       .then(() => {

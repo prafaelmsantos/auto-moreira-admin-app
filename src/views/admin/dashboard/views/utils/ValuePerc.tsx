@@ -12,7 +12,7 @@ const ValuePerc = ({ valuePerc }: { valuePerc: number }) => {
         valuePerc < 0 && (
           <>
             <MdArrowDropDown className="font-medium text-red-500" />
-            <p className="text-sm font-bold text-red-500">{`-${valuePerc}%`}</p>
+            <p className="text-sm font-bold text-red-500">{`${valuePerc}%`}</p>
           </>
         )
       )}

@@ -6,7 +6,6 @@ import { COLORS } from '../../utils/Colors';
 import { SwitchSX } from './style/SwitchSX';
 
 type ISwitchFormValidation = {
-  checked?: boolean;
   control: Control<any, any>;
   name: string;
   label: string;
@@ -15,7 +14,6 @@ type ISwitchFormValidation = {
 
 export default function SwitchFormValidation({
   control,
-  checked,
   name,
   label,
   label1
@@ -35,8 +33,8 @@ export default function SwitchFormValidation({
       <Controller
         name={name}
         control={control}
-        render={({ field }) => (
-          <Switch defaultChecked={checked} {...field} sx={SwitchSX()} />
+        render={({ field: { onChange, value } }) => (
+          <Switch onChange={onChange} checked={!!value} sx={SwitchSX()} />
         )}
       />
 

@@ -1,9 +1,11 @@
-import { TextField } from '@mui/material';
+import { IconButton, InputAdornment, TextField } from '@mui/material';
 import { Control, Controller } from 'react-hook-form';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
 import { COLORS } from '../../utils/Colors';
 import { TextFieldSX } from './style/TextFieldSX';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import Visibility from '@mui/icons-material/Visibility';
 
 type ITextFieldFormValidation = {
   error?: boolean;
@@ -19,6 +21,9 @@ type ITextFieldFormValidation = {
   variant?: 'outlined' | 'standard' | 'filled';
   disableUnderline?: boolean;
   disabled?: boolean;
+  endAdornment?: boolean;
+  showPassword?: boolean;
+  handleClickShowPassword?: () => void;
 };
 
 export default function TextFieldFormValidation({
@@ -34,7 +39,10 @@ export default function TextFieldFormValidation({
   rows,
   variant,
   disableUnderline,
-  disabled
+  disabled,
+  endAdornment,
+  showPassword,
+  handleClickShowPassword
 }: ITextFieldFormValidation) {
   const darkMode = useSelector((state: RootState) => state.darkModeSlice.dark);
   const redColor = '#d32f2f';
@@ -45,7 +53,7 @@ export default function TextFieldFormValidation({
         <TextField
           {...field}
           required={required}
-          type={type}
+          type={endAdornment ? (showPassword ? type : 'password') : type}
           label={label}
           disabled={disabled}
           multiline={multiline}
@@ -57,6 +65,20 @@ export default function TextFieldFormValidation({
           defaultValue={defaultValue}
           variant={variant}
           InputProps={{
+            endAdornment: endAdornment && !disabled && (
+              <InputAdornment position="end">
+                <IconButton
+                  color={'secondary'}
+                  aria-label="toggle password visibility"
+                  onClick={() =>
+                    handleClickShowPassword && handleClickShowPassword()
+                  }
+                  edge="end"
+                >
+                  {showPassword ? <VisibilityOff /> : <Visibility />}
+                </IconButton>
+              </InputAdornment>
+            ),
             disableUnderline: disableUnderline,
             style: {
               color: error

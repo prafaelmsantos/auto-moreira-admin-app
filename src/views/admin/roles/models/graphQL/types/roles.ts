@@ -13,6 +13,7 @@ export interface roles_roles_nodes {
   __typename: "Role";
   id: number;
   name: string | null;
+  isDefault: boolean;
 }
 
 export interface roles_roles {

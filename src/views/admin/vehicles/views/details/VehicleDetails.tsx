@@ -1,5 +1,4 @@
 import { Autocomplete, Grid, TextField } from '@mui/material';
-import TextFieldFormValidation from '../../../../../components/form/TextFieldFormValidation';
 
 import { IMark } from '../../../marks/models/Mark';
 import { IModel } from '../../../models/models/Model';
@@ -9,8 +8,6 @@ import { Controller, useFormContext } from 'react-hook-form';
 import { AutocompleteSX } from '../../../../../components/form/style/AutocompleteSX';
 import SwitchFormValidation from '../../../../../components/form/SwitchFormValidation';
 import { IVehicleValidationSchema } from '../../services/VehicleValidationSchema';
-import AutoCompleteFormValidation from '../../../../../components/form/AutoCompleteFormValidation';
-import { useEffect } from 'react';
 import AutoMoreiraLabel from '../../../../../components/form/AutoMoreiraLabel';
 import GeneralCard from '../../../users/views/components/card/GeneralCard';
 import { VehicleKeys } from '../../models/Vehicle';
@@ -268,7 +265,7 @@ export default function VehicleDetails({ models, marks }: IVehicleDetails) {
           type="number"
         />
       </Grid>
-      <Grid item md={2} xs={6}>
+      <Grid item md={4} lg={2} xs={6}>
         <AutoMoreiraLabel
           label="Oportunidade"
           children={
@@ -281,7 +278,7 @@ export default function VehicleDetails({ models, marks }: IVehicleDetails) {
           }
         />
       </Grid>
-      <Grid item md={2} xs={6}>
+      <Grid item md={4} lg={2} xs={6}>
         <AutoMoreiraLabel
           label="Vendido"
           children={

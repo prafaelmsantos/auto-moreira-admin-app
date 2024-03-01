@@ -140,7 +140,7 @@ const Dashboard = () => {
         <LineChart
           value={CurrencyFormatter.format(vehicleLineChart.value)}
           valuePerc={vehicleLineChart.valuePerc}
-          title={'Vendas'}
+          title={`Vendas ${new Date().getFullYear()}`}
           statistics={
             vehicleLineChart.statistics.length !== 0
               ? vehicleLineChart.statistics.map((x) => x.value)
@@ -166,7 +166,7 @@ const Dashboard = () => {
         <LineChart
           valuePerc={visitorLineChart.valuePerc}
           value={visitorLineChart.value.toString()}
-          title={'Visitantes'}
+          title={`Visitantes ${new Date().getFullYear()}`}
           statistics={
             visitorLineChart.visitors.length !== 0
               ? visitorLineChart.visitors.map((x) => x.value)

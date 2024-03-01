@@ -99,13 +99,13 @@ const CarWidget = () => {
       <Widget
         icon={<MdBarChart className="h-7 w-7" />}
         title={'Total Visitantes (este mês)'}
-        subtitle={`${visitorCounter.total}`}
+        subtitle={`${visitorCounter.totalMonth}`}
       />
 
       <Widget
         icon={<MdBarChart className="h-7 w-7" />}
         title={'Total Visitantes'}
-        subtitle={`${visitorCounter.totalMonth}`}
+        subtitle={`${visitorCounter.total}`}
       />
     </div>
   );

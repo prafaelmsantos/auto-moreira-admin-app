@@ -13,6 +13,9 @@ interface IGeneral {
   type?: string;
   multiline?: boolean;
   rows?: number;
+  endAdornment?: boolean;
+  showPassword?: boolean;
+  handleClickShowPassword?: () => void;
 }
 
 const GeneralCard = ({
@@ -26,7 +29,10 @@ const GeneralCard = ({
   disabled,
   type,
   multiline,
-  rows
+  rows,
+  endAdornment,
+  showPassword,
+  handleClickShowPassword
 }: IGeneral) => {
   return (
     <div className="items-start justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 shadow-3xl shadow-shadow-500 dark:!bg-navy-700 dark:shadow-none">
@@ -46,6 +52,9 @@ const GeneralCard = ({
           type={type}
           multiline={multiline}
           rows={rows}
+          endAdornment={endAdornment}
+          showPassword={showPassword}
+          handleClickShowPassword={handleClickShowPassword}
         />
       </p>
     </div>

@@ -67,7 +67,7 @@ export default function UserDetails({ roles }: IUserDetails) {
 
       <Grid item md={3} xs={12}>
         <AutoMoreiraLabel
-          label="Cargo"
+          label="Cargo*"
           children={
             <Controller
               render={({ field: { value, ...field } }) => (
@@ -90,12 +90,11 @@ export default function UserDetails({ roles }: IUserDetails) {
                       sx={AutocompleteSX(!!errors.roles)}
                     />
                   )}
-                  onChange={(_, data) => field.onChange([data])}
+                  onChange={(_, data) => field.onChange(data ? [data] : [])}
                 />
               )}
               name={'roles'}
               control={control}
-              //defaultValue={user.roles}
             />
           }
         />

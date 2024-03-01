@@ -1,19 +1,9 @@
-import {
-  FormControl,
-  Grid,
-  InputLabel,
-  MenuItem,
-  Select,
-  TextField
-} from '@mui/material';
+import { FormControl, Grid, MenuItem, Select, TextField } from '@mui/material';
 import { IClientMessage } from '../../models/ClientMessage';
 import { TextFieldSX } from '../../../../../components/form/style/TextFieldSX';
 import ClientMessageLabel from '../components/label/ClientMessageLabel';
-import {
-  AutocompleteSX,
-  SelectSX
-} from '../../../../../components/form/style/AutocompleteSX';
-import { StatusConverted, StatusMenu } from '../../models/enums/StatusEnum';
+import { SelectSX } from '../../../../../components/form/style/AutocompleteSX';
+import { StatusMenu } from '../../models/enums/StatusEnum';
 
 interface IClientMessageDetails {
   clientMessage: IClientMessage;

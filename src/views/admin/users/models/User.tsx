@@ -6,13 +6,19 @@ export interface IUser {
   id: number;
   firstName: string;
   lastName: string;
-  email: string | null;
-  phoneNumber: string | null;
+  email: string;
+  phoneNumber: string;
   image: string | null;
   password: string | null;
   token: string | null;
   roles: IRole[];
   darkMode?: boolean;
+}
+
+export interface IUserUpdatePassword {
+  email: string;
+  password: string;
+  confirmPassword: string;
 }
 
 export function convertToUser(user: users_users_nodes): IUser {

@@ -25,7 +25,7 @@ export default function Role() {
   const param = useParams();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const [role, setRole] = useState<IRole>({ id: 0, name: '' });
+  const [role, setRole] = useState<IRole>({ id: 0, name: '', isDefault: false });
   const roleId = Number(param.id);
   const match = useMatch(addRoleNavigate);
   const [mode, setMode] = useState<IMode>();
