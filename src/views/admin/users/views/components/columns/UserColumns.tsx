@@ -11,17 +11,17 @@ export const columns: GridColDef[] = [
   {
     field: 'email',
     headerName: 'Email',
-    width: 200
-  },
-  {
-    field: 'lastName',
-    headerName: 'Ultimo Nome',
-    width: 200
+    width: 300
   },
   {
     field: 'firstName',
     headerName: 'Primeiro Nome',
-    width: 200
+    width: 180
+  },
+  {
+    field: 'lastName',
+    headerName: 'Ultimo Nome',
+    width: 180
   },
   {
     field: 'phoneNumber',

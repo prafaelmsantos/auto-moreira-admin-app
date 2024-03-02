@@ -4,15 +4,10 @@ import { ModelKeys } from '../../models/Model';
 import { IMark } from '../../../marks/models/Mark';
 import { IModelValidationSchema } from '../../services/ModelValidationSchema';
 import GeneralCard from '../../../users/views/components/card/GeneralCard';
-import AutoCompleteFormValidation from '../../../../../components/form/AutoCompleteFormValidation';
+import AutoMoreiraLabel from '../../../../../components/form/AutoMoreiraLabel';
 import { AutocompleteSX } from '../../../../../components/form/style/AutocompleteSX';
-import { InputPropsSX } from '../../../../../components/form/style/InputPropsSX';
 
-interface IModelDetails {
-  marks: IMark[];
-}
-
-export default function ModelDetails({ marks }: IModelDetails) {
+export default function ModelDetails({ marks }: { marks: IMark[] }) {
   const {
     control,
     formState: { errors }
@@ -33,16 +28,38 @@ export default function ModelDetails({ marks }: IModelDetails) {
         />
       </Grid>
       <Grid item md={6} xs={12}>
-        <AutoCompleteFormValidation
-          {...{ errors }}
-          control={control}
-          required
-          name={ModelKeys.markId}
+        <AutoMoreiraLabel
+          children={
+            <Controller
+              render={({ field: { onChange, ...others } }) => (
+                <Autocomplete
+                  {...others}
+                  sx={{ mt: 1 }}
+                  isOptionEqualToValue={(option, value) => option === value}
+                  options={marks.map((x) => x.id)}
+                  getOptionLabel={(option) =>
+                    marks.find((x) => x.id === option)?.name ?? ''
+                  }
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      required
+                      variant="standard"
+                      error={!!errors.markId}
+                      helperText={errors.markId?.message}
+                      sx={AutocompleteSX(!!errors.markId)}
+                    />
+                  )}
+                  onChange={(_, data) => onChange(data)}
+                />
+              )}
+              name={ModelKeys.markId}
+              control={control}
+            />
+          }
           label={'Marca'}
           error={!!errors.markId}
-          helperText={errors.markId?.message}
-          defaultValue={''}
-          options={marks}
+          required
         />
       </Grid>
     </Grid>

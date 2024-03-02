@@ -18,7 +18,7 @@ export const columns: GridColDef[] = [
   {
     field: 'email',
     headerName: 'Email',
-    width: 200
+    width: 280
   },
   {
     field: 'phoneNumber',

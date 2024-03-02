@@ -16,6 +16,7 @@ import Roles from '../views/admin/roles/Roles';
 import User from '../views/admin/users/views/User';
 import Role from '../views/admin/roles/views/Role';
 import ResetPassword from '../views/auth/views/reset-password/ResetPassword';
+import { getCurrentUser } from '../views/auth/services/AuthService';
 
 export const AdminRoutes = [
   {
@@ -23,11 +24,6 @@ export const AdminRoutes = [
     element: <Navigate to="/admin/dashboard" replace />,
     id: RouteName.DASHBOARD
   },
-  /* {
-      path: '/admin/*',
-      element: <Dashboard />,
-      id: 'dashboard'
-    }, */
   {
     path: '/admin/dashboard',
     element: <Dashboard />,
@@ -114,5 +110,14 @@ export default function AutoMoreiraRouter({
 }: {
   routeType: RouteType;
 }) {
-  return useRoutes(routeType === RouteType.ADMIN ? AdminRoutes : AuthRoutes);
+  const userAdmin = !!getCurrentUser()?.roles[0].isDefault;
+  return useRoutes(
+    routeType === RouteType.ADMIN
+      ? userAdmin
+        ? AdminRoutes
+        : AdminRoutes.filter(
+            (x) => x.id !== RouteName.USERS && x.id !== RouteName.ROLES
+          )
+      : AuthRoutes
+  );
 }

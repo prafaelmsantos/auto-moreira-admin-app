@@ -9,9 +9,10 @@ import {
   clientMessages,
   clientMessages_clientMessages_nodes
 } from './models/graphQL/types/clientMessages';
+import { useEffect } from 'react';
 
 export default function ClientMessages() {
-  const { data, loading } = useQuery<clientMessages>(CLIENT_MESSAGES);
+  const { data, loading, refetch } = useQuery<clientMessages>(CLIENT_MESSAGES);
 
   const rows =
     data?.clientMessages?.nodes
@@ -21,6 +22,11 @@ export default function ClientMessages() {
         )
       )
       ?.sort((a, b) => b.id - a.id) ?? [];
+
+  useEffect(() => {
+    void refetch();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <main>

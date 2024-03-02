@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 
 import Footer from '../../components/footer/Footer';
 import Navbar from '../../components/navbar';
@@ -63,17 +63,6 @@ export default function Admin(props: { [x: string]: any }) {
     }
     return activeNavbar;
   };
-  /*  const getRoutes = (routes: RoutesType[]): any => {
-    return routes.map((prop, key) => {
-      if (prop.layout === '/admin') {
-        return (
-          <Route path={`/${prop.path}`} element={prop.component} key={key} />
-        );
-      } else {
-        return null;
-      }
-    });
-  }; */
 
   const isPerfilRoute = location.pathname.includes('/admin/profile');
 
@@ -98,14 +87,6 @@ export default function Admin(props: { [x: string]: any }) {
               {...rest}
             />
             <div className="pt-5s mx-auto mb-auto h-full min-h-[84vh] p-2 md:pr-2">
-              {/* <Routes>
-                {getRoutes(routes)}
-                <Route
-                  path="/"
-                  element={<Navigate to="/admin/dashboard" replace />}
-                />
-              </Routes> */}
-
               <AutoMoreiraRouter routeType={RouteType.ADMIN} />
             </div>
             <div className="p-3">

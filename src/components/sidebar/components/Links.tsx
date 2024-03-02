@@ -2,6 +2,8 @@
 
 import { Link, useLocation } from 'react-router-dom';
 import DashIcon from '../../icons/DashIcon';
+import { getCurrentUser } from '../../../views/auth/services/AuthService';
+import { RouteName } from '../../../models/enums/RouteType';
 
 export const SidebarLinks = (props: {
   routes: RoutesType[];
@@ -13,9 +15,17 @@ export const SidebarLinks = (props: {
 
   const { routes, setOpen, mobile } = props;
 
+  const userAdmin = !!getCurrentUser()?.roles[0].isDefault;
+
   // verifies if routeName is the one active (in browser input)
   const activeRoute = (routeName: string) =>
     location.pathname.includes(routeName);
+
+  const routesFiltered = userAdmin
+    ? routes
+    : routes.filter(
+        (x) => x.path !== RouteName.USERS && x.path !== RouteName.ROLES
+      );
 
   const createLinks = (routes: RoutesType[]) => {
     return routes.map((route, index) => {
@@ -63,7 +73,7 @@ export const SidebarLinks = (props: {
     });
   };
   // BRAND
-  return <>{createLinks(routes)}</>;
+  return <>{createLinks(routesFiltered)}</>;
 };
 
 export default SidebarLinks;

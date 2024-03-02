@@ -1,16 +1,18 @@
-import { FormControl, Grid, MenuItem, Select, TextField } from '@mui/material';
+import { Autocomplete, Grid, TextField } from '@mui/material';
 import { IClientMessage } from '../../models/ClientMessage';
 import { TextFieldSX } from '../../../../../components/form/style/TextFieldSX';
 import ClientMessageLabel from '../components/label/ClientMessageLabel';
-import { SelectSX } from '../../../../../components/form/style/AutocompleteSX';
+import { AutocompleteSX } from '../../../../../components/form/style/AutocompleteSX';
 import { StatusMenu } from '../../models/enums/StatusEnum';
 
 interface IClientMessageDetails {
   clientMessage: IClientMessage;
+  setClientMessage: React.Dispatch<React.SetStateAction<IClientMessage>>;
 }
 
 export default function ClientMessageDetails({
-  clientMessage
+  clientMessage,
+  setClientMessage
 }: IClientMessageDetails) {
   return (
     <>
@@ -51,19 +53,29 @@ export default function ClientMessageDetails({
               {ClientMessageLabel('Estado', true)}
             </Grid>
             <Grid item xs={6}>
-              <FormControl fullWidth>
-                <Select
-                  variant="standard"
-                  color="secondary"
-                  value={clientMessage.status}
-                  sx={SelectSX(false)}
-                  //onChange={handleChange}
-                >
-                  {StatusMenu.map((x) => (
-                    <MenuItem value={x.id}>{x.name}</MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
+              <Autocomplete
+                value={
+                  StatusMenu.find((x) => x.id === clientMessage.status) ??
+                  StatusMenu[0]
+                }
+                disableClearable
+                autoComplete={false}
+                sx={{ mt: 1 }}
+                isOptionEqualToValue={(option, value) => option === value}
+                options={StatusMenu}
+                getOptionLabel={(option) => option.name}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    required
+                    variant="standard"
+                    sx={AutocompleteSX(false)}
+                  />
+                )}
+                onChange={(_, data) =>
+                  setClientMessage((old) => ({ ...old, status: data.id }))
+                }
+              />
             </Grid>
           </Grid>
         </Grid>
