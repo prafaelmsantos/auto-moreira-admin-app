@@ -7,15 +7,16 @@ import GetActions from '../../../components/base/Actions';
 import PageHolder from '../../../components/base/PageHolder';
 import { IMode } from '../../../models/enums/Base';
 import { addVehicleNavigate } from './views/utils/Utils';
-import { columns } from './views/components/VehicleColumns';
+import { columns } from './views/components/columns/VehicleColumns';
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import {
   vehicles,
   vehicles_vehicles_nodes
 } from './models/graphQL/types/vehicles';
 
 export default function Vehicles() {
+  const [idsToDelete, setIdsToDelete] = useState<number[]>([]);
   const navigate = useNavigate();
   const { data, loading, refetch } = useQuery<vehicles>(VEHICLES);
 
@@ -36,10 +37,11 @@ export default function Vehicles() {
       <PageHolder
         actions={GetActions({
           mode: IMode.LIST,
-          handleAdd
+          handleAdd,
+          idsToDelete
         })}
       />
-      <Table {...{ rows, loading, columns }} />
+      <Table {...{ rows, loading, columns, setIdsToDelete }} />
     </main>
   );
 }

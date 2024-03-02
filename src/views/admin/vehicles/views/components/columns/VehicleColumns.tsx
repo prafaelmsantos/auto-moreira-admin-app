@@ -1,8 +1,8 @@
 import { GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
-import Actions from '../../../../../components/table/utils/Actions';
-import { RouteName } from '../../../../../models/enums/RouteType';
-import { IVehicle, convertBoolean } from '../../models/Vehicle';
-import { FuelTypeConverted } from '../../models/enums/FuelEnum';
+import Actions from '../../../../../../components/table/utils/Actions';
+import { RouteName } from '../../../../../../models/enums/RouteType';
+import { IVehicle, convertBoolean } from '../../../models/Vehicle';
+import { FuelTypeConverted } from '../../../models/enums/FuelEnum';
 
 export const columns: GridColDef[] = [
   {

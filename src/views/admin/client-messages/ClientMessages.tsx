@@ -4,14 +4,17 @@ import { CLIENT_MESSAGES } from './models/graphQL/ClientMessages';
 import { convertToClientMessage } from './models/ClientMessage';
 import Table from '../../../components/table/Table';
 import { columns } from './views/components/Columns/ClientMessageColumns';
-import { Box } from '@mui/material';
 import {
   clientMessages,
   clientMessages_clientMessages_nodes
 } from './models/graphQL/types/clientMessages';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import GetActions from '../../../components/base/Actions';
+import { IMode } from '../../../models/enums/Base';
+import PageHolder from '../../../components/base/PageHolder';
 
 export default function ClientMessages() {
+  const [idsToDelete, setIdsToDelete] = useState<number[]>([]);
   const { data, loading, refetch } = useQuery<clientMessages>(CLIENT_MESSAGES);
 
   const rows =
@@ -30,9 +33,13 @@ export default function ClientMessages() {
 
   return (
     <main>
-      <Box sx={{ mt: 12.3 }}>
-        <Table {...{ rows, loading, columns }} />
-      </Box>
+      <PageHolder
+        actions={GetActions({
+          mode: IMode.LIST,
+          idsToDelete
+        })}
+      />
+      <Table {...{ rows, loading, columns, setIdsToDelete }} />
     </main>
   );
 }

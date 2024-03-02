@@ -1,6 +1,6 @@
 import { useQuery } from '@apollo/client';
 import { useNavigate } from 'react-router-dom';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import PageHolder from '../../../../components/base/PageHolder';
 import GetActions from '../../../../components/base/Actions';
 import { IMode } from '../../../../models/enums/Base';
@@ -14,6 +14,7 @@ import { users, users_users_nodes } from './models/graphQL/types/users';
 
 export default function Users() {
   const navigate = useNavigate();
+  const [idsToDelete, setIdsToDelete] = useState<number[]>([]);
   const { data, loading, refetch } = useQuery<users>(USERS);
 
   const rows =
@@ -33,10 +34,11 @@ export default function Users() {
       <PageHolder
         actions={GetActions({
           mode: IMode.LIST,
-          handleAdd
+          handleAdd,
+          idsToDelete
         })}
       />
-      <Table {...{ rows, loading, columns }} />
+      <Table {...{ rows, loading, columns, setIdsToDelete }} />
     </main>
   );
 }

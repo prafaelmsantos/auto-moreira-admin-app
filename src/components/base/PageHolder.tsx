@@ -40,6 +40,7 @@ export default function PageHolder({ actions }: IPageHolder) {
               actions.map((action, key) => (
                 <Box key={key} sx={{ pb: '0.3rem' }}>
                   <ButtonComponent
+                    size={'small'}
                     disabled={action.disabled}
                     icon={action.icon}
                     onClick={action.callback}

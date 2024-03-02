@@ -1,7 +1,7 @@
 import { GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
 import Actions from '../../../../../../../components/table/utils/Actions';
 import { RouteName } from '../../../../../../../models/enums/RouteType';
-import { IRole, RoleKeys } from '../../../models/Role';
+import { RoleKeys } from '../../../models/Role';
 export const columns: GridColDef[] = [
   {
     field: RoleKeys.id,
@@ -22,7 +22,6 @@ export const columns: GridColDef[] = [
     disableExport: true,
     renderCell: (params: GridRenderCellParams<Date>) => (
       <Actions
-        disabled={(params.row as unknown as IRole).isDefault}
         editTitle={'Editar cargo'}
         deleteTitle={'Apagar cargo'}
         routeName={RouteName.ROLES}

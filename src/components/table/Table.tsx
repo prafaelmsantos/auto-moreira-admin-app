@@ -8,9 +8,15 @@ interface ITable {
   rows: any[];
   loading: boolean;
   columns: GridColDef[];
+  setIdsToDelete: React.Dispatch<React.SetStateAction<number[]>>;
 }
 
-export default function Table({ rows, loading, columns }: ITable) {
+export default function Table({
+  rows,
+  loading,
+  columns,
+  setIdsToDelete
+}: ITable) {
   const darkMode = useSelector((state: RootState) => state.darkModeSlice.dark);
 
   return (
@@ -89,7 +95,8 @@ export default function Table({ rows, loading, columns }: ITable) {
           noRowsLabel: 'Nenhum resultado encontrado.',
           toolbarExportCSV: 'Exportar CSV'
         }}
-        pageSizeOptions={[5, 10, 15, 20]}
+        onStateChange={(data) => setIdsToDelete(data.rowSelection as number[])}
+        pageSizeOptions={[5, 10, 25, 50, 100]}
         checkboxSelection
         disableRowSelectionOnClick
         {...{ columns, loading, rows }}

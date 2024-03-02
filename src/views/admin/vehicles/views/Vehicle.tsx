@@ -17,7 +17,7 @@ import { IVehicle } from '../models/Vehicle';
 import { addVehicleNavigate, vehicleListNavigate } from './utils/Utils';
 import { MODELS } from '../../vehicle-models/models/graphQL/Models';
 import { convertToModel } from '../../vehicle-models/models/Model';
-import VehicleDetails from './details/VehicleDetails';
+import VehicleDetails from './components/tabs/details/VehicleDetails';
 import TabContext from '@mui/lab/TabContext';
 import { VehicleValidationSchema } from '../services/VehicleValidationSchema';
 import {
@@ -67,6 +67,7 @@ export default function Vehicle() {
     opportunity: false,
     sold: false
   });
+
   const vehicleId = Number(param.id);
   const match = useMatch(addVehicleNavigate);
   const [mode, setMode] = useState<IMode>();
@@ -171,9 +172,8 @@ export default function Vehicle() {
       });
   };
 
-  const handleChange = (event: React.SyntheticEvent, newValue: string) => {
+  const handleChange = (event: React.SyntheticEvent, newValue: string) =>
     setValue(newValue);
-  };
 
   return (
     <>
@@ -203,7 +203,6 @@ export default function Vehicle() {
                 <VehicleDetails {...{ vehicle, marks, models }} />
               </TabPanel>
               <TabPanel value="2">Item Two</TabPanel>
-              <TabPanel value="3">Item Three</TabPanel>
             </TabContext>
           </>
         )}

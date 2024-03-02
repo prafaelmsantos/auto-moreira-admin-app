@@ -8,10 +8,11 @@ import PageHolder from '../../../components/base/PageHolder';
 import GetActions from '../../../components/base/Actions';
 import { IMode } from '../../../models/enums/Base';
 import { columns } from './views/components/ModelColumns';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { models, models_models_nodes } from './models/graphQL/types/models';
 
 export default function Models() {
+  const [idsToDelete, setIdsToDelete] = useState<number[]>([]);
   const navigate = useNavigate();
   const { data, loading, refetch } = useQuery<models>(MODELS);
 
@@ -32,10 +33,11 @@ export default function Models() {
       <PageHolder
         actions={GetActions({
           mode: IMode.LIST,
-          handleAdd
+          handleAdd,
+          idsToDelete
         })}
       />
-      <Table {...{ rows, loading, columns }} />
+      <Table {...{ rows, loading, columns, setIdsToDelete }} />
     </main>
   );
 }

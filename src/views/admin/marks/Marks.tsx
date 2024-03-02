@@ -9,10 +9,11 @@ import GetActions from '../../../components/base/Actions';
 import { useNavigate } from 'react-router-dom';
 import { columns } from './views/components/MarkColumns';
 import { addMarkNavigate } from './views/utils/Utils';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { marks, marks_marks_nodes } from './models/graphQL/types/marks';
 
 export default function Marks() {
+  const [idsToDelete, setIdsToDelete] = useState<number[]>([]);
   const navigate = useNavigate();
   const { data, loading, refetch } = useQuery<marks>(MARKS);
 
@@ -33,10 +34,11 @@ export default function Marks() {
       <PageHolder
         actions={GetActions({
           mode: IMode.LIST,
-          handleAdd
+          handleAdd,
+          idsToDelete
         })}
       />
-      <Table {...{ rows, loading, columns }} />
+      <Table {...{ rows, loading, columns, setIdsToDelete }} />
     </main>
   );
 }

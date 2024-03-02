@@ -1,16 +1,16 @@
 import { Autocomplete, Grid, TextField } from '@mui/material';
 
-import { IMark } from '../../../marks/models/Mark';
-import { IModel } from '../../../vehicle-models/models/Model';
-import { fuels } from '../../models/enums/FuelEnum';
-import { transmissions } from '../../models/enums/TransmissionEnum';
+import { IMark } from '../../../../../marks/models/Mark';
+import { IModel } from '../../../../../vehicle-models/models/Model';
+import { fuels } from '../../../../models/enums/FuelEnum';
+import { transmissions } from '../../../../models/enums/TransmissionEnum';
 import { Controller, useFormContext } from 'react-hook-form';
-import { AutocompleteSX } from '../../../../../components/form/style/AutocompleteSX';
-import SwitchFormValidation from '../../../../../components/form/SwitchFormValidation';
-import { IVehicleValidationSchema } from '../../services/VehicleValidationSchema';
-import AutoMoreiraLabel from '../../../../../components/form/AutoMoreiraLabel';
-import GeneralCard from '../../../identity/users/views/components/card/GeneralCard';
-import { VehicleKeys } from '../../models/Vehicle';
+import { AutocompleteSX } from '../../../../../../../components/form/style/AutocompleteSX';
+import SwitchFormValidation from '../../../../../../../components/form/SwitchFormValidation';
+import { IVehicleValidationSchema } from '../../../../services/VehicleValidationSchema';
+import AutoMoreiraLabel from '../../../../../../../components/form/AutoMoreiraLabel';
+import GeneralCard from '../../../../../identity/users/views/components/card/GeneralCard';
+import { VehicleKeys } from '../../../../models/Vehicle';
 
 interface IVehicleDetails {
   marks: IMark[];

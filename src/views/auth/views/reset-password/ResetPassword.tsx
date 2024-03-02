@@ -36,7 +36,7 @@ export default function ResetPassword() {
           setModal({
             title: 'Erro a tentar recuperar a palavra-passe',
             message:
-              'Lamentamos mas o dado inserido não está correto. Por favor, verifique o Nome de utilizador/Email.',
+              'Lamentamos mas o dado inserido não está correto. Por favor, verifique o email.',
             type: MessageType.ERROR,
             open: true
           })

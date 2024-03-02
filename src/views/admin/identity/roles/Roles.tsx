@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { ROLES } from './models/graphQL/Roles';
 
 import { convertToRole } from './models/Role';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import PageHolder from '../../../../components/base/PageHolder';
 import GetActions from '../../../../components/base/Actions';
 import { IMode } from '../../../../models/enums/Base';
@@ -15,6 +15,7 @@ import { roles, roles_roles_nodes } from './models/graphQL/types/roles';
 export default function Roles() {
   const navigate = useNavigate();
   const { data, loading, refetch } = useQuery<roles>(ROLES);
+  const [idsToDelete, setIdsToDelete] = useState<number[]>([]);
 
   const rows =
     data?.roles?.nodes
@@ -33,10 +34,11 @@ export default function Roles() {
       <PageHolder
         actions={GetActions({
           mode: IMode.LIST,
-          handleAdd
+          handleAdd,
+          idsToDelete
         })}
       />
-      <Table {...{ rows, loading, columns }} />
+      <Table {...{ rows, loading, columns, setIdsToDelete }} />
     </main>
   );
 }
