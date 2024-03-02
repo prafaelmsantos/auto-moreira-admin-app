@@ -3,7 +3,7 @@ import { NavigateFunction } from 'react-router-dom';
 import { BASE_API_URL } from '../../../config/variables';
 import { setUser, removeUser } from '../../../redux/userSlice';
 import { IUserRegistration, IUserLogin } from '../models/Auth';
-import { IUser } from '../../admin/users/models/User';
+import { IUser } from '../../admin/identity/users/models/User';
 import {
   getErrorMessage,
   getSessionHeaders,

@@ -1,4 +1,4 @@
-import { TRANSMISSION } from '../../../../../models/graphql-global-types';
+import { TRANSMISSION } from '../../../../../models/graphQL/graphql-global-types';
 
 export enum Transmission {
   MANUAL = 1,

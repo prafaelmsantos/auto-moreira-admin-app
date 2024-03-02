@@ -1,6 +1,6 @@
 import { Grid } from '@mui/material';
 import { MarkKeys } from '../../models/Mark';
-import GeneralCard from '../../../users/views/components/card/GeneralCard';
+import GeneralCard from '../../../identity/users/views/components/card/GeneralCard';
 import { IMarkValidationSchema } from '../../services/MarkValidationSchema';
 import { useFormContext } from 'react-hook-form';
 

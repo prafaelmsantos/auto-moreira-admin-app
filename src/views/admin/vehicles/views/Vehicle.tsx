@@ -6,7 +6,6 @@ import { IMode } from '../../../../models/enums/Base';
 import PageHolder from '../../../../components/base/PageHolder';
 import GetActions from '../../../../components/base/Actions';
 import Box from '@mui/material/Box';
-import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
@@ -16,8 +15,8 @@ import { MARKS } from '../../marks/models/graphQL/Marks';
 import { convertToMark } from '../../marks/models/Mark';
 import { IVehicle } from '../models/Vehicle';
 import { addVehicleNavigate, vehicleListNavigate } from './utils/Utils';
-import { MODELS } from '../../models/models/graphQL/Models';
-import { convertToModel } from '../../models/models/Model';
+import { MODELS } from '../../vehicle-models/models/graphQL/Models';
+import { convertToModel } from '../../vehicle-models/models/Model';
 import VehicleDetails from './details/VehicleDetails';
 import TabContext from '@mui/lab/TabContext';
 import { VehicleValidationSchema } from '../services/VehicleValidationSchema';
@@ -33,13 +32,14 @@ import {
   marks_marks_nodes,
   marks
 } from '../../marks/models/graphQL/types/marks';
-import {
-  models_models_nodes,
-  models
-} from '../../models/models/graphQL/types/models';
+
 import { FormProvider, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Typography } from '@mui/material';
+import {
+  models_models_nodes,
+  models
+} from '../../vehicle-models/models/graphQL/types/models';
 
 export default function Vehicle() {
   const methods = useForm<IVehicle>({

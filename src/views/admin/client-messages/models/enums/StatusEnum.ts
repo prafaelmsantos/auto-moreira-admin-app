@@ -1,4 +1,4 @@
-import { STATUS } from "../../../../../models/graphql-global-types";
+import { STATUS } from "../../../../../models/graphQL/graphql-global-types";
 
 export enum Status {
     OPEN = 1,

@@ -2,7 +2,7 @@
 import * as Yup from 'yup';
 
 import { IVehicle } from '../models/Vehicle';
-import { IModel } from '../../models/models/Model';
+import { IModel } from '../../vehicle-models/models/Model';
 import { Fuel } from '../models/enums/FuelEnum';
 import { Transmission } from '../models/enums/TransmissionEnum';
 

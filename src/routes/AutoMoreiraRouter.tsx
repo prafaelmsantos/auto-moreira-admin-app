@@ -1,20 +1,20 @@
 import { Navigate, useRoutes } from 'react-router-dom';
 import Vehicles from '../views/admin/vehicles/Vehicles';
 import Marks from '../views/admin/marks/Marks';
-import Models from '../views/admin/models/Models';
+import Models from '../views/admin/vehicle-models/Models';
 import SignIn from '../views/auth/views/sign-in/SignIn';
-import Profile from '../views/admin/users/views/profile/Profile';
+import Profile from '../views/admin/identity/users/views/profile/Profile';
 import Mark from '../views/admin/marks/views/Mark';
 import Dashboard from '../views/admin/dashboard/Dashboard';
 import { RouteName, RouteType } from '../models/enums/RouteType';
-import Model from '../views/admin/models/views/Model';
+import Model from '../views/admin/vehicle-models/views/Model';
 import Vehicle from '../views/admin/vehicles/views/Vehicle';
 import ClientMessages from '../views/admin/client-messages/ClientMessages';
-import Users from '../views/admin/users/Users';
+import Users from '../views/admin/identity/users/Users';
 import ClientMessage from '../views/admin/client-messages/views/ClientMessage';
-import Roles from '../views/admin/roles/Roles';
-import User from '../views/admin/users/views/User';
-import Role from '../views/admin/roles/views/Role';
+import Roles from '../views/admin/identity/roles/Roles';
+import User from '../views/admin/identity/users/views/User';
+import Role from '../views/admin/identity/roles/views/Role';
 import ResetPassword from '../views/auth/views/reset-password/ResetPassword';
 import { getCurrentUser } from '../views/auth/services/AuthService';
 

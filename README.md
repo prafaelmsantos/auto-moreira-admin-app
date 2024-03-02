@@ -65,5 +65,5 @@ Just follow the following steps:
    2.2. GraphQL;
    2.3 rover CLI = > run the command npm install -g @apollo/rover
    2.4 run npm install -g apollo
-3. Run `npx apollo codegen:generate --localSchemaFile=graphql-schema.graphql --target=typescript --includes=src/**/*.ts --tagName=gql --addTypename --globalTypesFile=src/models/graphql-global-types.ts types` (_don't forget to use_ `noglob`_for shells like zsh that consume wildcard symbols_).
+3. Run `npx apollo codegen:generate --localSchemaFile=graphql-schema.graphql --target=typescript --includes=src/**/*.ts --tagName=gql --addTypename --globalTypesFile=src/models/graphQL/graphql-global-types.ts types` (_don't forget to use_ `noglob`_for shells like zsh that consume wildcard symbols_).
 4. All done !

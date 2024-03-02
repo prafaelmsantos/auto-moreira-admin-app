@@ -1,4 +1,4 @@
-import { FUEL } from '../../../../../models/graphql-global-types';
+import { FUEL } from '../../../../../models/graphQL/graphql-global-types';
 
 
 

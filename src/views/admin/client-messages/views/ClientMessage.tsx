@@ -1,6 +1,6 @@
 import { useNavigate, useParams } from 'react-router-dom';
 import { useAppDispatch } from '../../../../redux/hooks';
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { IClientMessage } from '../models/ClientMessage';
 import { IMode } from '../../../../models/enums/Base';
 import { setLoader, setToInitialLoader } from '../../../../redux/loaderSlice';

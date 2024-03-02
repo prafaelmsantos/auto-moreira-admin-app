@@ -1,4 +1,4 @@
-import { IModel } from '../../models/models/Model';
+import { IModel } from '../../vehicle-models/models/Model';
 import { Fuel, FuelTypeGraphQLConverted } from './enums/FuelEnum';
 import {
   Transmission,

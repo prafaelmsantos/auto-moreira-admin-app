@@ -13,7 +13,7 @@ import AlertModal from './components/modal/AlertModal';
 import { closeSnackBar } from './redux/snackBarSlice';
 import { ThemeProvider, createTheme } from '@mui/material';
 import { COLORS } from './utils/Colors';
-import { getUser } from './views/admin/users/services/UserService';
+import { getUser } from './views/admin/identity/users/services/UserService';
 import { setLoader, setToInitialLoader } from './redux/loaderSlice';
 import {
   getCurrentUser,
@@ -97,7 +97,7 @@ const App = () => {
           open={currentSnackBar.snackBar.open}
           onClose={() => dispatch(closeSnackBar())}
         />
-        {user ? <Admin  /> : <Auth />}
+        {user ? <Admin /> : <Auth />}
       </ThemeProvider>
     </>
   );
