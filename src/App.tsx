@@ -19,6 +19,8 @@ import {
   getCurrentUser,
   setCurrentUser
 } from './views/auth/services/AuthService';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
 
 const App = () => {
   const dispatch = useAppDispatch();
@@ -81,8 +83,8 @@ const App = () => {
   }, [darkMode]);
 
   return (
-    <>
-      <ThemeProvider theme={theme}>
+    <ThemeProvider theme={theme}>
+      <DndProvider backend={HTML5Backend}>
         <AutoMoreiraLoader open={currentLoader} />
         <AlertModal
           title={currentModal.modal.title}
@@ -98,8 +100,8 @@ const App = () => {
           onClose={() => dispatch(closeSnackBar())}
         />
         {!user ? <Admin /> : <Auth />}
-      </ThemeProvider>
-    </>
+      </DndProvider>
+    </ThemeProvider>
   );
 };
 

@@ -1,0 +1,31 @@
+body {
+  margin: 0;
+  padding: 32px;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.list {
+  user-select: none;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.item {
+  flex-shrink: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgb(84, 84, 241);
+  color: white;
+  margin: 8px;
+  width: 250px;
+  height: 150px;
+  cursor: grab;
+  pointer-events: none;
+}
+
+.button {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}

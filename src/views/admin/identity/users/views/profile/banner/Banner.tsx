@@ -74,6 +74,7 @@ const Banner = ({ name, role, fetchUserImage, image }: IBanner) => {
           </div>
         </div>
         <input
+          accept="image/*"
           ref={fileInput}
           type="file"
           id="upload-button"

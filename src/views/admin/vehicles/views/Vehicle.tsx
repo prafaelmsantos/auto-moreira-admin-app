@@ -40,6 +40,7 @@ import {
   models_models_nodes,
   models
 } from '../../vehicle-models/models/graphQL/types/models';
+import VehicleImages from './components/tabs/images/VehicleImages';
 
 export default function Vehicle() {
   const methods = useForm<IVehicle>({
@@ -107,6 +108,8 @@ export default function Vehicle() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [vehicleId]);
 
+  const match1 = useMatch('/admin/vehicles/info');
+  console.log(match1);
   const [value, setValue] = useState('1');
 
   useEffect(() => {
@@ -196,13 +199,19 @@ export default function Vehicle() {
                   indicatorColor="secondary"
                 >
                   <Tab label={'Informação'} value="1" />
-                  <Tab label={<Typography>Imagens</Typography>} value="2" />
+                  {mode === IMode.EDIT && (
+                    <Tab label={<Typography>Imagens</Typography>} value="2" />
+                  )}
                 </TabList>
               </Box>
               <TabPanel value="1">
                 <VehicleDetails {...{ vehicle, marks, models }} />
               </TabPanel>
-              <TabPanel value="2">Item Two</TabPanel>
+              {mode === IMode.EDIT && (
+                <TabPanel value="2">
+                  <VehicleImages />
+                </TabPanel>
+              )}
             </TabContext>
           </>
         )}
