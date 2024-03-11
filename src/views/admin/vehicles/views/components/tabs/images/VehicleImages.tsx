@@ -3,7 +3,7 @@ import { blue } from '@mui/material/colors';
 import { useCallback, useRef, useState } from 'react';
 import { useDrag, useDrop } from 'react-dnd';
 import EditTwoToneIcon from '@mui/icons-material/EditTwoTone';
-import './VehicleImages.css';
+//import './VehicleImages.css';
 import { FaChevronRight, FaChevronLeft } from 'react-icons/fa6';
 import { MdOutlineDelete } from 'react-icons/md';
 
