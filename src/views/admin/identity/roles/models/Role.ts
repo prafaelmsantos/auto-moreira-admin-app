@@ -7,12 +7,13 @@ export interface IRole {
     isReadOnly: boolean;
 }
 
-export function convertToRole(role: roles_roles_nodes) {
+export function convertToRole(role: roles_roles_nodes): IRole {
   return {
     id: role.id,
     name: String(role.name),
-    isDefault: role.isDefault
-  } as IRole
+    isDefault: role.isDefault,
+    isReadOnly: false
+  }
 }
 
 export enum RoleKeys {
