@@ -19,7 +19,7 @@ import UserDetails from './details/UserDetails';
 import { useQuery } from '@apollo/client';
 
 import { ROLES } from '../../roles/models/graphQL/Roles';
-import { convertToRole } from '../../roles/models/Role';
+import { IRole, convertToRole } from '../../roles/models/Role';
 import { FormProvider, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import {
@@ -53,9 +53,9 @@ export default function User() {
 
   const { data } = useQuery<roles>(ROLES);
   const roles =
-    data?.roles?.nodes?.map((role) =>
+    (data?.roles?.nodes?.map((role) =>
       convertToRole(role as roles_roles_nodes)
-    ) ?? [];
+    ) as IRole[]) ?? [];
 
   useEffect(() => {
     if (userId) {

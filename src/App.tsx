@@ -99,7 +99,7 @@ const App = () => {
           open={currentSnackBar.snackBar.open}
           onClose={() => dispatch(closeSnackBar())}
         />
-        {!user ? <Admin /> : <Auth />}
+        {user ? <Admin /> : <Auth />}
       </DndProvider>
     </ThemeProvider>
   );

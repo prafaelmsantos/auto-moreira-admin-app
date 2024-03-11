@@ -25,6 +25,7 @@ export const UserValidationSchema: Yup.ObjectSchema<IUser> =
           name: Yup.string().default(''),
           id: Yup.number().default(0),
           isDefault: Yup.boolean().default(false),
+          isReadOnly: Yup.boolean().default(false),
         })
       )
       .default([]).min(1, 'O cargo é obrigatório!'), 

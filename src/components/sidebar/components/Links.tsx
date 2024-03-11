@@ -15,7 +15,9 @@ export const SidebarLinks = (props: {
 
   const { routes, setOpen, mobile } = props;
 
-  const userAdmin = !!getCurrentUser()?.roles[0].isDefault;
+  const userAdmin =
+    !getCurrentUser()?.roles[0]?.isDefault &&
+    getCurrentUser()?.roles[0]?.isReadOnly;
 
   // verifies if routeName is the one active (in browser input)
   const activeRoute = (routeName: string) =>

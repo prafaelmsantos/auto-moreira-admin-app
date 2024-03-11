@@ -31,7 +31,8 @@ export default function Role() {
   const [role, setRole] = useState<IRole>({
     id: 0,
     name: '',
-    isDefault: false
+    isDefault: false,
+    isReadOnly: false
   });
   const roleId = Number(param.id);
   const match = useMatch(addRoleNavigate);

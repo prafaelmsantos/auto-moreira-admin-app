@@ -32,7 +32,9 @@ export function convertToUser(user: users_users_nodes): IUser {
     password: null,
     token: null,
     roles:
-      user.roles?.map((role) => convertToRole(role as roles_roles_nodes)) ?? []
+      (user.roles?.map((role) =>
+        convertToRole(role as roles_roles_nodes)
+      ) as IRole[]) ?? []
   };
 }
 

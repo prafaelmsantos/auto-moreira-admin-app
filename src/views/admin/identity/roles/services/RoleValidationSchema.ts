@@ -5,6 +5,7 @@ export const RoleValidationSchema: Yup.ObjectSchema<IRole> = Yup.object().shape(
   {
     name: Yup.string().required('O nome é obrigatório!').default(''),
     isDefault: Yup.boolean().default(false),
+    isReadOnly: Yup.boolean().default(false),
     id: Yup.number().default(0)
   }
 );
