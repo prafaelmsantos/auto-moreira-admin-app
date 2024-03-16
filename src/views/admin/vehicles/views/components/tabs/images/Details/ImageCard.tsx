@@ -1,10 +1,10 @@
 import { Grid, IconButton } from '@mui/material';
-import { blue } from '@mui/material/colors';
 import { useDrag, useDrop } from 'react-dnd';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import { IVehicleImage } from '../../../../../models/Vehicle';
 import { useRef } from 'react';
 import { MdOutlineDelete } from 'react-icons/md';
+import { COLORS } from '../../../../../../../../utils/Colors';
 
 interface IImageCard {
   src: string;
@@ -77,10 +77,22 @@ const ImageCard = ({
 
   return (
     <Grid item xs={3}>
-      <div ref={ref} style={{ opacity }}>
-        <Grid container justifyContent={'center'}>{`#${index + 1}`}</Grid>
-        <img src={src} alt={title} loading="lazy" className={'item'} />
+      <div
+        className="text-navy-700 dark:text-white"
+        ref={ref}
+        style={{ opacity }}
+      >
+        <Grid sx={{ mb: 0.5 }} container justifyContent={'center'}>{`#${
+          index + 1
+        }`}</Grid>
+        <img
+          src={src}
+          alt={title}
+          loading="lazy"
+          className={'cursor-pointer'}
+        />
         <Grid
+          sx={{ mt: 0.5 }}
           container
           direction="row"
           justifyContent="space-around"
@@ -91,9 +103,8 @@ const ImageCard = ({
               onClick={() => moveImage(index, index === 0 ? 0 : index - 1)}
               sx={{
                 '&:hover': {
-                  background: blue[100]
-                },
-                color: 'secondary'
+                  background: COLORS.AUTO_MOREIRA_GRAY[600]
+                }
               }}
               color="inherit"
               size="small"
@@ -104,9 +115,8 @@ const ImageCard = ({
               onClick={() => moveImage(index, index + 1)}
               sx={{
                 '&:hover': {
-                  background: blue[100]
-                },
-                color: 'secondary'
+                  background: COLORS.AUTO_MOREIRA_GRAY[600]
+                }
               }}
               color="inherit"
               size="small"
@@ -119,9 +129,8 @@ const ImageCard = ({
               onClick={() => remodeItem(index)}
               sx={{
                 '&:hover': {
-                  background: blue[100]
-                },
-                color: 'secondary'
+                  background: COLORS.AUTO_MOREIRA_GRAY[600]
+                }
               }}
               color="inherit"
               size="small"

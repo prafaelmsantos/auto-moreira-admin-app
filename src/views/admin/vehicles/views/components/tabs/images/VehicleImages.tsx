@@ -1,7 +1,6 @@
 import { Grid, IconButton, Tooltip } from '@mui/material';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import EditTwoToneIcon from '@mui/icons-material/EditTwoTone';
-//import './VehicleImages.css';
 import { IVehicleImage } from '../../../../models/Vehicle';
 import ImageCard from './Details/ImageCard';
 
@@ -14,16 +13,14 @@ const VehicleImages = ({
 }) => {
   const [images, setImages] = useState<IVehicleImage[]>(vehicleImages);
 
-  const moveImage = useCallback((dragIndex: number, hoverIndex: number) => {
+  const moveImage = (dragIndex: number, hoverIndex: number) => {
     setImages((prevCards) => {
       const clonedCards = [...prevCards];
       const removedItem = clonedCards.splice(dragIndex, 1)[0];
-
       clonedCards.splice(hoverIndex, 0, removedItem);
-
       return clonedCards;
     });
-  }, []);
+  };
 
   const remodeItem = (index: number) => {
     const updatedItems = [...images];
@@ -35,13 +32,6 @@ const VehicleImages = ({
 
   const handleChange = (e: any) => {
     if (e.target.files.length) {
-      /* e.target.files.forEach((file: Blob) => {
-        reader.readAsDataURL(file);
-        const result = reader.result?.toString();
-        if (result)
-          setImages((old) => [...old, { id: 0, img: result, title: 'xD' }]);
-      }); */
-
       const files = Array.from(e.target.files) as Blob[];
       files.map((file: Blob, i: number) => {
         const reader = new FileReader();
@@ -60,9 +50,6 @@ const VehicleImages = ({
     }
   };
 
-  //URL.createObjectURL(file)
-  console.log(images);
-
   const handleImageUpload = () =>
     fileInput && fileInput.current && fileInput.current.click();
 
@@ -75,20 +62,18 @@ const VehicleImages = ({
     <main>
       <Grid container spacing={4} direction="row" alignItems="center">
         {images.map((image, index) => (
-          <>
-            <ImageCard
-              remodeItem={remodeItem}
-              key={image.id}
-              src={image.url}
-              title={'image.title'}
-              id={image.id}
-              index={index}
-              moveImage={moveImage}
-            />
-          </>
+          <ImageCard
+            remodeItem={remodeItem}
+            key={image.id}
+            src={image.url}
+            title={`${index + 1}`}
+            id={image.id}
+            index={index}
+            moveImage={moveImage}
+          />
         ))}
       </Grid>
-      <div className="border-white-400 bg-dark -bottom-12 flex h-[40px] w-[40px] items-center justify-center rounded-full border-[4px] dark:!border-navy-700">
+      <div className="border-white-400 -bottom-12 flex h-[40px] w-[40px] items-center justify-center rounded-full border-[4px] bg-white dark:!border-navy-700">
         <Tooltip title={'Editar'} arrow>
           <IconButton onClick={handleImageUpload} color="inherit" size="small">
             <EditTwoToneIcon fontSize="small" />
