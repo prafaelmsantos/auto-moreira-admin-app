@@ -13,7 +13,7 @@ import TabPanel from '@mui/lab/TabPanel';
 import { useQuery } from '@apollo/client';
 import { MARKS } from '../../marks/models/graphQL/Marks';
 import { convertToMark } from '../../marks/models/Mark';
-import { IVehicle } from '../models/Vehicle';
+import { IVehicle, IVehicleImage } from '../models/Vehicle';
 import { addVehicleNavigate, vehicleListNavigate } from './utils/Utils';
 import { MODELS } from '../../vehicle-models/models/graphQL/Models';
 import { convertToModel } from '../../vehicle-models/models/Model';
@@ -66,7 +66,8 @@ export default function Vehicle() {
     engineSize: 0,
     power: 0,
     opportunity: false,
-    sold: false
+    sold: false,
+    vehicleImages: []
   });
 
   const vehicleId = Number(param.id);
@@ -178,6 +179,9 @@ export default function Vehicle() {
   const handleChange = (event: React.SyntheticEvent, newValue: string) =>
     setValue(newValue);
 
+  const handleChangeImages = (vehicleImages: IVehicleImage[]) =>
+    setVehicle((old) => ({ ...old, vehicleImages: vehicleImages }));
+
   return (
     <>
       <FormProvider {...methods}>
@@ -209,7 +213,10 @@ export default function Vehicle() {
               </TabPanel>
               {mode === IMode.EDIT && (
                 <TabPanel value="2">
-                  <VehicleImages />
+                  <VehicleImages
+                    vehicleImages={vehicle.vehicleImages}
+                    {...{ handleChangeImages }}
+                  />
                 </TabPanel>
               )}
             </TabContext>

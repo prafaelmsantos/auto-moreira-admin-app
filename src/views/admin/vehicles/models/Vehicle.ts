@@ -23,6 +23,12 @@ export interface IVehicle {
   power: number;
   opportunity: boolean;
   sold: boolean;
+  vehicleImages: IVehicleImage[];
+}
+
+export interface IVehicleImage {
+  id: number;
+  url: string;
 }
 
 export function convertToVehicle(vehicle: vehicles_vehicles_nodes): IVehicle {
@@ -50,7 +56,8 @@ export function convertToVehicle(vehicle: vehicles_vehicles_nodes): IVehicle {
     engineSize: vehicle.engineSize,
     power: vehicle.power,
     opportunity: vehicle.opportunity,
-    sold: vehicle.sold
+    sold: vehicle.sold,
+    vehicleImages: vehicle.vehicleImages
   };
 }
 

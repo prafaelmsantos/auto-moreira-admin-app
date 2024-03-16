@@ -1,7 +1,12 @@
 import { GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
 import Actions from '../../../../../../components/table/utils/Actions';
 import { RouteName } from '../../../../../../models/enums/RouteType';
-import { IVehicle, convertBoolean } from '../../../models/Vehicle';
+import defaultVehicle from '../../../../../../assets/img/vehicles/defaultVehicle.jpg';
+import {
+  IVehicle,
+  IVehicleImage,
+  convertBoolean
+} from '../../../models/Vehicle';
 import { FuelTypeConverted } from '../../../models/enums/FuelEnum';
 
 export const columns: GridColDef[] = [
@@ -9,6 +14,26 @@ export const columns: GridColDef[] = [
     field: 'id',
     headerName: '#',
     width: 50
+  },
+  {
+    field: 'vehicleImages',
+    headerName: 'Foto',
+    width: 150,
+    sortable: false,
+    filterable: false,
+    disableExport: true,
+    renderCell: (params: GridRenderCellParams<any, Date>) => {
+      const vehicle = params.row as IVehicle;
+      const images = params.formattedValue as unknown as IVehicleImage[];
+      return (
+        <img
+          src={images.length !== 0 ? images[0].url : defaultVehicle}
+          alt={`${vehicle.model.mark?.name} ${vehicle.model.name} ${vehicle.version}`}
+          loading="lazy"
+          className={'h-12'}
+        />
+      );
+    }
   },
   {
     field: 'mark',
@@ -22,11 +47,6 @@ export const columns: GridColDef[] = [
     headerName: 'Modelo',
     width: 150,
     valueFormatter: (params) => params.value.name
-  },
-  {
-    field: 'version',
-    headerName: 'Versão',
-    width: 150
   },
   {
     field: 'year',

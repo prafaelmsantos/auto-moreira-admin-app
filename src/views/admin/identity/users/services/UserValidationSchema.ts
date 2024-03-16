@@ -19,7 +19,7 @@ export const UserValidationSchema: Yup.ObjectSchema<IUser> =
       password: Yup.string().trim().nullable().default(null),
       token: Yup.string().trim().nullable().default(null),
       id: Yup.number().default(0),
-       roles: Yup.array()
+      roles: Yup.array()
       .of(
         Yup.object().shape({
           name: Yup.string().default(''),

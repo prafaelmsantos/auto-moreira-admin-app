@@ -23,6 +23,13 @@ export interface vehicles_vehicles_nodes_model {
   mark: vehicles_vehicles_nodes_model_mark;
 }
 
+export interface vehicles_vehicles_nodes_vehicleImages {
+  __typename: "VehicleImage";
+  id: number;
+  vehicleId: number;
+  url: string;
+}
+
 export interface vehicles_vehicles_nodes {
   __typename: "Vehicle";
   id: number;
@@ -41,6 +48,7 @@ export interface vehicles_vehicles_nodes {
   power: number;
   opportunity: boolean;
   sold: boolean;
+  vehicleImages: vehicles_vehicles_nodes_vehicleImages[];
 }
 
 export interface vehicles_vehicles {
