@@ -24,7 +24,9 @@ export const columns: GridColDef[] = [
     disableExport: true,
     renderCell: (params: GridRenderCellParams<any, Date>) => {
       const vehicle = params.row as IVehicle;
-      const images = params.formattedValue as unknown as IVehicleImage[];
+      let images = params.formattedValue as unknown as IVehicleImage[];
+      images = images.slice().sort((a, b) => a.id - b.id);
+
       return (
         <img
           src={images.length !== 0 ? images[0].url : defaultVehicle}

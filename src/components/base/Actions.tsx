@@ -2,7 +2,7 @@ import { FaPlusCircle, FaCheck } from 'react-icons/fa';
 import { FaPencil, FaXmark } from 'react-icons/fa6';
 import { IAction } from './PageHolder';
 import { IMode } from '../../models/enums/Base';
-
+import { LuUpload } from 'react-icons/lu';
 import { MdOutlineDeleteOutline } from 'react-icons/md';
 
 interface IGetActions {
@@ -12,8 +12,10 @@ interface IGetActions {
   handleSumbitAdd?: () => void;
   handleSubmitEdit?: () => void;
   handleSubmitDelete?: () => void;
+  handleUpload?: () => void;
   handleClose?: () => void;
   idsToDelete?: number[];
+  upload?: boolean;
 }
 export default function GetActions({
   mode,
@@ -23,7 +25,9 @@ export default function GetActions({
   handleSubmitDelete,
   handleClose,
   handleEdit,
-  idsToDelete
+  idsToDelete,
+  handleUpload,
+  upload
 }: IGetActions): IAction[] {
   switch (mode) {
     case IMode.LIST:
@@ -60,6 +64,10 @@ export default function GetActions({
 
     case IMode.EDIT:
       return [
+        {
+          icon: <LuUpload />,
+          callback: () => handleUpload && void handleUpload()
+        },
         {
           icon: <FaXmark />,
           callback: () => handleClose && void handleClose()

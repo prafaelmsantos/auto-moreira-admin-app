@@ -4,7 +4,6 @@ import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import { IVehicleImage } from '../../../../../models/Vehicle';
 import { useRef } from 'react';
 import { MdOutlineDelete } from 'react-icons/md';
-import { COLORS } from '../../../../../../../../utils/Colors';
 
 interface IImageCard {
   src: string;
@@ -101,11 +100,6 @@ const ImageCard = ({
           <Grid item>
             <IconButton
               onClick={() => moveImage(index, index === 0 ? 0 : index - 1)}
-              sx={{
-                '&:hover': {
-                  background: COLORS.AUTO_MOREIRA_GRAY[600]
-                }
-              }}
               color="inherit"
               size="small"
             >
@@ -113,11 +107,6 @@ const ImageCard = ({
             </IconButton>
             <IconButton
               onClick={() => moveImage(index, index + 1)}
-              sx={{
-                '&:hover': {
-                  background: COLORS.AUTO_MOREIRA_GRAY[600]
-                }
-              }}
               color="inherit"
               size="small"
             >
@@ -127,11 +116,6 @@ const ImageCard = ({
           <Grid item>
             <IconButton
               onClick={() => remodeItem(index)}
-              sx={{
-                '&:hover': {
-                  background: COLORS.AUTO_MOREIRA_GRAY[600]
-                }
-              }}
               color="inherit"
               size="small"
             >
