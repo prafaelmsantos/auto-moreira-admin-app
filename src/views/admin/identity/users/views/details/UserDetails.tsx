@@ -1,10 +1,10 @@
 import { Controller, useFormContext } from 'react-hook-form';
 import { Autocomplete, Grid, TextField } from '@mui/material';
 import GeneralCard from '../components/card/GeneralCard';
-import { AutocompleteSX } from '../../../../../../components/form/style/AutocompleteSX';
 import { IRole } from '../../../roles/models/Role';
 import { IUserValidationSchema } from '../../services/UserValidationSchema';
 import AutoMoreiraLabel from '../../../../../../components/form/AutoMoreiraLabel';
+import { TextFieldSX } from '../../../../../../components/form/style/TextFieldSX';
 
 interface IUserDetails {
   roles: IRole[];
@@ -12,8 +12,11 @@ interface IUserDetails {
 export default function UserDetails({ roles }: IUserDetails) {
   const {
     control,
+    watch,
     formState: { errors }
   } = useFormContext<IUserValidationSchema>();
+
+  const userId = Number(watch('id'));
 
   return (
     <Grid container mt={5} px={5} spacing={3}>
@@ -67,19 +70,20 @@ export default function UserDetails({ roles }: IUserDetails) {
 
       <Grid item md={3} xs={12}>
         <AutoMoreiraLabel
-          label="Cargo*"
           children={
             <Controller
-              render={({ field: { value, ...field } }) => (
+              render={({ field: { onChange, value, ...others } }) => (
                 <Autocomplete
-                  {...field}
-                  value={value && value.length !== 0 ? value[0] : undefined}
+                  {...others}
                   sx={{ mt: 1 }}
+                  value={value[0] ?? null}
                   isOptionEqualToValue={(option, value) =>
                     option.id === value.id
                   }
                   options={roles}
-                  getOptionLabel={(option) => option.name}
+                  getOptionLabel={(option) =>
+                    roles.find((x) => x.id === option.id)?.name ?? ''
+                  }
                   renderInput={(params) => (
                     <TextField
                       {...params}
@@ -87,16 +91,23 @@ export default function UserDetails({ roles }: IUserDetails) {
                       variant="standard"
                       error={!!errors.roles}
                       helperText={errors.roles?.message}
-                      sx={AutocompleteSX(!!errors.roles)}
+                      sx={TextFieldSX(!!errors.roles)}
+                      InputProps={{
+                        disableUnderline: userId === 1
+                      }}
+                      disabled={userId === 1}
                     />
                   )}
-                  onChange={(_, data) => field.onChange(data ? [data] : [])}
+                  onChange={(_, data) => onChange(data ? [data] : [])}
                 />
               )}
               name={'roles'}
               control={control}
             />
           }
+          label={'Cargo'}
+          error={!!errors.roles}
+          required
         />
       </Grid>
     </Grid>
