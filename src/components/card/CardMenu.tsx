@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { AiOutlineUser } from 'react-icons/ai';
 import { BsThreeDots } from 'react-icons/bs';
@@ -9,9 +9,12 @@ import Dropdown from '../dropdown';
 
 function CardMenu(props: { transparent?: boolean }) {
   const { transparent } = props;
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
+  const [openWrapper, setOpenWrapper] = useState(false);
   return (
     <Dropdown
+      openWrapper={openWrapper}
+      setOpenWrapper={setOpenWrapper}
       button={
         <button
           onClick={() => setOpen(!open)}

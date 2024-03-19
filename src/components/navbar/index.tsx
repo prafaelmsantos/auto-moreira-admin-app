@@ -14,7 +14,7 @@ import {
   setCurrentUser,
   setUserDarkMode
 } from '../../views/auth/services/AuthService';
-import { useCallback } from 'react';
+import { useCallback, useState } from 'react';
 
 const Navbar = (props: {
   currentRoute: ICurrentRoute;
@@ -28,6 +28,9 @@ const Navbar = (props: {
   const navigate = useNavigate();
   const darkMode = useSelector((state: RootState) => state.darkModeSlice.dark);
   const user = useSelector((state: RootState) => state.userSlice.user);
+
+  const [openWrapper, setOpenWrapper] = useState(false);
+  const [openWrapperProfile, setOpenWrapperProfile] = useState(false);
 
   const fetchUserDarkMode = useCallback(
     (darkMode: boolean) => {
@@ -71,6 +74,8 @@ const Navbar = (props: {
         </span>
 
         <Dropdown
+          openWrapper={openWrapper}
+          setOpenWrapper={setOpenWrapper}
           button={
             <p className="cursor-pointer">
               <IoMdInformationCircleOutline className="h-4 w-4 text-gray-600 dark:text-white" />
@@ -87,6 +92,7 @@ const Navbar = (props: {
                 className="mb-2 aspect-video w-full rounded-lg"
               />
               <a
+                onClick={() => setOpenWrapper(false)}
                 target="blank"
                 href="https://auto-moreira-app.onrender.com/"
                 className="px-full linear flex cursor-pointer items-center justify-center rounded-xl bg-brand-500 py-[11px] font-bold text-white transition duration-200 hover:bg-brand-600 hover:text-white active:bg-brand-700 dark:bg-brand-400 dark:hover:bg-brand-300 dark:active:bg-brand-200"
@@ -94,6 +100,7 @@ const Navbar = (props: {
                 Auto Moreira Website
               </a>
               <a
+                onClick={() => setOpenWrapper(false)}
                 target="blank"
                 href="https://horizon-ui.com/docs-tailwind/docs/react/installation?ref=live-free-tailwind-react"
                 className="px-full linear flex cursor-pointer items-center justify-center rounded-xl border py-[11px] font-bold text-navy-700 transition duration-200 hover:bg-gray-200 hover:text-navy-700 dark:!border-white/10 dark:text-white dark:hover:bg-white/20 dark:hover:text-white dark:active:bg-white/10"
@@ -124,6 +131,8 @@ const Navbar = (props: {
         </div>
         {/* Profile & Dropdown */}
         <Dropdown
+          openWrapper={openWrapperProfile}
+          setOpenWrapper={setOpenWrapperProfile}
           button={
             <img
               className="h-10 w-10 rounded-full"
@@ -146,18 +155,23 @@ const Navbar = (props: {
                 <Link
                   className="text-sm text-gray-800 dark:text-white hover:dark:text-white"
                   to={`/admin/admin/dashboard`}
+                  onClick={() => setOpenWrapperProfile(false)}
                 >
                   {'Painel Principal'}
                 </Link>
                 <Link
                   className="mt-3 text-sm text-gray-800 dark:text-white hover:dark:text-white"
                   to={`/admin/profile`}
+                  onClick={() => setOpenWrapperProfile(false)}
                 >
                   {'Perfil'}
                 </Link>
 
                 <Link
-                  onClick={() => logout(dispatch, navigate)}
+                  onClick={() => {
+                    setOpenWrapperProfile(false);
+                    logout(dispatch, navigate);
+                  }}
                   to={'/auth/sign-in'}
                   className="mt-3 text-sm font-medium text-red-500 hover:text-red-500"
                 >

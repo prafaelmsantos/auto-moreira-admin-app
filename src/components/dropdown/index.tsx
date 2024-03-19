@@ -25,10 +25,19 @@ const Dropdown = (props: {
   children: JSX.Element;
   classNames: string;
   animation?: string;
+  openWrapper: boolean;
+  setOpenWrapper: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
-  const { button, children, classNames, animation } = props;
+  const {
+    button,
+    children,
+    classNames,
+    animation,
+    setOpenWrapper,
+    openWrapper
+  } = props;
   const wrapperRef = React.useRef(null);
-  const [openWrapper, setOpenWrapper] = React.useState(false);
+
   useOutsideAlerter(wrapperRef, setOpenWrapper);
 
   return (
