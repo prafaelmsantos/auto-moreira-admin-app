@@ -10,12 +10,15 @@ interface IActions {
   deleteTitle: string;
   routeName: RouteName;
   id: number;
-  onlyDelete?: boolean;
+  deleteDisabled?: boolean;
+  editDisabled?: boolean;
 }
 
 export default function Actions({
   editTitle,
   deleteTitle,
+  deleteDisabled,
+  editDisabled,
   routeName,
   id
 }: IActions) {
@@ -25,6 +28,7 @@ export default function Actions({
     <>
       <Tooltip title={editTitle} arrow>
         <IconButton
+          disabled={editDisabled}
           onClick={() => navigate(`/admin/${routeName}/${id}`)}
           sx={{
             '&:hover': {
@@ -41,6 +45,7 @@ export default function Actions({
 
       <Tooltip title={deleteTitle} arrow>
         <IconButton
+          disabled={deleteDisabled}
           sx={{
             '&:hover': { background: red[100] },
             color: red[500]

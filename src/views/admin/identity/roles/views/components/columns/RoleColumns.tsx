@@ -22,6 +22,7 @@ export const columns: GridColDef[] = [
     disableExport: true,
     renderCell: (params: GridRenderCellParams<Date>) => (
       <Actions
+        deleteDisabled={Number(params.id) === 1}
         editTitle={'Editar cargo'}
         deleteTitle={'Apagar cargo'}
         routeName={RouteName.ROLES}
