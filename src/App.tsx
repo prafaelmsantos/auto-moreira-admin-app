@@ -2,11 +2,12 @@ import { useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { useAppDispatch } from './redux/hooks';
 import { closeModal } from './redux/modalSlice';
-
+import { LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import 'dayjs/locale/pt';
 import { RootState } from './redux/store';
 import AutoMoreiraSnackbar from './components/snackBar/AutoMoreiraSnackbar';
 import AutoMoreiraLoader from './components/loader/AutoMoreiraLoader';
-
 import Auth from './layouts/auth';
 import Admin from './layouts/admin';
 import AlertModal from './components/modal/AlertModal';
@@ -84,23 +85,25 @@ const App = () => {
 
   return (
     <ThemeProvider theme={theme}>
-      <DndProvider backend={HTML5Backend}>
-        <AutoMoreiraLoader open={currentLoader} />
-        <AlertModal
-          title={currentModal.modal.title}
-          message={currentModal.modal.message}
-          isOpen={currentModal.modal.open}
-          onOk={() => dispatch(closeModal())}
-          type={currentModal.modal.type}
-        />
-        <AutoMoreiraSnackbar
-          type={currentSnackBar.snackBar.type}
-          message={currentSnackBar.snackBar.message}
-          open={currentSnackBar.snackBar.open}
-          onClose={() => dispatch(closeSnackBar())}
-        />
-        {user ? <Admin /> : <Auth />}
-      </DndProvider>
+      <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="pt">
+        <DndProvider backend={HTML5Backend}>
+          <AutoMoreiraLoader open={currentLoader} />
+          <AlertModal
+            title={currentModal.modal.title}
+            message={currentModal.modal.message}
+            isOpen={currentModal.modal.open}
+            onOk={() => dispatch(closeModal())}
+            type={currentModal.modal.type}
+          />
+          <AutoMoreiraSnackbar
+            type={currentSnackBar.snackBar.type}
+            message={currentSnackBar.snackBar.message}
+            open={currentSnackBar.snackBar.open}
+            onClose={() => dispatch(closeSnackBar())}
+          />
+          {user ? <Admin /> : <Auth />}
+        </DndProvider>
+      </LocalizationProvider>
     </ThemeProvider>
   );
 };

@@ -21,12 +21,7 @@ export default function SwitchFormValidation({
   const darkMode = useSelector((state: RootState) => state.darkModeSlice.dark);
 
   return (
-    <Stack
-      direction="row"
-      spacing={1}
-      alignItems="center"
-      sx={{ mx: 1, mt: 1 }}
-    >
+    <Stack direction="row" spacing={1} alignItems="center" sx={{ mt: 0 }}>
       <Typography color={darkMode ? 'white' : COLORS.AUTO_MOREIRA_NAVY[700]}>
         {label}
       </Typography>

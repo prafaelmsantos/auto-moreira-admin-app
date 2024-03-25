@@ -23,6 +23,7 @@ export interface IVehicle {
   power: number;
   opportunity: boolean;
   sold: boolean;
+  soldDate?: Date | null;
   vehicleImages: IVehicleImage[];
 }
 
@@ -79,6 +80,8 @@ export enum VehicleKeys {
     doors = "doors",
     engineSize = "engineSize",
     power="power",
-    observations = "observations"
-
+    observations = "observations",
+    sold = "sold",
+    opportunity = "opportunity",
+    soldDate = "soldDate"
 }

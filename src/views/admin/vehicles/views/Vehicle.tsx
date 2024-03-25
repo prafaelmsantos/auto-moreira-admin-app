@@ -67,6 +67,7 @@ export default function Vehicle() {
     power: 0,
     opportunity: false,
     sold: false,
+    soldDate: null,
     vehicleImages: []
   });
 

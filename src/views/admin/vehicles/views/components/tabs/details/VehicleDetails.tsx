@@ -1,4 +1,4 @@
-import { Autocomplete, Grid, TextField } from '@mui/material';
+import { Autocomplete, Box, Grid, Stack, TextField } from '@mui/material';
 
 import { IMark } from '../../../../../marks/models/Mark';
 import { IModel } from '../../../../../vehicle-models/models/Model';
@@ -11,6 +11,8 @@ import { IVehicleValidationSchema } from '../../../../services/VehicleValidation
 import AutoMoreiraLabel from '../../../../../../../components/form/AutoMoreiraLabel';
 import GeneralCard from '../../../../../identity/users/views/components/card/GeneralCard';
 import { VehicleKeys } from '../../../../models/Vehicle';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import dayjs from 'dayjs';
 
 interface IVehicleDetails {
   marks: IMark[];
@@ -24,6 +26,8 @@ export default function VehicleDetails({ models, marks }: IVehicleDetails) {
     formState: { errors }
   } = useFormContext<IVehicleValidationSchema>();
   const markId = Number(watch(VehicleKeys.modelMarkId));
+
+  const sold = !!watch(VehicleKeys.sold);
 
   return (
     <Grid container mt={4} px={5} spacing={2} rowSpacing={4}>
@@ -248,7 +252,7 @@ export default function VehicleDetails({ models, marks }: IVehicleDetails) {
           {...{ errors }}
           control={control}
           name={VehicleKeys.engineSize}
-          label={'Tamanho do motor'}
+          label={'Tamanho do motor (cm3)'}
           error={!!errors.engineSize}
           helperText={errors.engineSize?.message}
           type="number"
@@ -259,13 +263,13 @@ export default function VehicleDetails({ models, marks }: IVehicleDetails) {
           {...{ errors }}
           control={control}
           name={VehicleKeys.power}
-          label={'Potência'}
+          label={'Potência (CV)'}
           error={!!errors.power}
           helperText={errors.power?.message}
           type="number"
         />
       </Grid>
-      <Grid item md={4} lg={2} xs={6}>
+      <Grid item md={4} lg={4} xs={6}>
         <AutoMoreiraLabel
           label="Oportunidade"
           children={
@@ -273,12 +277,12 @@ export default function VehicleDetails({ models, marks }: IVehicleDetails) {
               {...{ control }}
               label="Não"
               label1="Sim"
-              name="opportunity"
+              name={VehicleKeys.opportunity}
             />
           }
         />
       </Grid>
-      <Grid item md={4} lg={2} xs={6}>
+      <Grid item md={4} lg={4} xs={6}>
         <AutoMoreiraLabel
           label="Vendido"
           children={
@@ -286,12 +290,37 @@ export default function VehicleDetails({ models, marks }: IVehicleDetails) {
               {...{ control }}
               label="Não"
               label1="Sim"
-              name="sold"
+              name={VehicleKeys.sold}
             />
           }
         />
       </Grid>
-      <Grid item md={12} xs={12}>
+      {sold && (
+        <Grid item md={4} lg={4} xs={12}>
+          <AutoMoreiraLabel
+            children={
+              <Stack sx={{ mt: 0.6 }}>
+                <Controller
+                  render={({ field: { value, ...others } }) => (
+                    <DatePicker
+                      {...others}
+                      disableFuture
+                      defaultValue={value ? dayjs(value) : dayjs(new Date())}
+                      sx={AutocompleteSX(false)}
+                      slotProps={{ textField: { variant: 'standard' } }}
+                    />
+                  )}
+                  name={VehicleKeys.soldDate}
+                  control={control}
+                />
+              </Stack>
+            }
+            label={'Data de venda'}
+          />
+        </Grid>
+      )}
+
+      <Grid item xs={12}>
         <GeneralCard
           {...{ errors }}
           control={control}

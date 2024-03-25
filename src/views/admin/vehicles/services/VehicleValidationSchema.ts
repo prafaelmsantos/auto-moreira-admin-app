@@ -49,6 +49,7 @@ export const VehicleValidationSchema: Yup.ObjectSchema<IVehicle> =
     power: Yup.number().default(0),
     opportunity: Yup.boolean().default(false),
     sold: Yup.boolean().default(false),
+    soldDate: Yup.date().nullable().default(null),
     vehicleImages: Yup.array()
       .of(
         Yup.object<IVehicleImage>().shape({
