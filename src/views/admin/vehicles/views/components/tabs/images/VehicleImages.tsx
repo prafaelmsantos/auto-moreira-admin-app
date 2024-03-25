@@ -1,17 +1,21 @@
-import { Box, Grid, IconButton, Tooltip } from '@mui/material';
+import { Box, Button, Grid, Stack } from '@mui/material';
 import { useEffect, useRef, useState } from 'react';
-import EditTwoToneIcon from '@mui/icons-material/EditTwoTone';
 import { IVehicleImage } from '../../../../models/Vehicle';
 import ImageCard from './Details/ImageCard';
 import AutoMoreiraLabel from '../../../../../../../components/form/AutoMoreiraLabel';
+import { COLORS } from '../../../../../../../utils/Colors';
+import { LuUpload } from 'react-icons/lu';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../../../../../redux/store';
 
+interface IVehicleImages {
+  vehicleImages: IVehicleImage[];
+  handleChangeImages: (vehicleImages: IVehicleImage[]) => void;
+}
 const VehicleImages = ({
   vehicleImages,
   handleChangeImages
-}: {
-  vehicleImages: IVehicleImage[];
-  handleChangeImages: (vehicleImages: IVehicleImage[]) => void;
-}) => {
+}: IVehicleImages) => {
   const [images, setImages] = useState<IVehicleImage[]>(vehicleImages);
 
   const moveImage = (dragIndex: number, hoverIndex: number) => {
@@ -42,7 +46,8 @@ const VehicleImages = ({
             ...old,
             {
               id: old.length + 1,
-              url: reader.result?.toString() ?? ''
+              url: reader.result?.toString() ?? '',
+              isMain: false
             }
           ]);
         };
@@ -59,12 +64,65 @@ const VehicleImages = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [images]);
 
+  const darkMode = useSelector((state: RootState) => state.darkModeSlice.dark);
+
   return (
     <Box sx={{ mt: 3, px: 5 }}>
       <AutoMoreiraLabel
         label=""
         children={
           <>
+            <div className="flex justify-end">
+              <Stack
+                direction="row"
+                sx={{
+                  minHeight: '50px',
+                  display: 'flex',
+                  justifyContent: 'flex-end',
+                  alignItems: 'center'
+                }}
+              >
+                <Box
+                  sx={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    gap: 1
+                  }}
+                >
+                  <Button
+                    size="small"
+                    fullWidth
+                    onClick={handleImageUpload}
+                    sx={{
+                      '&:hover': {
+                        backgroundColor: darkMode
+                          ? COLORS.AUTO_MOREIRA_BRAND[300]
+                          : COLORS.AUTO_MOREIRA_BRAND[600],
+                        boxShadow: 'none'
+                      },
+                      backgroundColor: darkMode
+                        ? COLORS.AUTO_MOREIRA_BRAND[400]
+                        : COLORS.AUTO_MOREIRA_BRAND[500],
+                      borderColor: darkMode
+                        ? COLORS.AUTO_MOREIRA_BRAND[400]
+                        : COLORS.AUTO_MOREIRA_BRAND[500],
+                      textTransform: 'none'
+                    }}
+                  >
+                    <Stack
+                      direction="row"
+                      justifyContent="center"
+                      alignItems="center"
+                      sx={{ py: 0.5, color: 'white' }}
+                    >
+                      <LuUpload />
+                    </Stack>
+                  </Button>
+                </Box>
+              </Stack>
+            </div>
+
             <Grid
               container
               spacing={4}
@@ -85,17 +143,7 @@ const VehicleImages = ({
                 />
               ))}
             </Grid>
-            <div className="border-white-400 -bottom-12 flex h-[40px] w-[40px] items-center justify-center rounded-full border-[4px] bg-white dark:!border-navy-700">
-              <Tooltip title={'Editar'} arrow>
-                <IconButton
-                  onClick={handleImageUpload}
-                  color="inherit"
-                  size="small"
-                >
-                  <EditTwoToneIcon fontSize="small" />
-                </IconButton>
-              </Tooltip>
-            </div>
+
             <input
               accept="image/png, image/gif, image/jpeg, image/jpeg"
               ref={fileInput}

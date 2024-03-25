@@ -5,10 +5,6 @@ import { setLoader, setToInitialLoader } from '../../../../redux/loaderSlice';
 import { IMode } from '../../../../models/enums/Base';
 import PageHolder from '../../../../components/base/PageHolder';
 import GetActions from '../../../../components/base/Actions';
-import Box from '@mui/material/Box';
-import Tab from '@mui/material/Tab';
-import TabList from '@mui/lab/TabList';
-import TabPanel from '@mui/lab/TabPanel';
 
 import { useQuery } from '@apollo/client';
 import { MARKS } from '../../marks/models/graphQL/Marks';
@@ -18,7 +14,6 @@ import { addVehicleNavigate, vehicleListNavigate } from './utils/Utils';
 import { MODELS } from '../../vehicle-models/models/graphQL/Models';
 import { convertToModel } from '../../vehicle-models/models/Model';
 import VehicleDetails from './components/tabs/details/VehicleDetails';
-import TabContext from '@mui/lab/TabContext';
 import { VehicleValidationSchema } from '../services/VehicleValidationSchema';
 import {
   createVehicle,
@@ -35,7 +30,6 @@ import {
 
 import { FormProvider, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Typography } from '@mui/material';
 import {
   models_models_nodes,
   models
@@ -84,7 +78,6 @@ export default function Vehicle() {
 
   const models =
     modelsData?.models?.nodes
-
       ?.map((model) => convertToModel(model as models_models_nodes))
       ?.sort((a, b) => a.id - b.id) ?? [];
 
@@ -110,14 +103,10 @@ export default function Vehicle() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [vehicleId]);
 
-  const match1 = useMatch('/admin/vehicles/info');
-  console.log(match1);
-  const [value, setValue] = useState('1');
-
   useEffect(() => {
     void reset(vehicle);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [vehicle, value]);
+  }, [vehicle]);
 
   const handleClose = () => navigate(vehicleListNavigate);
 
@@ -177,11 +166,10 @@ export default function Vehicle() {
       });
   };
 
-  const handleChange = (event: React.SyntheticEvent, newValue: string) =>
-    setValue(newValue);
-
-  const handleChangeImages = (vehicleImages: IVehicleImage[]) =>
+  const handleChangeImages = (vehicleImages: IVehicleImage[]) => {
+    if (vehicleImages.length !== 0) vehicleImages[0].isMain = true;
     setVehicle((old) => ({ ...old, vehicleImages: vehicleImages }));
+  };
 
   return (
     <FormProvider {...methods}>

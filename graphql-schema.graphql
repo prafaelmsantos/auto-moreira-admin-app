@@ -7,6 +7,7 @@ type User {
   lastName: String!
   image: String
   darkMode: Boolean!
+  isDefault: Boolean!
   roles: [Role!]!
   id: Int!
   userName: String
@@ -27,6 +28,7 @@ type User {
 type Role {
   users: [User!]!
   isDefault: Boolean!
+  isReadOnly: Boolean!
   id: Int!
   name: String
   normalizedName: String
@@ -133,6 +135,7 @@ type VehicleImage {
   url: String!
   vehicleId: Int!
   vehicle: Vehicle!
+  isMain: Boolean!
   id: Int!
 }
 "A connection to a list of items."
@@ -272,6 +275,7 @@ input UserFilterInput {
   lastName: StringOperationFilterInput
   image: StringOperationFilterInput
   darkMode: BooleanOperationFilterInput
+  isDefault: BooleanOperationFilterInput
   roles: ListFilterInputTypeOfRoleFilterInput
   id: ComparableInt32OperationFilterInput
   userName: StringOperationFilterInput
@@ -294,6 +298,7 @@ input UserSortInput {
   lastName: SortEnumType
   image: SortEnumType
   darkMode: SortEnumType
+  isDefault: SortEnumType
   id: SortEnumType
   userName: SortEnumType
   normalizedUserName: SortEnumType
@@ -315,6 +320,7 @@ input RoleFilterInput {
   or: [RoleFilterInput!]
   users: ListFilterInputTypeOfUserFilterInput
   isDefault: BooleanOperationFilterInput
+  isReadOnly: BooleanOperationFilterInput
   id: ComparableInt32OperationFilterInput
   name: StringOperationFilterInput
   normalizedName: StringOperationFilterInput
@@ -322,6 +328,7 @@ input RoleFilterInput {
 }
 input RoleSortInput {
   isDefault: SortEnumType
+  isReadOnly: SortEnumType
   id: SortEnumType
   name: SortEnumType
   normalizedName: SortEnumType
@@ -570,6 +577,7 @@ input VehicleImageFilterInput {
   url: StringOperationFilterInput
   vehicleId: ComparableInt32OperationFilterInput
   vehicle: VehicleFilterInput
+  isMain: BooleanOperationFilterInput
   id: ComparableInt32OperationFilterInput
 }
 "The `@defer` directive may be provided for fragment spreads and inline fragments to inform the executor to delay the execution of the current fragment to indicate deprioritization of the current fragment. A query with `@defer` directive will cause the request to potentially return multiple responses, where non-deferred data is delivered in the initial response and data deferred is delivered in a subsequent response. `@include` and `@skip` take precedence over `@defer`."

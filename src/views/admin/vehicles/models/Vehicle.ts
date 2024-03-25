@@ -30,6 +30,7 @@ export interface IVehicle {
 export interface IVehicleImage {
   id: number;
   url: string;
+  isMain: boolean;
 }
 
 export function convertToVehicle(vehicle: vehicles_vehicles_nodes): IVehicle {

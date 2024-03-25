@@ -28,6 +28,7 @@ export interface vehicles_vehicles_nodes_vehicleImages {
   id: number;
   vehicleId: number;
   url: string;
+  isMain: boolean;
 }
 
 export interface vehicles_vehicles_nodes {

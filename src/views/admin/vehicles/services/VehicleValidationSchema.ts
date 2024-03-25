@@ -55,6 +55,7 @@ export const VehicleValidationSchema: Yup.ObjectSchema<IVehicle> =
         Yup.object<IVehicleImage>().shape({
           id: Yup.number().default(0),
           url: Yup.string().default('').required('A cor é obrigatória!'),
+          isMain: Yup.boolean().default(false)
         })
       )
       .default([])

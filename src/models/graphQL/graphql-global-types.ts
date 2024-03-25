@@ -222,6 +222,7 @@ export interface RoleFilterInput {
   or?: RoleFilterInput[] | null;
   users?: ListFilterInputTypeOfUserFilterInput | null;
   isDefault?: BooleanOperationFilterInput | null;
+  isReadOnly?: BooleanOperationFilterInput | null;
   id?: ComparableInt32OperationFilterInput | null;
   name?: StringOperationFilterInput | null;
   normalizedName?: StringOperationFilterInput | null;
@@ -230,6 +231,7 @@ export interface RoleFilterInput {
 
 export interface RoleSortInput {
   isDefault?: SortEnumType | null;
+  isReadOnly?: SortEnumType | null;
   id?: SortEnumType | null;
   name?: SortEnumType | null;
   normalizedName?: SortEnumType | null;
@@ -272,6 +274,7 @@ export interface UserFilterInput {
   lastName?: StringOperationFilterInput | null;
   image?: StringOperationFilterInput | null;
   darkMode?: BooleanOperationFilterInput | null;
+  isDefault?: BooleanOperationFilterInput | null;
   roles?: ListFilterInputTypeOfRoleFilterInput | null;
   id?: ComparableInt32OperationFilterInput | null;
   userName?: StringOperationFilterInput | null;
@@ -295,6 +298,7 @@ export interface UserSortInput {
   lastName?: SortEnumType | null;
   image?: SortEnumType | null;
   darkMode?: SortEnumType | null;
+  isDefault?: SortEnumType | null;
   id?: SortEnumType | null;
   userName?: SortEnumType | null;
   normalizedUserName?: SortEnumType | null;
@@ -341,6 +345,7 @@ export interface VehicleImageFilterInput {
   url?: StringOperationFilterInput | null;
   vehicleId?: ComparableInt32OperationFilterInput | null;
   vehicle?: VehicleFilterInput | null;
+  isMain?: BooleanOperationFilterInput | null;
   id?: ComparableInt32OperationFilterInput | null;
 }
 

@@ -38,6 +38,7 @@ export const VEHICLES = gql`
           id
           vehicleId
           url
+          isMain
         }
       }
     }
