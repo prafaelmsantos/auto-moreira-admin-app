@@ -3,7 +3,7 @@ import { useQuery } from '@apollo/client';
 import { CLIENT_MESSAGES } from './models/graphQL/ClientMessages';
 import { convertToClientMessage } from './models/ClientMessage';
 import Table from '../../../components/table/Table';
-import { columns } from './views/components/Columns/ClientMessageColumns';
+import { columns } from './views/components/columns/ClientMessageColumns';
 import {
   clientMessages,
   clientMessages_clientMessages_nodes

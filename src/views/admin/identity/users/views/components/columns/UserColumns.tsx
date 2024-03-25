@@ -11,33 +11,33 @@ export const columns: GridColDef[] = [
   {
     field: 'email',
     headerName: 'Email',
-    width: 300
+    width: 250
   },
   {
     field: 'firstName',
     headerName: 'Primeiro Nome',
-    width: 180
+    width: 150
   },
   {
     field: 'lastName',
     headerName: 'Ultimo Nome',
-    width: 180
+    width: 150
   },
   {
     field: 'phoneNumber',
     headerName: 'Telemóvel',
-    width: 200
+    width: 120
   },
   {
     field: 'roles',
     headerName: 'Cargo',
-    width: 200,
+    width: 150,
     valueFormatter: (params) => (params.value as IRole[])[0].name ?? 'Sem cargo'
   },
   {
     field: 'actions',
     headerName: 'Ações',
-    width: 150,
+    width: 100,
     sortable: false,
     filterable: false,
     disableExport: true,

@@ -18,17 +18,17 @@ export const columns: GridColDef[] = [
   {
     field: 'email',
     headerName: 'Email',
-    width: 280
+    width: 250
   },
   {
     field: 'phoneNumber',
     headerName: 'Contacto',
-    width: 150
+    width: 120
   },
   {
     field: 'createdDate',
     headerName: 'Data/Hora',
-    width: 200,
+    width: 150,
     type: 'dateTime',
     valueFormatter: (params) =>
       `${(params.value as Date).toLocaleDateString()} ${(
@@ -38,7 +38,7 @@ export const columns: GridColDef[] = [
   {
     field: 'status',
     headerName: 'Estado',
-    width: 150,
+    width: 100,
     type: 'singleSelect',
     valueOptions: () => [
       {
