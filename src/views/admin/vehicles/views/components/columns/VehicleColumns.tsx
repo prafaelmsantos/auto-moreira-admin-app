@@ -24,12 +24,14 @@ export const columns: GridColDef[] = [
     disableExport: true,
     renderCell: (params: GridRenderCellParams<any, Date>) => {
       const vehicle = params.row as IVehicle;
-      let images = params.formattedValue as unknown as IVehicleImage[];
-      images = images.slice().sort((a, b) => a.id - b.id);
-
+      const images = params.formattedValue as unknown as IVehicleImage[];
       return (
         <img
-          src={images.length !== 0 ? images[0].url : defaultVehicle}
+          src={
+            images.length !== 0
+              ? images.find((x) => x.isMain)?.url ?? defaultVehicle
+              : defaultVehicle
+          }
           alt={`${vehicle.model.mark?.name} ${vehicle.model.name} ${vehicle.version}`}
           loading="lazy"
           className={'h-12'}

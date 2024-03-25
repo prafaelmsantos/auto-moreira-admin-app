@@ -75,7 +75,7 @@ const ImageCard = ({
   drag(drop(ref));
 
   return (
-    <Grid item xs={3}>
+    <Grid item md={3} sm={6} xs={12}>
       <div
         className="text-navy-700 dark:text-white"
         ref={ref}

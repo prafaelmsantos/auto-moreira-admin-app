@@ -41,17 +41,27 @@ const VehicleImages = ({
       files.map((file: Blob, i: number) => {
         const reader = new FileReader();
         file = files[i];
-        reader.onload = () => {
-          setImages((old) => [
-            ...old,
-            {
-              id: old.length + 1,
-              url: reader.result?.toString() ?? '',
-              isMain: false
-            }
-          ]);
-        };
-        return reader.readAsDataURL(file);
+
+        const imageTypes = [
+          'image/png',
+          'image/gif',
+          'image/jpeg',
+          'image/jpeg'
+        ];
+
+        if (imageTypes.find((x) => x === file.type)) {
+          reader.onload = () => {
+            setImages((old) => [
+              ...old,
+              {
+                id: old.length + 1,
+                url: reader.result?.toString() ?? '',
+                isMain: false
+              }
+            ]);
+          };
+          return reader.readAsDataURL(file);
+        }
       });
     }
   };
