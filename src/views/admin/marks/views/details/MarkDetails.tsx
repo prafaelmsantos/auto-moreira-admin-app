@@ -11,7 +11,7 @@ export default function MarkDetails() {
   } = useFormContext<IMarkValidationSchema>();
 
   return (
-    <Grid container mt={5} px={5}>
+    <Grid container mt={3} px={5}>
       <Grid item xs={12}>
         <GeneralCard
           {...{ errors }}

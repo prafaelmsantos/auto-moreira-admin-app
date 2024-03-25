@@ -30,7 +30,7 @@ export default function VehicleDetails({ models, marks }: IVehicleDetails) {
   const sold = !!watch(VehicleKeys.sold);
 
   return (
-    <Grid container mt={4} px={5} spacing={2} rowSpacing={4}>
+    <Grid container mt={1} px={5} spacing={2} rowSpacing={4}>
       <Grid item md={4} xs={12}>
         <AutoMoreiraLabel
           children={
@@ -319,7 +319,6 @@ export default function VehicleDetails({ models, marks }: IVehicleDetails) {
           />
         </Grid>
       )}
-
       <Grid item xs={12}>
         <GeneralCard
           {...{ errors }}

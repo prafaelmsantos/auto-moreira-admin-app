@@ -19,7 +19,7 @@ export default function UserDetails({ roles }: IUserDetails) {
   const userId = Number(watch('id'));
 
   return (
-    <Grid container mt={5} px={5} spacing={3}>
+    <Grid container mt={3} px={5} spacing={3}>
       <Grid item md={6} xs={12}>
         <GeneralCard
           required

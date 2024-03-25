@@ -16,7 +16,7 @@ export default function ClientMessageDetails({
 }: IClientMessageDetails) {
   return (
     <>
-      <Grid container spacing={3} mt={5} px={5}>
+      <Grid container spacing={3} mt={3} px={5}>
         <Grid item xs={12} md={5} mt={3} px={4}>
           <Grid container spacing={2}>
             <Grid item xs={6}>

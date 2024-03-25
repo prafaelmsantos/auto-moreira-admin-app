@@ -184,46 +184,25 @@ export default function Vehicle() {
     setVehicle((old) => ({ ...old, vehicleImages: vehicleImages }));
 
   return (
-    <>
-      <FormProvider {...methods}>
-        {mode && (
-          <>
-            <Box sx={{ width: '100%', typography: 'body1' }}></Box>
-            <PageHolder
-              actions={GetActions({
-                ...{ mode, handleClose },
-                handleSubmitEdit: handleSubmit(handleSumbitEdit),
-                handleSumbitAdd: handleSubmit(handleSumbitAdd)
-              })}
-            />
-            <TabContext value={value}>
-              <Box>
-                <TabList
-                  onChange={handleChange}
-                  textColor="secondary"
-                  indicatorColor="secondary"
-                >
-                  <Tab label={'Informação'} value="1" />
-                  {mode === IMode.EDIT && (
-                    <Tab label={<Typography>Imagens</Typography>} value="2" />
-                  )}
-                </TabList>
-              </Box>
-              <TabPanel value="1">
-                <VehicleDetails {...{ vehicle, marks, models }} />
-              </TabPanel>
-              {mode === IMode.EDIT && (
-                <TabPanel value="2">
-                  <VehicleImages
-                    vehicleImages={vehicle.vehicleImages}
-                    {...{ handleChangeImages }}
-                  />
-                </TabPanel>
-              )}
-            </TabContext>
-          </>
-        )}
-      </FormProvider>
-    </>
+    <FormProvider {...methods}>
+      {mode && (
+        <>
+          <PageHolder
+            actions={GetActions({
+              ...{ mode, handleClose },
+              handleSubmitEdit: handleSubmit(handleSumbitEdit),
+              handleSumbitAdd: handleSubmit(handleSumbitAdd)
+            })}
+          />
+
+          <VehicleDetails {...{ vehicle, marks, models }} />
+
+          <VehicleImages
+            vehicleImages={vehicle.vehicleImages}
+            {...{ handleChangeImages }}
+          />
+        </>
+      )}
+    </FormProvider>
   );
 }

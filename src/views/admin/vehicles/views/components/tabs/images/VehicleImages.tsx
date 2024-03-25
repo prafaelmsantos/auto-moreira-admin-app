@@ -1,8 +1,9 @@
-import { Grid, IconButton, Tooltip } from '@mui/material';
+import { Box, Grid, IconButton, Tooltip } from '@mui/material';
 import { useEffect, useRef, useState } from 'react';
 import EditTwoToneIcon from '@mui/icons-material/EditTwoTone';
 import { IVehicleImage } from '../../../../models/Vehicle';
 import ImageCard from './Details/ImageCard';
+import AutoMoreiraLabel from '../../../../../../../components/form/AutoMoreiraLabel';
 
 const VehicleImages = ({
   vehicleImages,
@@ -59,37 +60,55 @@ const VehicleImages = ({
   }, [images]);
 
   return (
-    <main>
-      <Grid container spacing={4} direction="row" alignItems="center">
-        {images.map((image, index) => (
-          <ImageCard
-            remodeItem={remodeItem}
-            key={image.id}
-            src={image.url}
-            title={`${index + 1}`}
-            id={image.id}
-            index={index}
-            moveImage={moveImage}
-          />
-        ))}
-      </Grid>
-      <div className="border-white-400 -bottom-12 flex h-[40px] w-[40px] items-center justify-center rounded-full border-[4px] bg-white dark:!border-navy-700">
-        <Tooltip title={'Editar'} arrow>
-          <IconButton onClick={handleImageUpload} color="inherit" size="small">
-            <EditTwoToneIcon fontSize="small" />
-          </IconButton>
-        </Tooltip>
-      </div>
-      <input
-        accept="image/png, image/gif, image/jpeg, image/jpeg"
-        ref={fileInput}
-        type="file"
-        id="upload-button"
-        style={{ display: 'none' }}
-        multiple
-        onChange={handleChange}
+    <Box sx={{ mt: 3, px: 5 }}>
+      <AutoMoreiraLabel
+        label=""
+        children={
+          <>
+            <Grid
+              container
+              spacing={4}
+              px={2}
+              direction={'row'}
+              alignItems={'center'}
+              justifyItems={'center'}
+            >
+              {images.map((image, index) => (
+                <ImageCard
+                  remodeItem={remodeItem}
+                  key={image.id}
+                  src={image.url}
+                  title={`${index + 1}`}
+                  id={image.id}
+                  index={index}
+                  moveImage={moveImage}
+                />
+              ))}
+            </Grid>
+            <div className="border-white-400 -bottom-12 flex h-[40px] w-[40px] items-center justify-center rounded-full border-[4px] bg-white dark:!border-navy-700">
+              <Tooltip title={'Editar'} arrow>
+                <IconButton
+                  onClick={handleImageUpload}
+                  color="inherit"
+                  size="small"
+                >
+                  <EditTwoToneIcon fontSize="small" />
+                </IconButton>
+              </Tooltip>
+            </div>
+            <input
+              accept="image/png, image/gif, image/jpeg, image/jpeg"
+              ref={fileInput}
+              type="file"
+              id="upload-button"
+              style={{ display: 'none' }}
+              multiple
+              onChange={handleChange}
+            />
+          </>
+        }
       />
-    </main>
+    </Box>
   );
 };
 

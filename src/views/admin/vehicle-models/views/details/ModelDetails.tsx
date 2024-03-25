@@ -14,7 +14,7 @@ export default function ModelDetails({ marks }: { marks: IMark[] }) {
   } = useFormContext<IModelValidationSchema>();
 
   return (
-    <Grid container mt={5} px={5} spacing={2}>
+    <Grid container mt={3} px={5} spacing={2}>
       <Grid item md={6} xs={12}>
         <GeneralCard
           {...{ errors }}
