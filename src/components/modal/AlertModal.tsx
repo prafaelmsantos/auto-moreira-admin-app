@@ -117,7 +117,7 @@ export default function AlertModal(props: IAlertModal) {
                     variant="outlined"
                     sx={{ color: COLORS.AUTO_MOREIRA_ALTERNATIVE_BLUE }}
                   >
-                    <Typography sx={{ fontSize: 16 }}>Cancel</Typography>
+                    <Typography sx={{ fontSize: 16 }}>Cancelar</Typography>
                   </Button>
                 )}
                 {onOk && (
@@ -199,7 +199,7 @@ export default function AlertModal(props: IAlertModal) {
                       borderColor: COLORS.AUTO_MOREIRA_ALTERNATIVE_BLUE
                     }}
                   >
-                    <Typography sx={{ fontSize: 16 }}>Yes</Typography>
+                    <Typography sx={{ fontSize: 16 }}>Sim</Typography>
                   </Button>
                 )}
 
@@ -210,7 +210,7 @@ export default function AlertModal(props: IAlertModal) {
                     variant={'outlined'}
                     sx={{ color: COLORS.AUTO_MOREIRA_ALTERNATIVE_BLUE }}
                   >
-                    <Typography sx={{ fontSize: 16 }}>No</Typography>
+                    <Typography sx={{ fontSize: 16 }}>Não</Typography>
                   </Button>
                 )}
                 {onCancel && (
@@ -220,7 +220,7 @@ export default function AlertModal(props: IAlertModal) {
                     variant={'outlined'}
                     sx={{ color: COLORS.AUTO_MOREIRA_ALTERNATIVE_BLUE }}
                   >
-                    <Typography sx={{ fontSize: 16 }}>Cancel</Typography>
+                    <Typography sx={{ fontSize: 16 }}>Cancelar</Typography>
                   </Button>
                 )}
               </>
