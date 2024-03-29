@@ -26,7 +26,11 @@ import AlertModal from '../../../components/modal/AlertModal';
 export default function Vehicles() {
   const [idsToDelete, setIdsToDelete] = useState<number[]>([]);
   const navigate = useNavigate();
-  const { data, loading, refetch } = useQuery<vehicles>(VEHICLES);
+  const { data, loading, refetch } = useQuery<vehicles>(VEHICLES, {
+    variables: {
+      first: 1000
+    }
+  });
 
   const rows =
     data?.vehicles?.nodes

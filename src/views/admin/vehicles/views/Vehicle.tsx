@@ -13,7 +13,7 @@ import { IVehicle, IVehicleImage } from '../models/Vehicle';
 import { addVehicleNavigate, vehicleListNavigate } from './utils/Utils';
 import { MODELS } from '../../vehicle-models/models/graphQL/Models';
 import { convertToModel } from '../../vehicle-models/models/Model';
-import VehicleDetails from './components/tabs/details/VehicleDetails';
+import VehicleDetails from './details/VehicleDetails';
 import { VehicleValidationSchema } from '../services/VehicleValidationSchema';
 import {
   createVehicle,
@@ -34,7 +34,7 @@ import {
   models_models_nodes,
   models
 } from '../../vehicle-models/models/graphQL/types/models';
-import VehicleImages from './components/tabs/images/VehicleImages';
+import VehicleImages from './images/VehicleImages';
 
 export default function Vehicle() {
   const methods = useForm<IVehicle>({
@@ -68,8 +68,16 @@ export default function Vehicle() {
   const vehicleId = Number(param.id);
   const match = useMatch(addVehicleNavigate);
   const [mode, setMode] = useState<IMode>();
-  const { data: marksData } = useQuery<marks>(MARKS);
-  const { data: modelsData } = useQuery<models>(MODELS);
+  const { data: marksData } = useQuery<marks>(MARKS, {
+    variables: {
+      first: 500
+    }
+  });
+  const { data: modelsData } = useQuery<models>(MODELS, {
+    variables: {
+      first: 500
+    }
+  });
 
   const marks =
     marksData?.marks?.nodes

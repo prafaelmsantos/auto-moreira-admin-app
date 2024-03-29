@@ -23,7 +23,11 @@ import AlertModal from '../../../components/modal/AlertModal';
 export default function Marks() {
   const [idsToDelete, setIdsToDelete] = useState<number[]>([]);
   const navigate = useNavigate();
-  const { data, loading, refetch } = useQuery<marks>(MARKS);
+  const { data, loading, refetch } = useQuery<marks>(MARKS, {
+    variables: {
+      first: 500
+    }
+  });
 
   const rows =
     data?.marks?.nodes

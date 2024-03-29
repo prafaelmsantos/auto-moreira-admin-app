@@ -22,7 +22,11 @@ import AlertModal from '../../../components/modal/AlertModal';
 export default function Models() {
   const [idsToDelete, setIdsToDelete] = useState<number[]>([]);
   const navigate = useNavigate();
-  const { data, loading, refetch } = useQuery<models>(MODELS);
+  const { data, loading, refetch } = useQuery<models>(MODELS, {
+    variables: {
+      first: 500
+    }
+  });
 
   const rows =
     data?.models?.nodes

@@ -43,10 +43,6 @@ const App = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  /*   useEffect(() => {
-    user && dispatch(setUser(user));
-  }, []); */
-
   const currentLoader = useSelector(
     (state: RootState) => state.loaderSlice.loader
   );

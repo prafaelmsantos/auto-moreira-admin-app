@@ -23,7 +23,11 @@ import { setModal } from '../../../redux/modalSlice';
 
 export default function ClientMessages() {
   const [idsToDelete, setIdsToDelete] = useState<number[]>([]);
-  const { data, loading, refetch } = useQuery<clientMessages>(CLIENT_MESSAGES);
+  const { data, loading, refetch } = useQuery<clientMessages>(CLIENT_MESSAGES, {
+    variables: {
+      first: 1000
+    }
+  });
 
   const rows =
     data?.clientMessages?.nodes

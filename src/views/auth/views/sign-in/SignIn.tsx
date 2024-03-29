@@ -70,7 +70,7 @@ export default function SignIn() {
             variant="auth"
             extra="mb-3"
             label="Email*"
-            placeholder="cr7master"
+            placeholder="exemplo@gmail.com"
             id="email"
             type="text"
             register={register('email')}

@@ -1,7 +1,7 @@
 import { Grid, IconButton } from '@mui/material';
 import { useDrag, useDrop } from 'react-dnd';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
-import { IVehicleImage } from '../../../../../models/Vehicle';
+import { IVehicleImage } from '../../../models/Vehicle';
 import { useRef } from 'react';
 import { MdOutlineDelete } from 'react-icons/md';
 

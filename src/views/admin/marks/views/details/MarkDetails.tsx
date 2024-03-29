@@ -1,6 +1,6 @@
 import { Grid } from '@mui/material';
 import { MarkKeys } from '../../models/Mark';
-import GeneralCard from '../../../identity/users/views/components/card/GeneralCard';
+import TextFieldCard from '../../../identity/users/views/components/card/TextFieldCard';
 import { IMarkValidationSchema } from '../../services/MarkValidationSchema';
 import { useFormContext } from 'react-hook-form';
 
@@ -13,7 +13,7 @@ export default function MarkDetails() {
   return (
     <Grid container mt={3} px={5}>
       <Grid item xs={12}>
-        <GeneralCard
+        <TextFieldCard
           {...{ errors }}
           control={control}
           required

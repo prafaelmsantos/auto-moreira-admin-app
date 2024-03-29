@@ -22,7 +22,11 @@ import AlertModal from '../../../../components/modal/AlertModal';
 
 export default function Roles() {
   const navigate = useNavigate();
-  const { data, loading, refetch } = useQuery<roles>(ROLES);
+  const { data, loading, refetch } = useQuery<roles>(ROLES, {
+    variables: {
+      first: 500
+    }
+  });
   const [idsToDelete, setIdsToDelete] = useState<number[]>([]);
 
   const rows =

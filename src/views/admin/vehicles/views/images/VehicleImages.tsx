@@ -1,12 +1,14 @@
 import { Box, Button, Grid, Stack } from '@mui/material';
 import { useEffect, useRef, useState } from 'react';
-import { IVehicleImage } from '../../../../models/Vehicle';
-import ImageCard from './Details/ImageCard';
-import AutoMoreiraLabel from '../../../../../../../components/form/AutoMoreiraLabel';
-import { COLORS } from '../../../../../../../utils/Colors';
+import { IVehicleImage, VehicleKeys } from '../../models/Vehicle';
+import ImageCard from '../components/cards/ImageCard';
+import AutoMoreiraLabel from '../../../../../components/form/AutoMoreiraLabel';
+import { COLORS } from '../../../../../utils/Colors';
 import { LuUpload } from 'react-icons/lu';
 import { useSelector } from 'react-redux';
-import { RootState } from '../../../../../../../redux/store';
+import { RootState } from '../../../../../redux/store';
+import { IVehicleValidationSchema } from '../../services/VehicleValidationSchema';
+import { useFormContext } from 'react-hook-form';
 
 interface IVehicleImages {
   vehicleImages: IVehicleImage[];
@@ -69,8 +71,12 @@ const VehicleImages = ({
   const handleImageUpload = () =>
     fileInput && fileInput.current && fileInput.current.click();
 
+  const { setValue } = useFormContext<IVehicleValidationSchema>();
+
   useEffect(() => {
-    void handleChangeImages(images);
+    void setValue<any>(VehicleKeys.vehicleImages, images);
+
+    //void handleChangeImages(images);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [images]);
 
@@ -79,7 +85,7 @@ const VehicleImages = ({
   return (
     <Box sx={{ mt: 3, px: 5 }}>
       <AutoMoreiraLabel
-        label=""
+        label="Imagens"
         children={
           <>
             <div className="flex justify-end">
@@ -137,6 +143,7 @@ const VehicleImages = ({
               container
               spacing={4}
               px={2}
+              sx={{ minHeight: 150 }}
               direction={'row'}
               alignItems={'center'}
               justifyItems={'center'}

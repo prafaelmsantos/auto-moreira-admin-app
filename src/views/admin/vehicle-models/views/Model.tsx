@@ -38,7 +38,11 @@ export default function Model() {
   const modelId = Number(param.id);
   const match = useMatch(addModelNavigate);
   const [mode, setMode] = useState<IMode>();
-  const { data } = useQuery<marks>(MARKS);
+  const { data } = useQuery<marks>(MARKS, {
+    variables: {
+      first: 500
+    }
+  });
   const marks =
     data?.marks?.nodes?.map((mark) =>
       convertToMark(mark as marks_marks_nodes)

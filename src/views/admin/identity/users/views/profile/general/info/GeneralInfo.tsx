@@ -7,7 +7,7 @@ import { UserValidationSchema } from '../../../../services/UserValidationSchema'
 import Card from '../../../../../../../../components/card';
 import ProfilePageHolder from '../../../../../../../../components/base/ProfilePageHolder';
 import GetActions from '../../../../../../../../components/base/Actions';
-import GeneralCard from '../../../components/card/GeneralCard';
+import TextFieldCard from '../../../components/card/TextFieldCard';
 import { useAppDispatch } from '../../../../../../../../redux/hooks';
 import {
   setLoader,
@@ -98,7 +98,7 @@ const GeneralInfo = ({
         </div>
         {/* Cards */}
         <div className="xs:grid-cols-1 grid gap-4 px-2 md:grid-cols-2">
-          <GeneralCard
+          <TextFieldCard
             disabled={mode === IMode.PREVIEW}
             error={!!errors.firstName}
             helperText={errors.firstName?.message}
@@ -108,7 +108,7 @@ const GeneralInfo = ({
             value={user.firstName}
             {...{ control }}
           />
-          <GeneralCard
+          <TextFieldCard
             disabled={mode === IMode.PREVIEW}
             error={!!errors.lastName}
             helperText={errors.lastName?.message}
@@ -118,7 +118,7 @@ const GeneralInfo = ({
             value={user.lastName}
             {...{ errors, control }}
           />
-          <GeneralCard
+          <TextFieldCard
             disabled={mode === IMode.PREVIEW}
             error={!!errors.email}
             helperText={errors.email?.message}
@@ -128,7 +128,7 @@ const GeneralInfo = ({
             required
             {...{ errors, control }}
           />
-          <GeneralCard
+          <TextFieldCard
             disabled={mode === IMode.PREVIEW}
             error={!!errors.phoneNumber}
             helperText={errors.phoneNumber?.message}

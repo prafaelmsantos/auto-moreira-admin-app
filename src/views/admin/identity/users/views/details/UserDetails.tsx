@@ -1,6 +1,6 @@
 import { Controller, useFormContext } from 'react-hook-form';
 import { Autocomplete, Grid, TextField } from '@mui/material';
-import GeneralCard from '../components/card/GeneralCard';
+import TextFieldCard from '../components/card/TextFieldCard';
 import { IRole } from '../../../roles/models/Role';
 import { IUserValidationSchema } from '../../services/UserValidationSchema';
 import AutoMoreiraLabel from '../../../../../../components/form/AutoMoreiraLabel';
@@ -21,7 +21,7 @@ export default function UserDetails({ roles }: IUserDetails) {
   return (
     <Grid container mt={3} px={5} spacing={3}>
       <Grid item md={6} xs={12}>
-        <GeneralCard
+        <TextFieldCard
           required
           name={'firstName'}
           label={'Primeiro Nome'}
@@ -33,7 +33,7 @@ export default function UserDetails({ roles }: IUserDetails) {
       </Grid>
 
       <Grid item md={6} xs={12}>
-        <GeneralCard
+        <TextFieldCard
           required
           name={'lastName'}
           label={'Ultimo Nome'}
@@ -45,7 +45,7 @@ export default function UserDetails({ roles }: IUserDetails) {
       </Grid>
 
       <Grid item md={6} xs={12}>
-        <GeneralCard
+        <TextFieldCard
           required
           name={'email'}
           label={'Email'}
@@ -57,7 +57,7 @@ export default function UserDetails({ roles }: IUserDetails) {
       </Grid>
 
       <Grid item md={3} xs={12}>
-        <GeneralCard
+        <TextFieldCard
           required
           name={'phoneNumber'}
           label={'Telemóvel'}

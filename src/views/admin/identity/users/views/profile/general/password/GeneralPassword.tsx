@@ -1,6 +1,6 @@
 import Card from '../../../../../../../../components/card';
 import { IUser, IUserUpdatePassword } from '../../../../models/User';
-import GeneralCard from '../../../components/card/GeneralCard';
+import TextFieldCard from '../../../components/card/TextFieldCard';
 import { useEffect, useState } from 'react';
 import ProfilePageHolder from '../../../../../../../../components/base/ProfilePageHolder';
 import GetActions from '../../../../../../../../components/base/Actions';
@@ -124,7 +124,7 @@ const GeneralPassword = ({ user }: IGeneralPassword) => {
 
         {mode === IMode.EDIT && (
           <div className="xs:grid-cols-1 grid gap-4 px-2 md:grid-cols-2">
-            <GeneralCard
+            <TextFieldCard
               error={!!errors.password}
               helperText={errors.password?.message}
               name={'password'}
@@ -136,7 +136,7 @@ const GeneralPassword = ({ user }: IGeneralPassword) => {
               handleClickShowPassword={handleShowPasswordFirst}
               {...{ control }}
             />
-            <GeneralCard
+            <TextFieldCard
               error={!!errors.confirmPassword}
               helperText={errors.confirmPassword?.message}
               name={'confirmPassword'}

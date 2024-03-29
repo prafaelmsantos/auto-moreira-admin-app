@@ -82,5 +82,6 @@ export enum VehicleKeys {
     observations = "observations",
     sold = "sold",
     opportunity = "opportunity",
-    soldDate = "soldDate"
+    soldDate = "soldDate",
+    vehicleImages = "vehicleImages"
 }

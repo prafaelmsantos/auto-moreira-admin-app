@@ -1,16 +1,16 @@
-import { Autocomplete, Box, Grid, Stack, TextField } from '@mui/material';
+import { Autocomplete, Grid, Stack, TextField } from '@mui/material';
 
-import { IMark } from '../../../../../marks/models/Mark';
-import { IModel } from '../../../../../vehicle-models/models/Model';
-import { fuels } from '../../../../models/enums/FuelEnum';
-import { transmissions } from '../../../../models/enums/TransmissionEnum';
+import { IMark } from '../../../marks/models/Mark';
+import { IModel } from '../../../vehicle-models/models/Model';
+import { fuels } from '../../models/enums/FuelEnum';
+import { transmissions } from '../../models/enums/TransmissionEnum';
 import { Controller, useFormContext } from 'react-hook-form';
-import { AutocompleteSX } from '../../../../../../../components/form/style/AutocompleteSX';
-import SwitchFormValidation from '../../../../../../../components/form/SwitchFormValidation';
-import { IVehicleValidationSchema } from '../../../../services/VehicleValidationSchema';
-import AutoMoreiraLabel from '../../../../../../../components/form/AutoMoreiraLabel';
-import GeneralCard from '../../../../../identity/users/views/components/card/GeneralCard';
-import { VehicleKeys } from '../../../../models/Vehicle';
+import { AutocompleteSX } from '../../../../../components/form/style/AutocompleteSX';
+import SwitchFormValidation from '../../../../../components/form/SwitchFormValidation';
+import { IVehicleValidationSchema } from '../../services/VehicleValidationSchema';
+import AutoMoreiraLabel from '../../../../../components/form/AutoMoreiraLabel';
+import TextFieldCard from '../../../identity/users/views/components/card/TextFieldCard';
+import { VehicleKeys } from '../../models/Vehicle';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import dayjs from 'dayjs';
 
@@ -110,7 +110,7 @@ export default function VehicleDetails({ models, marks }: IVehicleDetails) {
         />
       </Grid>
       <Grid item md={4} xs={12}>
-        <GeneralCard
+        <TextFieldCard
           {...{ errors }}
           control={control}
           required
@@ -157,7 +157,7 @@ export default function VehicleDetails({ models, marks }: IVehicleDetails) {
         />
       </Grid>
       <Grid item md={4} xs={12}>
-        <GeneralCard
+        <TextFieldCard
           {...{ errors }}
           control={control}
           required
@@ -169,7 +169,7 @@ export default function VehicleDetails({ models, marks }: IVehicleDetails) {
         />
       </Grid>
       <Grid item md={2} xs={6}>
-        <GeneralCard
+        <TextFieldCard
           {...{ errors }}
           control={control}
           name={VehicleKeys.year}
@@ -180,11 +180,11 @@ export default function VehicleDetails({ models, marks }: IVehicleDetails) {
         />
       </Grid>
       <Grid item md={2} xs={6}>
-        <GeneralCard
+        <TextFieldCard
           {...{ errors }}
           control={control}
           name={VehicleKeys.price}
-          label={'Preço'}
+          label={'Preço (€)'}
           error={!!errors.price}
           helperText={errors.price?.message}
           type="number"
@@ -220,13 +220,13 @@ export default function VehicleDetails({ models, marks }: IVehicleDetails) {
               control={control}
             />
           }
-          label={'Combustível'}
+          label={'Transmissão'}
           error={!!errors.fuelType}
           required
         />
       </Grid>
       <Grid item md={2} xs={6}>
-        <GeneralCard
+        <TextFieldCard
           {...{ errors }}
           control={control}
           name={VehicleKeys.mileage}
@@ -237,7 +237,7 @@ export default function VehicleDetails({ models, marks }: IVehicleDetails) {
         />
       </Grid>
       <Grid item md={2} xs={6}>
-        <GeneralCard
+        <TextFieldCard
           {...{ errors }}
           control={control}
           name={VehicleKeys.doors}
@@ -248,7 +248,7 @@ export default function VehicleDetails({ models, marks }: IVehicleDetails) {
         />
       </Grid>
       <Grid item md={2} xs={6}>
-        <GeneralCard
+        <TextFieldCard
           {...{ errors }}
           control={control}
           name={VehicleKeys.engineSize}
@@ -259,7 +259,7 @@ export default function VehicleDetails({ models, marks }: IVehicleDetails) {
         />
       </Grid>
       <Grid item md={2} xs={6}>
-        <GeneralCard
+        <TextFieldCard
           {...{ errors }}
           control={control}
           name={VehicleKeys.power}
@@ -320,7 +320,7 @@ export default function VehicleDetails({ models, marks }: IVehicleDetails) {
         </Grid>
       )}
       <Grid item xs={12}>
-        <GeneralCard
+        <TextFieldCard
           {...{ errors }}
           control={control}
           name={VehicleKeys.observations}

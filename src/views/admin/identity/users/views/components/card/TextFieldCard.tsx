@@ -18,7 +18,7 @@ interface IGeneral {
   handleClickShowPassword?: () => void;
 }
 
-const GeneralCard = ({
+const TextField = ({
   label,
   value,
   required,
@@ -61,4 +61,4 @@ const GeneralCard = ({
   );
 };
 
-export default GeneralCard;
+export default TextField;

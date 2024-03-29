@@ -51,7 +51,11 @@ export default function User() {
   const match = useMatch(addUserNavigate);
   const [mode, setMode] = useState<IMode>();
 
-  const { data } = useQuery<roles>(ROLES);
+  const { data } = useQuery<roles>(ROLES, {
+    variables: {
+      first: 500
+    }
+  });
   const roles =
     (data?.roles?.nodes?.map((role) =>
       convertToRole(role as roles_roles_nodes)
@@ -143,22 +147,20 @@ export default function User() {
   };
 
   return (
-    <>
-      <FormProvider {...methods}>
-        {mode && (
-          <>
-            <PageHolder
-              actions={GetActions({
-                ...{ mode, handleClose },
-                handleSubmitEdit: handleSubmit(handleSumbitEdit),
-                handleSumbitAdd: handleSubmit(handleSumbitAdd)
-              })}
-            />
+    <FormProvider {...methods}>
+      {mode && (
+        <>
+          <PageHolder
+            actions={GetActions({
+              ...{ mode, handleClose },
+              handleSubmitEdit: handleSubmit(handleSumbitEdit),
+              handleSumbitAdd: handleSubmit(handleSumbitAdd)
+            })}
+          />
 
-            <UserDetails {...{ roles }} />
-          </>
-        )}
-      </FormProvider>
-    </>
+          <UserDetails {...{ roles }} />
+        </>
+      )}
+    </FormProvider>
   );
 }
