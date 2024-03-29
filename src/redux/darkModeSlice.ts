@@ -5,7 +5,7 @@ interface IMarksMode {
 }
 
 const initialState: IMarksMode = {
-  dark: false
+  dark: true
 };
 
 export const darkModeSlice = createSlice({

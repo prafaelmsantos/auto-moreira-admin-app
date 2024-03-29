@@ -1,10 +1,11 @@
 import { useNavigate } from 'react-router-dom';
 
 import { useFormContext } from 'react-hook-form';
-import InputField from '../../../../../components/fields/InputField';
+
 import { IResetPasswordMode } from '../../../models/Auth';
 import { IResetPasswordValidationSchema } from '../../../services/ResetPasswordValidationSchema';
 import CheckCircleOutlineOutlinedIcon from '@mui/icons-material/CheckCircleOutlineOutlined';
+import TextFieldCard from '../../../../admin/identity/users/views/components/card/TextFieldCard';
 
 interface IResetPasswordDetails {
   mode: IResetPasswordMode;
@@ -18,7 +19,7 @@ export default function ResetPasswordDetails({
 }: IResetPasswordDetails) {
   const navigate = useNavigate();
   const {
-    register,
+    control,
     formState: { errors }
   } = useFormContext<IResetPasswordValidationSchema>();
 
@@ -36,21 +37,19 @@ export default function ResetPasswordDetails({
 
           {/* Email */}
 
-          <InputField
-            variant="auth"
-            extra="mb-3"
-            label="Email*"
-            placeholder="exemplo@gmail.com"
-            id="email"
-            type="text"
-            register={register('email')}
+          <TextFieldCard
             error={!!errors.email}
             helperText={errors.email?.message}
+            name={'email'}
+            required
+            label={'Email'}
+            value={''}
+            {...{ control }}
           />
 
           <button
             onClick={handleSubmit}
-            className="linear mt-2 w-full rounded-xl bg-brand-400 py-[12px] text-base font-medium text-white transition duration-200 hover:bg-brand-300 active:bg-brand-200"
+            className="linear mt-4 w-full rounded-xl bg-brand-400 py-[12px] text-base font-medium text-white transition duration-200 hover:bg-brand-300 active:bg-brand-200"
           >
             Enviar
           </button>

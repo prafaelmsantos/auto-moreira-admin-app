@@ -45,6 +45,7 @@ export default function TextFieldFormValidation({
   handleClickShowPassword
 }: ITextFieldFormValidation) {
   const darkMode = useSelector((state: RootState) => state.darkModeSlice.dark);
+
   const redColor = '#d32f2f';
 
   return (

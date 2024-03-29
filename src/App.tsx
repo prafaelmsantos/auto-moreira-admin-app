@@ -52,6 +52,7 @@ const App = () => {
     (state: RootState) => state.snackBarSlice
   );
   const darkMode = useSelector((state: RootState) => state.darkModeSlice.dark);
+
   const theme = createTheme({
     palette: {
       primary: {

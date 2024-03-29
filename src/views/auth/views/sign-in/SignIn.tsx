@@ -1,4 +1,3 @@
-import InputField from '../../../../components/fields/InputField';
 import { IUserLogin } from '../../models/Auth';
 import { MessageType } from '../../../../models/enums/MessageTypeEnum';
 import { setModal } from '../../../../redux/modalSlice';
@@ -11,6 +10,9 @@ import { mainNavigate } from '../utils/Utils';
 import { FormProvider, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { SignInValidationSchema } from '../../services/SignInValidationSchema';
+import TextFieldCard from '../../../admin/identity/users/views/components/card/TextFieldCard';
+import { useState } from 'react';
+import { Box } from '@mui/material';
 
 export default function SignIn() {
   const dispatch = useAppDispatch();
@@ -21,7 +23,7 @@ export default function SignIn() {
   });
   const {
     handleSubmit,
-    register,
+    control,
     formState: { errors }
   } = methods;
 
@@ -54,6 +56,8 @@ export default function SignIn() {
         );
       });
   };
+  const [showPassword, setShowPassword] = useState<boolean>(false);
+  const handleShowPassword = () => setShowPassword((show) => !show);
 
   return (
     <div className="mb-16 mt-16 flex h-full w-full items-center justify-center px-2 md:mx-0 md:px-0 lg:mb-10 lg:items-center lg:justify-start">
@@ -66,32 +70,34 @@ export default function SignIn() {
           </p>
 
           {/* Email */}
-          <InputField
-            variant="auth"
-            extra="mb-3"
-            label="Email*"
-            placeholder="exemplo@gmail.com"
-            id="email"
-            type="text"
-            register={register('email')}
+          <TextFieldCard
             error={!!errors.email}
             helperText={errors.email?.message}
+            name={'email'}
+            required
+            label={'Email'}
+            value={''}
+            {...{ control }}
           />
 
           {/* Password */}
-          <InputField
-            variant="auth"
-            extra="mb-3"
-            label="Palavra-passe*"
-            placeholder="Min. 6 caracteres"
-            id="password"
-            type="password"
-            register={register('password')}
-            error={!!errors.password}
-            helperText={errors.password?.message}
-          />
-          {/* Checkbox */}
-          <div className="mb-4 mt-1 flex items-center justify-end px-2">
+          <Box sx={{ mt: 2 }}>
+            <TextFieldCard
+              error={!!errors.password}
+              helperText={errors.password?.message}
+              name={'password'}
+              required
+              label={'Palavra-passe'}
+              value={''}
+              endAdornment
+              showPassword={showPassword}
+              handleClickShowPassword={handleShowPassword}
+              {...{ control }}
+            />
+          </Box>
+
+          {/* Reset Password */}
+          <div className="mb-4 mt-3 flex items-center justify-end px-2">
             <button
               className="text-sm font-medium text-white hover:text-brand-600"
               onClick={() => navigate('/auth/reset-password')}

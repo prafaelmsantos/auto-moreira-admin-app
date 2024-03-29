@@ -4,7 +4,9 @@ import { COLORS } from '../../../utils/Colors';
 
 export const TextFieldSX = (error: boolean) => {
   const darkMode = useSelector((state: RootState) => state.darkModeSlice.dark);
+
   const redColor = '#d32f2f';
+  
   return {
     '& .MuiInput-underline:before': {
       borderBottomColor: darkMode ? 'white' : COLORS.AUTO_MOREIRA_NAVY[700]
