@@ -3,6 +3,7 @@
 import { HiX } from 'react-icons/hi';
 import Links from './components/Links';
 import routes from '../../routes/SideBarRoutes';
+import { useNavigate } from 'react-router-dom';
 
 const Sidebar = (props: {
   open: boolean;
@@ -10,6 +11,8 @@ const Sidebar = (props: {
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
   const { open, setOpen, mobile } = props;
+
+  const navigate = useNavigate();
 
   return (
     <div
@@ -25,9 +28,11 @@ const Sidebar = (props: {
       </span>
 
       <div className={`mx-[56px] mt-[50px] flex items-center`}>
-        <div className="ml-1 mt-1 h-2.5 font-poppins text-[26px] font-bold uppercase text-navy-700 dark:text-white">
-          <span className="font-medium">Auto</span> Moreira
-        </div>
+        <button onClick={() => navigate('/admin/dashboard')}>
+          <div className="ml-1 mt-1 h-2.5 font-poppins text-[26px] font-bold uppercase text-navy-700 dark:text-white">
+            <span className="font-medium">Auto</span> Moreira
+          </div>
+        </button>
       </div>
       <div className="mb-7 mt-[58px] h-px bg-gray-300 dark:bg-white/30" />
       {/* Nav item */}

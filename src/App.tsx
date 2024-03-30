@@ -18,14 +18,16 @@ import { getUser } from './views/admin/identity/users/services/UserService';
 import { setLoader, setToInitialLoader } from './redux/loaderSlice';
 import {
   getCurrentUser,
+  logout,
   setCurrentUser
 } from './views/auth/services/AuthService';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
+import { useNavigate } from 'react-router-dom';
 
 const App = () => {
   const dispatch = useAppDispatch();
-
+  const navigate = useNavigate();
   const user = getCurrentUser();
 
   useEffect(() => {
@@ -36,7 +38,10 @@ const App = () => {
           setCurrentUser(data, dispatch);
           dispatch(setToInitialLoader());
         })
-        .catch(() => dispatch(setToInitialLoader()));
+        .catch(() => {
+          logout(dispatch, navigate);
+          dispatch(setToInitialLoader());
+        });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -77,7 +82,6 @@ const App = () => {
     } else {
       document.body.classList.add('dark');
     }
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [darkMode]);
 
