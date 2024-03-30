@@ -4,7 +4,7 @@ import TextFieldCard from '../components/card/TextFieldCard';
 import { IRole } from '../../../roles/models/Role';
 import { IUserValidationSchema } from '../../services/UserValidationSchema';
 import AutoMoreiraLabel from '../../../../../../components/form/AutoMoreiraLabel';
-import { TextFieldSX } from '../../../../../../components/form/style/TextFieldSX';
+import { AutocompleteSX } from '../../../../../../components/form/style/AutocompleteSX';
 
 interface IUserDetails {
   roles: IRole[];
@@ -75,6 +75,7 @@ export default function UserDetails({ roles }: IUserDetails) {
               render={({ field: { onChange, value, ...others } }) => (
                 <Autocomplete
                   {...others}
+                  disabled={userId === 1}
                   sx={{ mt: 1 }}
                   value={value[0] ?? null}
                   isOptionEqualToValue={(option, value) =>
@@ -91,11 +92,7 @@ export default function UserDetails({ roles }: IUserDetails) {
                       variant="standard"
                       error={!!errors.roles}
                       helperText={errors.roles?.message}
-                      sx={TextFieldSX(!!errors.roles)}
-                      InputProps={{
-                        disableUnderline: userId === 1
-                      }}
-                      disabled={userId === 1}
+                      sx={AutocompleteSX(!!errors.roles)}
                     />
                   )}
                   onChange={(_, data) => onChange(data ? [data] : [])}

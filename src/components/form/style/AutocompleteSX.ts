@@ -21,6 +21,18 @@ export const AutocompleteSX = (error: boolean) => {
     '& .MuiButtonBase-root': {
       color: darkMode ? 'white' : COLORS.AUTO_MOREIRA_NAVY[700]
     },
+    '& .MuiInputBase-input.Mui-disabled': {
+      WebkitTextFillColor: error
+        ? redColor
+        : darkMode
+        ? 'white'
+        : COLORS.AUTO_MOREIRA_NAVY[700],
+      color: error
+        ? redColor
+        : darkMode
+        ? 'white'
+        : COLORS.AUTO_MOREIRA_NAVY[700]
+    },
     '& .MuiButtonBase-root.Mui-disabled': {
       color: error
         ? redColor

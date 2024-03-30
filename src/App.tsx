@@ -36,9 +36,7 @@ const App = () => {
           setCurrentUser(data, dispatch);
           dispatch(setToInitialLoader());
         })
-        .catch((e) => {
-          dispatch(setToInitialLoader());
-        });
+        .catch(() => dispatch(setToInitialLoader()));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -56,7 +54,10 @@ const App = () => {
   const theme = createTheme({
     palette: {
       primary: {
-        main: COLORS.AUTO_MOREIRA_NAVY[700]
+        light: darkMode ? '#ffffff' : COLORS.AUTO_MOREIRA_NAVY[700],
+        dark: darkMode ? '#ffffff' : COLORS.AUTO_MOREIRA_NAVY[700],
+        contrastText: darkMode ? '#ffffff' : COLORS.AUTO_MOREIRA_NAVY[700],
+        main: darkMode ? '#ffffff' : COLORS.AUTO_MOREIRA_NAVY[700]
       },
       secondary: {
         light: darkMode ? '#ffffff' : COLORS.AUTO_MOREIRA_NAVY[700],
