@@ -111,7 +111,7 @@ export default function AutoMoreiraRouter({
   routeType: RouteType;
 }) {
   const userAdmin =
-    !getCurrentUser()?.roles[0]?.isDefault &&
+    getCurrentUser()?.roles[0]?.isDefault &&
     getCurrentUser()?.roles[0]?.isReadOnly;
 
   return useRoutes(

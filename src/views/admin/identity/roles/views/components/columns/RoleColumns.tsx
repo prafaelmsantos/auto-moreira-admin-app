@@ -24,7 +24,8 @@ export default function columns(refetch: () => void): GridColDef[] {
       disableExport: true,
       renderCell: (params: GridRenderCellParams<Date>) => (
         <Actions
-          deleteDisabled={Number(params.id) === 1}
+          deleteDisabled={Number(params.id) === 1 || Number(params.id) === 2}
+          editDisabled={Number(params.id) === 1 || Number(params.id) === 2}
           editTitle={'Editar cargo'}
           deleteTitle={'Apagar cargo'}
           routeName={RouteName.ROLES}

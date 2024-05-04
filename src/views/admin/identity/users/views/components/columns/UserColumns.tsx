@@ -34,7 +34,7 @@ export default function columns(refetch: () => void): GridColDef[] {
       headerName: 'Cargo',
       width: 150,
       valueFormatter: (params) =>
-        (params.value as IRole[])[0].name ?? 'Sem cargo'
+        (params.value as IRole[])[0]?.name ?? 'Sem cargo'
     },
     {
       field: 'actions',
