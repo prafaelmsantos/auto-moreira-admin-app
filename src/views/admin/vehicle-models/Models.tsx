@@ -24,14 +24,15 @@ export default function Models() {
   const navigate = useNavigate();
   const { data, loading, refetch } = useQuery<models>(MODELS, {
     variables: {
+      order: { id: 'ASC' },
       first: 500
     }
   });
 
   const rows =
-    data?.models?.nodes
-      ?.map((model) => convertToModel(model as models_models_nodes))
-      ?.sort((a, b) => a.id - b.id) ?? [];
+    data?.models?.nodes?.map((model) =>
+      convertToModel(model as models_models_nodes)
+    ) ?? [];
 
   const handleAdd = () => navigate(addModelNavigate);
 

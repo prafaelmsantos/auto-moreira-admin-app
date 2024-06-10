@@ -28,14 +28,15 @@ export default function Vehicles() {
   const navigate = useNavigate();
   const { data, loading, refetch } = useQuery<vehicles>(VEHICLES, {
     variables: {
-      first: 1000
+      order: { id: 'ASC' },
+      first: 500
     }
   });
 
   const rows =
-    data?.vehicles?.nodes
-      ?.map((vehicle) => convertToVehicle(vehicle as vehicles_vehicles_nodes))
-      ?.sort((a, b) => a.id - b.id) ?? [];
+    data?.vehicles?.nodes?.map((vehicle) =>
+      convertToVehicle(vehicle as vehicles_vehicles_nodes)
+    ) ?? [];
 
   const handleAdd = () => navigate(addVehicleNavigate);
 

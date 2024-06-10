@@ -40,6 +40,7 @@ export default function Model() {
   const [mode, setMode] = useState<IMode>();
   const { data } = useQuery<marks>(MARKS, {
     variables: {
+      order: { id: 'ASC' },
       first: 500
     }
   });
@@ -134,21 +135,19 @@ export default function Model() {
   };
 
   return (
-    <>
-      <FormProvider {...methods}>
-        {mode && (
-          <>
-            <PageHolder
-              actions={GetActions({
-                ...{ mode, handleClose },
-                handleSubmitEdit: handleSubmit(handleSumbitEdit),
-                handleSumbitAdd: handleSubmit(handleSumbitAdd)
-              })}
-            />
-            <ModelDetails {...{ marks }} />
-          </>
-        )}
-      </FormProvider>
-    </>
+    <FormProvider {...methods}>
+      {mode && (
+        <>
+          <PageHolder
+            actions={GetActions({
+              ...{ mode, handleClose },
+              handleSubmitEdit: handleSubmit(handleSumbitEdit),
+              handleSumbitAdd: handleSubmit(handleSumbitAdd)
+            })}
+          />
+          <ModelDetails {...{ marks }} />
+        </>
+      )}
+    </FormProvider>
   );
 }

@@ -25,14 +25,15 @@ export default function Users() {
   const [idsToDelete, setIdsToDelete] = useState<number[]>([]);
   const { data, loading, refetch } = useQuery<users>(USERS, {
     variables: {
+      order: { id: 'ASC' },
       first: 500
     }
   });
 
   const rows =
-    data?.users?.nodes
-      ?.map((user) => convertToUser(user as users_users_nodes))
-      ?.sort((a, b) => a.id - b.id) ?? [];
+    data?.users?.nodes?.map((user) =>
+      convertToUser(user as users_users_nodes)
+    ) ?? [];
 
   const handleAdd = () => navigate(addUserNavigate);
 

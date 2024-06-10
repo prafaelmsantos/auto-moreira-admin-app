@@ -70,24 +70,26 @@ export default function Vehicle() {
   const [mode, setMode] = useState<IMode>();
   const { data: marksData } = useQuery<marks>(MARKS, {
     variables: {
+      order: { id: 'ASC' },
       first: 500
     }
   });
   const { data: modelsData } = useQuery<models>(MODELS, {
     variables: {
+      order: { id: 'ASC' },
       first: 500
     }
   });
 
   const marks =
-    marksData?.marks?.nodes
-      ?.map((mark) => convertToMark(mark as marks_marks_nodes))
-      ?.sort((a, b) => a.id - b.id) ?? [];
+    marksData?.marks?.nodes?.map((mark) =>
+      convertToMark(mark as marks_marks_nodes)
+    ) ?? [];
 
   const models =
-    modelsData?.models?.nodes
-      ?.map((model) => convertToModel(model as models_models_nodes))
-      ?.sort((a, b) => a.id - b.id) ?? [];
+    modelsData?.models?.nodes?.map((model) =>
+      convertToModel(model as models_models_nodes)
+    ) ?? [];
 
   useEffect(() => {
     if (vehicleId) {

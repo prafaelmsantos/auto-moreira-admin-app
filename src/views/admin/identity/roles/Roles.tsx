@@ -24,15 +24,16 @@ export default function Roles() {
   const navigate = useNavigate();
   const { data, loading, refetch } = useQuery<roles>(ROLES, {
     variables: {
+      order: { id: 'ASC' },
       first: 500
     }
   });
   const [idsToDelete, setIdsToDelete] = useState<number[]>([]);
 
   const rows =
-    data?.roles?.nodes
-      ?.map((role) => convertToRole(role as roles_roles_nodes))
-      ?.sort((a, b) => a.id - b.id) ?? [];
+    data?.roles?.nodes?.map((role) =>
+      convertToRole(role as roles_roles_nodes)
+    ) ?? [];
 
   const handleAdd = () => navigate(addRoleNavigate);
 

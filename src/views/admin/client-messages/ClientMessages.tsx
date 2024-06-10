@@ -25,18 +25,17 @@ export default function ClientMessages() {
   const [idsToDelete, setIdsToDelete] = useState<number[]>([]);
   const { data, loading, refetch } = useQuery<clientMessages>(CLIENT_MESSAGES, {
     variables: {
+      order: { id: 'DESC' },
       first: 1000
     }
   });
 
   const rows =
-    data?.clientMessages?.nodes
-      ?.map((clientMessage) =>
-        convertToClientMessage(
-          clientMessage as clientMessages_clientMessages_nodes
-        )
+    data?.clientMessages?.nodes?.map((clientMessage) =>
+      convertToClientMessage(
+        clientMessage as clientMessages_clientMessages_nodes
       )
-      ?.sort((a, b) => b.id - a.id) ?? [];
+    ) ?? [];
 
   useEffect(() => {
     void refetch();

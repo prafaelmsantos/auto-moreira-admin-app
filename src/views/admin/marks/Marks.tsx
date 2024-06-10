@@ -25,14 +25,15 @@ export default function Marks() {
   const navigate = useNavigate();
   const { data, loading, refetch } = useQuery<marks>(MARKS, {
     variables: {
+      order: { id: 'ASC' },
       first: 500
     }
   });
 
   const rows =
-    data?.marks?.nodes
-      ?.map((mark) => convertToMark(mark as marks_marks_nodes))
-      ?.sort((a, b) => a.id - b.id) ?? [];
+    data?.marks?.nodes?.map((mark) =>
+      convertToMark(mark as marks_marks_nodes)
+    ) ?? [];
 
   const handleAdd = () => navigate(addMarkNavigate);
 
