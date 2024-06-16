@@ -15,9 +15,12 @@ import { MessageType } from '../../../../../../../../models/enums/MessageTypeEnu
 import { updateUserPassword } from '../../../../services/UserService';
 import { setModal } from '../../../../../../../../redux/modalSlice';
 
-import { yupResolver } from '@hookform/resolvers/yup';
 import { FormProvider, useForm } from 'react-hook-form';
-import { UserPasswordValidationSchema } from '../../../../services/UserPasswordValidationSchema';
+import {
+  IUserPasswordValidationSchema,
+  userPasswordValidationSchema
+} from '../../../../services/UserPasswordValidationSchema';
+import { zodResolver } from '@hookform/resolvers/zod';
 
 interface IGeneralPassword {
   user: IUser;
@@ -32,8 +35,12 @@ const GeneralPassword = ({ user }: IGeneralPassword) => {
   const [showPassword, setShowPassword] = useState(ShowPasswordInitialState);
 
   const dispatch = useAppDispatch();
-  const methods = useForm<IUserUpdatePassword>({
-    resolver: yupResolver(UserPasswordValidationSchema)
+  const methods = useForm<IUserPasswordValidationSchema>({
+    resolver: async (data, context, options) =>
+      await zodResolver(userPasswordValidationSchema)(data, context, options),
+    mode: 'all',
+    reValidateMode: 'onChange',
+    shouldFocusError: true
   });
 
   const {

@@ -8,19 +8,26 @@ import { IMode } from '../../../../models/enums/Base';
 import PageHolder from '../../../../components/base/PageHolder';
 import GetActions from '../../../../components/base/Actions';
 import { addMarkNavigate, markListNavigate } from './utils/Utils';
-
-import { MarkValidationSchema } from '../services/MarkValidationSchema';
+import {
+  IMarkValidationSchema,
+  markValidationSchema
+} from '../services/MarkValidationSchema';
 import { createMark, getMark, updateMark } from '../services/MarkService';
 import { setModal } from '../../../../redux/modalSlice';
 import { MessageType } from '../../../../models/enums/MessageTypeEnum';
 import { setSnackBar } from '../../../../redux/snackBarSlice';
 import { FormProvider, useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
+import { zodResolver } from '@hookform/resolvers/zod';
 
 export default function Mark() {
-  const methods = useForm<IMark>({
-    resolver: yupResolver(MarkValidationSchema)
+  const methods = useForm<IMarkValidationSchema>({
+    resolver: async (data, context, options) =>
+      await zodResolver(markValidationSchema)(data, context, options),
+    mode: 'all',
+    reValidateMode: 'onChange',
+    shouldFocusError: true
   });
+
   const { reset, handleSubmit } = methods;
 
   const param = useParams();

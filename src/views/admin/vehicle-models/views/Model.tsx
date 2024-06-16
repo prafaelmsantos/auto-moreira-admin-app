@@ -9,7 +9,10 @@ import GetActions from '../../../../components/base/Actions';
 import { IModel } from '../models/Model';
 import { addModelNavigate, modelListNavigate } from './utils/Utils';
 import ModelDetails from './details/ModelDetails';
-import { ModelValidationSchema } from '../services/ModelValidationSchema';
+import {
+  IModelValidationSchema,
+  ModelValidationSchema
+} from '../services/ModelValidationSchema';
 import { useQuery } from '@apollo/client';
 import { MARKS } from '../../marks/models/graphQL/Marks';
 import { convertToMark } from '../../marks/models/Mark';
@@ -22,11 +25,15 @@ import {
   marks
 } from '../../marks/models/graphQL/types/marks';
 import { FormProvider, useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
+import { zodResolver } from '@hookform/resolvers/zod';
 
 export default function Model() {
-  const methods = useForm<IModel>({
-    resolver: yupResolver(ModelValidationSchema)
+  const methods = useForm<IModelValidationSchema>({
+    resolver: async (data, context, options) =>
+      await zodResolver(ModelValidationSchema)(data, context, options),
+    mode: 'all',
+    reValidateMode: 'onChange',
+    shouldFocusError: true
   });
 
   const { reset, handleSubmit } = methods;

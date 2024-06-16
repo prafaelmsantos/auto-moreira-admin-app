@@ -1,19 +1,16 @@
+import { z } from 'zod';
 
-import * as Yup from 'yup';
-import { IUserUpdatePassword } from '../models/User';
-
-export const UserPasswordValidationSchema: Yup.ObjectSchema<IUserUpdatePassword> =
-    Yup.object().shape({    
-      email: Yup.string().trim().required('O email é obrigatório!').default(''),   
-      password: Yup.string().trim()
-      .required('A palavra-passe é obrigatória!')
+export const userPasswordValidationSchema = z.object({
+    email: z.string().trim().min(1, 'O email é obrigatório!').email('O email é inválido!'),
+    password: z.string().trim()
+      .min(1,'A palavra-passe é obrigatória!')
+      .min(6, 'A palavra-passe deve conter pelo menos 6 caracteres!'),
+    confirmPassword: z.string().trim()
+      .min(1, 'A nova palavra-passe é obrigatória!')
       .min(6, 'A palavra-passe deve conter pelo menos 6 caracteres!')
-      .default(''),
-      confirmPassword: Yup.string().trim().label('confirm password')
-      .required('A nova palavra-passe é obrigatória!')
-      .oneOf([Yup.ref('password')], 'As palavras-passe não são iguais!')
-      .min(6, 'A palavra-passe deve conter pelo menos 6 caracteres!')
-      .default(''),
-    });
+}).refine(data => data.password === data.confirmPassword, {
+  message: "As palavras-passe não são iguais!",
+  path: ["confirmPassword"]
+});
 
-    export type IUserPasswordValidationSchema = Yup.InferType<typeof UserPasswordValidationSchema>;
+export type IUserPasswordValidationSchema = z.infer<typeof userPasswordValidationSchema>;

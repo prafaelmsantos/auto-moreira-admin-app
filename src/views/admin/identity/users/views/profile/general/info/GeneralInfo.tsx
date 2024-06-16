@@ -1,9 +1,11 @@
 import { FormProvider, useForm } from 'react-hook-form';
 import { IUser } from '../../../../models/User';
-import { yupResolver } from '@hookform/resolvers/yup';
 import { useEffect } from 'react';
 import { IMode } from '../../../../../../../../models/enums/Base';
-import { UserValidationSchema } from '../../../../services/UserValidationSchema';
+import {
+  IUserValidationSchema,
+  userValidationSchema
+} from '../../../../services/UserValidationSchema';
 import Card from '../../../../../../../../components/card';
 import ProfilePageHolder from '../../../../../../../../components/base/ProfilePageHolder';
 import GetActions from '../../../../../../../../components/base/Actions';
@@ -17,6 +19,7 @@ import { updateUser } from '../../../../services/UserService';
 import { setSnackBar } from '../../../../../../../../redux/snackBarSlice';
 import { MessageType } from '../../../../../../../../models/enums/MessageTypeEnum';
 import { setModal } from '../../../../../../../../redux/modalSlice';
+import { zodResolver } from '@hookform/resolvers/zod';
 
 interface IGeneralInfo {
   user: IUser;
@@ -29,8 +32,13 @@ const GeneralInfo = ({
   setModeInfo: setMode
 }: IGeneralInfo) => {
   const dispatch = useAppDispatch();
-  const methods = useForm<IUser>({
-    resolver: yupResolver(UserValidationSchema)
+
+  const methods = useForm<IUserValidationSchema>({
+    resolver: async (data, context, options) =>
+      await zodResolver(userValidationSchema)(data, context, options),
+    mode: 'all',
+    reValidateMode: 'onChange',
+    shouldFocusError: true
   });
 
   const {

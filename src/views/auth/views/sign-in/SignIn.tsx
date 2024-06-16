@@ -8,8 +8,11 @@ import { setSnackBar } from '../../../../redux/snackBarSlice';
 import { setLoader, setToInitialLoader } from '../../../../redux/loaderSlice';
 import { mainNavigate } from '../utils/Utils';
 import { FormProvider, useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
-import { SignInValidationSchema } from '../../services/SignInValidationSchema';
+import { zodResolver } from '@hookform/resolvers/zod';
+import {
+  ISignInValidationSchema,
+  signInValidationSchema
+} from '../../services/SignInValidationSchema';
 import TextFieldCard from '../../../admin/identity/users/views/components/card/TextFieldCard';
 import { useState } from 'react';
 import { Box } from '@mui/material';
@@ -18,9 +21,14 @@ export default function SignIn() {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const methods = useForm<IUserLogin>({
-    resolver: yupResolver(SignInValidationSchema)
+  const methods = useForm<ISignInValidationSchema>({
+    resolver: async (data, context, options) =>
+      await zodResolver(signInValidationSchema)(data, context, options),
+    mode: 'all',
+    reValidateMode: 'onChange',
+    shouldFocusError: true
   });
+
   const {
     handleSubmit,
     control,
@@ -47,9 +55,9 @@ export default function SignIn() {
         dispatch(setToInitialLoader());
         dispatch(
           setModal({
-            title: 'Erro ao tentar efetuar login ao sistema',
+            title: 'Erro ao tentar entrar no sistema',
             message:
-              'Lamentamos mas os dados inseridos não estão corretos. Por favor, verifique o email ou a password.',
+              'Lamentamos mas os dados inseridos não estão corretos. Por favor verifique o email ou a password ou tente mais tarde.',
             type: MessageType.ERROR,
             open: true
           })

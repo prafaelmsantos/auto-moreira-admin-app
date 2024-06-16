@@ -1,11 +1,8 @@
-import { IMark } from '../models/Mark';
-import * as Yup from 'yup';
+import { z } from 'zod';
 
-export const MarkValidationSchema: Yup.ObjectSchema<IMark> = Yup.object().shape(
-  {
-    name: Yup.string().required('O nome é obrigatório!').default(''),
-    id: Yup.number().default(0)
-  }
-);
+export const markValidationSchema = z.object({
+    name: z.string().trim().min(1, 'O nome é obrigatório!'),
+    id: z.coerce.number().default(0)
+});
 
-export type IMarkValidationSchema = Yup.InferType<typeof MarkValidationSchema>;
+export type IMarkValidationSchema = z.infer<typeof markValidationSchema>;

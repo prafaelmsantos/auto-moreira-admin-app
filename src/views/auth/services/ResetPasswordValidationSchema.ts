@@ -1,9 +1,7 @@
-import * as Yup from 'yup';
+import { z } from 'zod';
 
-export const ResetPasswordValidationSchema: Yup.ObjectSchema<{email: string}> = Yup.object().shape(
-  {
-    email: Yup.string().trim().required('O nome é obrigatório!'),
-  }
-);
+export const resetPasswordValidationSchema = z.object({
+    email: z.string().trim().min(1, 'O email é obrigatório!').email('O email é inválido!')
+});
 
-export type IResetPasswordValidationSchema = Yup.InferType<typeof ResetPasswordValidationSchema>;
+export type IResetPasswordValidationSchema = z.infer<typeof resetPasswordValidationSchema>;

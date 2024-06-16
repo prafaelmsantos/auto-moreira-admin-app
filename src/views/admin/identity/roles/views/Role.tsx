@@ -16,12 +16,19 @@ import PageHolder from '../../../../../components/base/PageHolder';
 import GetActions from '../../../../../components/base/Actions';
 import RoleDetails from './details/RoleDetails';
 import { FormProvider, useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
-import { RoleValidationSchema } from '../services/RoleValidationSchema';
+import {
+  IRoleValidationSchema,
+  roleValidationSchema
+} from '../services/RoleValidationSchema';
+import { zodResolver } from '@hookform/resolvers/zod';
 
 export default function Role() {
-  const methods = useForm<IRole>({
-    resolver: yupResolver(RoleValidationSchema)
+  const methods = useForm<IRoleValidationSchema>({
+    resolver: async (data, context, options) =>
+      await zodResolver(roleValidationSchema)(data, context, options),
+    mode: 'all',
+    reValidateMode: 'onChange',
+    shouldFocusError: true
   });
 
   const { reset, handleSubmit } = methods;

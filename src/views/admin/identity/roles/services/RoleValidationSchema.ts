@@ -1,13 +1,10 @@
-import * as Yup from 'yup';
-import { IRole } from '../models/Role';
+import { z } from 'zod';
 
-export const RoleValidationSchema: Yup.ObjectSchema<IRole> = Yup.object().shape(
-  {
-    name: Yup.string().required('O nome é obrigatório!').default(''),
-    isDefault: Yup.boolean().default(false),
-    isReadOnly: Yup.boolean().default(false),
-    id: Yup.number().default(0)
-  }
-);
+export const roleValidationSchema = z.object({
+    name: z.string().trim().min(1, 'O nome é obrigatório!'),
+    isDefault: z.boolean().default(false),
+    isReadOnly: z.boolean().default(false),
+    id: z.coerce.number().default(0)
+});
 
-export type IRoleValidationSchema = Yup.InferType<typeof RoleValidationSchema>;
+export type IRoleValidationSchema = z.infer<typeof roleValidationSchema>;

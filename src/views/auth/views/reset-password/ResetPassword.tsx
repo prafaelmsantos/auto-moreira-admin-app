@@ -1,6 +1,8 @@
 import { useAppDispatch } from '../../../../redux/hooks';
-import { yupResolver } from '@hookform/resolvers/yup';
-import { ResetPasswordValidationSchema } from '../../services/ResetPasswordValidationSchema';
+import {
+  IResetPasswordValidationSchema,
+  resetPasswordValidationSchema
+} from '../../services/ResetPasswordValidationSchema';
 import { FormProvider, useForm } from 'react-hook-form';
 import { IResetPasswordMode } from '../../models/Auth';
 import { useState } from 'react';
@@ -9,6 +11,7 @@ import { setLoader, setToInitialLoader } from '../../../../redux/loaderSlice';
 import { resetPassword } from '../../services/AuthService';
 import { MessageType } from '../../../../models/enums/MessageTypeEnum';
 import { setModal } from '../../../../redux/modalSlice';
+import { zodResolver } from '@hookform/resolvers/zod';
 
 export default function ResetPassword() {
   const dispatch = useAppDispatch();
@@ -17,9 +20,14 @@ export default function ResetPassword() {
     IResetPasswordMode.START
   );
 
-  const methods = useForm<{ email: string }>({
-    resolver: yupResolver(ResetPasswordValidationSchema)
+  const methods = useForm<IResetPasswordValidationSchema>({
+    resolver: async (data, context, options) =>
+      await zodResolver(resetPasswordValidationSchema)(data, context, options),
+    mode: 'all',
+    reValidateMode: 'onChange',
+    shouldFocusError: true
   });
+
   const { handleSubmit } = methods;
 
   const onSubmit = async (user: { email: string }) => {
@@ -36,7 +44,7 @@ export default function ResetPassword() {
           setModal({
             title: 'Erro a tentar recuperar a palavra-passe',
             message:
-              'Lamentamos mas o dado inserido não está correto. Por favor, verifique o email.',
+              'Lamentamos mas o email inserido é inválido. Por favor verifique o email ou tente mais tarde.',
             type: MessageType.ERROR,
             open: true
           })
