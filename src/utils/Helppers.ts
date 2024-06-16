@@ -10,3 +10,12 @@ export function removeEmptyFields(data: any) {
     style: 'currency',
     currency: 'EUR'
   });
+
+  export const imageTypes = [
+    'image/png',
+    'image/gif',
+    'image/jpeg',
+    'image/jpeg'
+  ];
+
+  export const MAX_FILE_SIZE = 10000000;

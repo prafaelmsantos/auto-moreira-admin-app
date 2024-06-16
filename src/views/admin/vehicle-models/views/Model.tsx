@@ -11,7 +11,7 @@ import { addModelNavigate, modelListNavigate } from './utils/Utils';
 import ModelDetails from './details/ModelDetails';
 import {
   IModelValidationSchema,
-  ModelValidationSchema
+  modelValidationSchema
 } from '../services/ModelValidationSchema';
 import { useQuery } from '@apollo/client';
 import { MARKS } from '../../marks/models/graphQL/Marks';
@@ -30,7 +30,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 export default function Model() {
   const methods = useForm<IModelValidationSchema>({
     resolver: async (data, context, options) =>
-      await zodResolver(ModelValidationSchema)(data, context, options),
+      await zodResolver(modelValidationSchema)(data, context, options),
     mode: 'all',
     reValidateMode: 'onChange',
     shouldFocusError: true

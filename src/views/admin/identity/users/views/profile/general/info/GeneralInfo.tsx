@@ -9,7 +9,7 @@ import {
 import Card from '../../../../../../../../components/card';
 import ProfilePageHolder from '../../../../../../../../components/base/ProfilePageHolder';
 import GetActions from '../../../../../../../../components/base/Actions';
-import TextFieldCard from '../../../components/card/TextFieldCard';
+import TextFieldCard from '../../../components/card/AutoMoreiraTextFieldCard';
 import { useAppDispatch } from '../../../../../../../../redux/hooks';
 import {
   setLoader,
@@ -44,8 +44,7 @@ const GeneralInfo = ({
   const {
     reset,
     handleSubmit,
-    formState: { errors },
-    control
+    formState: { errors }
   } = methods;
 
   useEffect(() => {
@@ -114,7 +113,6 @@ const GeneralInfo = ({
             required
             label={'Primeiro Nome'}
             value={user.firstName}
-            {...{ control }}
           />
           <TextFieldCard
             disabled={mode === IMode.PREVIEW}
@@ -124,7 +122,7 @@ const GeneralInfo = ({
             required
             label={'Ultimo Nome'}
             value={user.lastName}
-            {...{ errors, control }}
+            {...{ errors }}
           />
           <TextFieldCard
             disabled={mode === IMode.PREVIEW}
@@ -134,7 +132,7 @@ const GeneralInfo = ({
             label={'Email'}
             value={user.email ?? ''}
             required
-            {...{ errors, control }}
+            {...{ errors }}
           />
           <TextFieldCard
             disabled={mode === IMode.PREVIEW}
@@ -144,7 +142,7 @@ const GeneralInfo = ({
             label={'Contacto'}
             value={user.phoneNumber}
             required
-            {...{ errors, control }}
+            {...{ errors }}
           />
         </div>
       </Card>

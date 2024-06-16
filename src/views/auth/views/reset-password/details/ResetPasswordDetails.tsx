@@ -5,7 +5,7 @@ import { useFormContext } from 'react-hook-form';
 import { IResetPasswordMode } from '../../../models/Auth';
 import { IResetPasswordValidationSchema } from '../../../services/ResetPasswordValidationSchema';
 import CheckCircleOutlineOutlinedIcon from '@mui/icons-material/CheckCircleOutlineOutlined';
-import TextFieldCard from '../../../../admin/identity/users/views/components/card/TextFieldCard';
+import TextFieldCard from '../../../../admin/identity/users/views/components/card/AutoMoreiraTextFieldCard';
 
 interface IResetPasswordDetails {
   mode: IResetPasswordMode;
@@ -19,7 +19,6 @@ export default function ResetPasswordDetails({
 }: IResetPasswordDetails) {
   const navigate = useNavigate();
   const {
-    control,
     formState: { errors }
   } = useFormContext<IResetPasswordValidationSchema>();
 
@@ -44,7 +43,6 @@ export default function ResetPasswordDetails({
             required
             label={'Email'}
             value={''}
-            {...{ control }}
           />
 
           <button

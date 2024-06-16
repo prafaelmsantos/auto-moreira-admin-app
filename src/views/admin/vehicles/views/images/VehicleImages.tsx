@@ -1,23 +1,21 @@
-import { Box, Button, Grid, Stack } from '@mui/material';
+import { Box, Grid } from '@mui/material';
 import { useEffect, useRef, useState } from 'react';
 import { IVehicleImage, VehicleKeys } from '../../models/Vehicle';
 import ImageCard from '../components/cards/ImageCard';
 import AutoMoreiraLabel from '../../../../../components/form/AutoMoreiraLabel';
-import { COLORS } from '../../../../../utils/Colors';
-import { LuUpload } from 'react-icons/lu';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../../../../redux/store';
 import { IVehicleValidationSchema } from '../../services/VehicleValidationSchema';
 import { useFormContext } from 'react-hook-form';
+import { useAppDispatch } from '../../../../../redux/hooks';
+import { setModal } from '../../../../../redux/modalSlice';
+import { MessageType } from '../../../../../models/enums/MessageTypeEnum';
+import { MAX_FILE_SIZE, imageTypes } from '../../../../../utils/Helppers';
+import ImageButton from '../components/buttons/ImageButton';
 
 interface IVehicleImages {
   vehicleImages: IVehicleImage[];
-  handleChangeImages: (vehicleImages: IVehicleImage[]) => void;
 }
-const VehicleImages = ({
-  vehicleImages,
-  handleChangeImages
-}: IVehicleImages) => {
+const VehicleImages = ({ vehicleImages }: IVehicleImages) => {
+  const dispatch = useAppDispatch();
   const [images, setImages] = useState<IVehicleImage[]>(vehicleImages);
 
   const moveImage = (dragIndex: number, hoverIndex: number) => {
@@ -41,17 +39,12 @@ const VehicleImages = ({
     if (e.target.files.length) {
       const files = Array.from(e.target.files) as Blob[];
       files.map((file: Blob, i: number) => {
-        const reader = new FileReader();
         file = files[i];
-
-        const imageTypes = [
-          'image/png',
-          'image/gif',
-          'image/jpeg',
-          'image/jpeg'
-        ];
-
-        if (imageTypes.find((x) => x === file.type)) {
+        if (
+          imageTypes.find((x) => x === file.type) &&
+          file.size <= MAX_FILE_SIZE
+        ) {
+          const reader = new FileReader();
           reader.onload = () => {
             setImages((old) => [
               ...old,
@@ -63,6 +56,16 @@ const VehicleImages = ({
             ]);
           };
           return reader.readAsDataURL(file);
+        } else {
+          dispatch(
+            setModal({
+              title: 'Erro Interno do Servidor',
+              message:
+                'A imagem carregada é inválida! Por favor, verifique o tipo e o tamanho da imagem e tente novamente.',
+              type: MessageType.ERROR,
+              open: true
+            })
+          );
         }
       });
     }
@@ -75,12 +78,8 @@ const VehicleImages = ({
 
   useEffect(() => {
     void setValue<any>(VehicleKeys.vehicleImages, images);
-
-    //void handleChangeImages(images);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [images]);
-
-  const darkMode = useSelector((state: RootState) => state.darkModeSlice.dark);
 
   return (
     <Box sx={{ mt: 3, px: 5 }}>
@@ -89,54 +88,11 @@ const VehicleImages = ({
         children={
           <>
             <div className="flex justify-end">
-              <Stack
-                direction="row"
-                sx={{
-                  minHeight: '50px',
-                  display: 'flex',
-                  justifyContent: 'flex-end',
-                  alignItems: 'center'
-                }}
-              >
-                <Box
-                  sx={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    gap: 1
-                  }}
-                >
-                  <Button
-                    size="small"
-                    fullWidth
-                    onClick={handleImageUpload}
-                    sx={{
-                      '&:hover': {
-                        backgroundColor: darkMode
-                          ? COLORS.AUTO_MOREIRA_BRAND[300]
-                          : COLORS.AUTO_MOREIRA_BRAND[600],
-                        boxShadow: 'none'
-                      },
-                      backgroundColor: darkMode
-                        ? COLORS.AUTO_MOREIRA_BRAND[400]
-                        : COLORS.AUTO_MOREIRA_BRAND[500],
-                      borderColor: darkMode
-                        ? COLORS.AUTO_MOREIRA_BRAND[400]
-                        : COLORS.AUTO_MOREIRA_BRAND[500],
-                      textTransform: 'none'
-                    }}
-                  >
-                    <Stack
-                      direction="row"
-                      justifyContent="center"
-                      alignItems="center"
-                      sx={{ py: 0.5, color: 'white' }}
-                    >
-                      <LuUpload />
-                    </Stack>
-                  </Button>
-                </Box>
-              </Stack>
+              {images.length !== 0 && (
+                <ImageButton handleClick={() => setImages([])} deleteBtn />
+              )}
+
+              <ImageButton handleClick={handleImageUpload} />
             </div>
 
             <Grid

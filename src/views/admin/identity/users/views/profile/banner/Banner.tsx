@@ -5,6 +5,10 @@ import { IconButton, Tooltip } from '@mui/material';
 import { useRef } from 'react';
 import EditTwoToneIcon from '@mui/icons-material/EditTwoTone';
 import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone';
+import { MAX_FILE_SIZE, imageTypes } from '../../../../../../../utils/Helppers';
+import { setModal } from '../../../../../../../redux/modalSlice';
+import { MessageType } from '../../../../../../../models/enums/MessageTypeEnum';
+import { useAppDispatch } from '../../../../../../../redux/hooks';
 
 interface IBanner {
   name: string;
@@ -14,17 +18,35 @@ interface IBanner {
 }
 
 const Banner = ({ name, role, fetchUserImage, image }: IBanner) => {
+  const dispatch = useAppDispatch();
   const fileInput = useRef<HTMLInputElement>(null);
 
   const handleChange = (e: any) => {
     if (e.target.files.length) {
-      const reader = new FileReader();
-      reader.readAsDataURL(e.target.files[0]);
+      const file = e.target.files[0] as Blob;
 
-      reader.onload = function () {
-        const result = reader.result?.toString();
-        result && fetchUserImage(result);
-      };
+      if (
+        imageTypes.find((x) => x === file.type) &&
+        file.size <= MAX_FILE_SIZE
+      ) {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+
+        reader.onload = function () {
+          const result = reader.result?.toString();
+          result && fetchUserImage(result);
+        };
+      } else {
+        dispatch(
+          setModal({
+            title: 'Erro Interno do Servidor',
+            message:
+              'A imagem carregada é inválida! Por favor, verifique o tipo e o tamanho da imagem e tente novamente.',
+            type: MessageType.ERROR,
+            open: true
+          })
+        );
+      }
     }
   };
 

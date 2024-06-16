@@ -14,7 +14,10 @@ import { addVehicleNavigate, vehicleListNavigate } from './utils/Utils';
 import { MODELS } from '../../vehicle-models/models/graphQL/Models';
 import { convertToModel } from '../../vehicle-models/models/Model';
 import VehicleDetails from './details/VehicleDetails';
-import { VehicleValidationSchema } from '../services/VehicleValidationSchema';
+import {
+  IVehicleValidationSchema,
+  vehicleValidationSchema
+} from '../services/VehicleValidationSchema';
 import {
   createVehicle,
   getVehicle,
@@ -29,16 +32,22 @@ import {
 } from '../../marks/models/graphQL/types/marks';
 
 import { FormProvider, useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
 import {
   models_models_nodes,
   models
 } from '../../vehicle-models/models/graphQL/types/models';
 import VehicleImages from './images/VehicleImages';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { Fuel } from '../models/enums/FuelEnum';
+import { Transmission } from '../models/enums/TransmissionEnum';
 
 export default function Vehicle() {
-  const methods = useForm<IVehicle>({
-    resolver: yupResolver(VehicleValidationSchema)
+  const methods = useForm<IVehicleValidationSchema>({
+    resolver: async (data, context, options) =>
+      await zodResolver(vehicleValidationSchema)(data, context, options),
+    mode: 'all',
+    reValidateMode: 'onChange',
+    shouldFocusError: true
   });
 
   const { reset, handleSubmit } = methods;
@@ -54,15 +63,16 @@ export default function Vehicle() {
     color: '',
     mileage: 0,
     price: 0,
-    fuelType: null,
+    fuelType: Fuel.DIESEL,
     doors: 0,
-    transmission: null,
+    transmission: Transmission.MANUAL,
     engineSize: 0,
     power: 0,
     opportunity: false,
     sold: false,
     soldDate: null,
-    vehicleImages: []
+    vehicleImages: [],
+    observations: ''
   });
 
   const vehicleId = Number(param.id);

@@ -1,5 +1,5 @@
 import { IconButton, InputAdornment, TextField } from '@mui/material';
-import { Control, Controller } from 'react-hook-form';
+import { Controller } from 'react-hook-form';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
 import { COLORS } from '../../utils/Colors';
@@ -7,11 +7,10 @@ import { TextFieldSX } from './style/TextFieldSX';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import Visibility from '@mui/icons-material/Visibility';
 
-type ITextFieldFormValidation = {
+type IAutoMoreiraTextFieldFormValidation = {
   error?: boolean;
   helperText?: string;
   label?: string;
-  control: Control<any, any>;
   defaultValue?: string | number | null;
   name: string;
   required?: boolean;
@@ -26,11 +25,10 @@ type ITextFieldFormValidation = {
   handleClickShowPassword?: () => void;
 };
 
-export default function TextFieldFormValidation({
+export default function AutoMoreiraTextFieldFormValidation({
   error,
   helperText,
   label,
-  control,
   defaultValue,
   name,
   required,
@@ -43,7 +41,7 @@ export default function TextFieldFormValidation({
   endAdornment,
   showPassword,
   handleClickShowPassword
-}: ITextFieldFormValidation) {
+}: IAutoMoreiraTextFieldFormValidation) {
   const darkMode = useSelector((state: RootState) => state.darkModeSlice.dark);
 
   const redColor = '#d32f2f';
@@ -93,7 +91,6 @@ export default function TextFieldFormValidation({
         />
       )}
       name={name}
-      control={control}
       defaultValue={defaultValue}
     />
   );

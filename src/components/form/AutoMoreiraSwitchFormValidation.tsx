@@ -1,23 +1,21 @@
 import { Stack, Switch, Typography } from '@mui/material';
-import { Control, Controller } from 'react-hook-form';
+import { Controller } from 'react-hook-form';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
 import { COLORS } from '../../utils/Colors';
 import { SwitchSX } from './style/SwitchSX';
 
-type ISwitchFormValidation = {
-  control: Control<any, any>;
+type IAutoMoreiraSwitchFormValidation = {
   name: string;
   label: string;
   label1: string;
 };
 
-export default function SwitchFormValidation({
-  control,
+export default function AutoMoreiraSwitchFormValidation({
   name,
   label,
   label1
-}: ISwitchFormValidation) {
+}: IAutoMoreiraSwitchFormValidation) {
   const darkMode = useSelector((state: RootState) => state.darkModeSlice.dark);
 
   return (
@@ -27,7 +25,6 @@ export default function SwitchFormValidation({
       </Typography>
       <Controller
         name={name}
-        control={control}
         render={({ field: { onChange, value } }) => (
           <Switch onChange={onChange} checked={!!value} sx={SwitchSX()} />
         )}

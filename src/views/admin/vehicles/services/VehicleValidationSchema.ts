@@ -1,66 +1,36 @@
-import * as Yup from 'yup';
-
-import { IVehicle, IVehicleImage } from '../models/Vehicle';
-import { IModel } from '../../vehicle-models/models/Model';
+import { z } from 'zod';
 import { Fuel } from '../models/enums/FuelEnum';
 import { Transmission } from '../models/enums/TransmissionEnum';
 
-export const VehicleValidationSchema: Yup.ObjectSchema<IVehicle> =
-  Yup.object().shape({
-    id: Yup.number().default(0),
-    modelId: Yup.number()
-      .default(0)
-      .test(
-        'O modelo é obrigatorio!',
-        'O modelo é obrigatorio!',
-        (value) => value > 0
-      )
-      .required('O modelo é obrigatorio!'),
-    model: Yup.object<IModel | undefined>()
-      .shape({
-        name: Yup.string().default(''),
-        id: Yup.number().default(0),
-        markId: Yup.number()
-          .default(0)
-          .test(
-            'A marca é obrigatoria!',
-            'A marca é obrigatoria!',
-            (value) => value > 0
-          )
-          .required('A marca é obrigatoria!')
-      })
-      .default(undefined),
-    year: Yup.number().default(0),
-    color: Yup.string().default('').required('A cor é obrigatória!'),
-    observations: Yup.string().default(''),
-    mileage: Yup.number().default(0),
-    price: Yup.number().default(0),
-    fuelType: Yup.mixed<Fuel>()
-      .oneOf(Object.values(Fuel) as number[])
-      .required('A tipo de combustível é obrigatório!')
-      .default(Fuel.DIESEL),
-    version: Yup.string().default('').required('A versão é obrigatória!'),
-    doors: Yup.number().default(0),
-    transmission: Yup.mixed<Transmission>()
-      .oneOf(Object.values(Transmission) as number[])
-      .required('A trasmissão é obrigatória!')
-      .default(Transmission.MANUAL),
-    engineSize: Yup.number().default(0),
-    power: Yup.number().default(0),
-    opportunity: Yup.boolean().default(false),
-    sold: Yup.boolean().default(false),
-    soldDate: Yup.date().nullable().default(null),
-    vehicleImages: Yup.array()
-      .of(
-        Yup.object<IVehicleImage>().shape({
-          id: Yup.number().default(0),
-          url: Yup.string().default('').required('A cor é obrigatória!'),
-          isMain: Yup.boolean().default(false)
-        })
-      )
-      .default([])
-  });
+export const vehicleImageValidationSchema = z.object({
+  id:  z.coerce.number().default(0),
+  url: z.string().trim().min(1, 'O endereço da imagem é obrigatório!'),
+  isMain: z.boolean().default(false),
+});
 
-export type IVehicleValidationSchema = Yup.InferType<
-  typeof VehicleValidationSchema
->;
+export const vehicleValidationSchema = z.object({
+    modelId: z.coerce.number().int('o modelo é inválido!').positive('O modelo é obrigatório!'),
+    model: z.object({
+        name: z.string().default(''),
+        id: z.coerce.number().default(0),
+        markId: z.coerce.number().int('A marca é inválida!').positive('A marca é obrigatória!'),
+      }),
+    year: z.coerce.number().int('O ano é inválido!').positive('O ano é inválido!').min(1900,'O ano é inválido!'),
+    color: z.string().nullable().default(null),
+    observations: z.string().nullable().default(null),
+    mileage: z.coerce.number().nonnegative('O nº de Kms é inválido!'),
+    price: z.coerce.number().nonnegative('O preço é inválido!'),
+    fuelType: z.nativeEnum(Fuel),
+    version: z.string().nullable().default(null),
+    doors: z.coerce.number().positive('O nº de portas é inválido!'),
+    transmission: z.nativeEnum(Transmission),
+    engineSize: z.coerce.number().positive('O tamanho do motor é inválido!'),
+    power: z.coerce.number().positive('A potência é inválida!'),
+    opportunity: z.boolean().default(false),
+    sold: z.boolean().default(false),
+    soldDate: z.date().nullable().default(null),
+    vehicleImages: z.array(vehicleImageValidationSchema).default([]),
+    id: z.coerce.number().default(0)
+});
+
+export type IVehicleValidationSchema = z.infer<typeof vehicleValidationSchema>;

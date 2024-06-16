@@ -1,6 +1,6 @@
 import { Controller, useFormContext } from 'react-hook-form';
 import { Autocomplete, Grid, TextField } from '@mui/material';
-import TextFieldCard from '../components/card/TextFieldCard';
+import TextFieldCard from '../components/card/AutoMoreiraTextFieldCard';
 import { IRole } from '../../../roles/models/Role';
 import { IUserValidationSchema } from '../../services/UserValidationSchema';
 import AutoMoreiraLabel from '../../../../../../components/form/AutoMoreiraLabel';
@@ -11,7 +11,6 @@ interface IUserDetails {
 }
 export default function UserDetails({ roles }: IUserDetails) {
   const {
-    control,
     watch,
     formState: { errors }
   } = useFormContext<IUserValidationSchema>();
@@ -28,7 +27,7 @@ export default function UserDetails({ roles }: IUserDetails) {
           error={!!errors.firstName}
           helperText={errors.firstName?.message}
           value={''}
-          {...{ errors, control }}
+          {...{ errors }}
         />
       </Grid>
 
@@ -40,7 +39,7 @@ export default function UserDetails({ roles }: IUserDetails) {
           error={!!errors.lastName}
           helperText={errors.lastName?.message}
           value={''}
-          {...{ errors, control }}
+          {...{ errors }}
         />
       </Grid>
 
@@ -52,7 +51,7 @@ export default function UserDetails({ roles }: IUserDetails) {
           error={!!errors.email}
           helperText={errors.email?.message}
           value={''}
-          {...{ errors, control }}
+          {...{ errors }}
         />
       </Grid>
 
@@ -64,7 +63,7 @@ export default function UserDetails({ roles }: IUserDetails) {
           error={!!errors.phoneNumber}
           helperText={errors.phoneNumber?.message}
           value={''}
-          {...{ errors, control }}
+          {...{ errors }}
         />
       </Grid>
 
@@ -99,7 +98,6 @@ export default function UserDetails({ roles }: IUserDetails) {
                 />
               )}
               name={'roles'}
-              control={control}
             />
           }
           label={'Cargo'}

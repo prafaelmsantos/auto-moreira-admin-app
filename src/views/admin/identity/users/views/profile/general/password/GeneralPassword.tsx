@@ -1,6 +1,6 @@
 import Card from '../../../../../../../../components/card';
 import { IUser, IUserUpdatePassword } from '../../../../models/User';
-import TextFieldCard from '../../../components/card/TextFieldCard';
+import TextFieldCard from '../../../components/card/AutoMoreiraTextFieldCard';
 import { useEffect, useState } from 'react';
 import ProfilePageHolder from '../../../../../../../../components/base/ProfilePageHolder';
 import GetActions from '../../../../../../../../components/base/Actions';
@@ -35,6 +35,7 @@ const GeneralPassword = ({ user }: IGeneralPassword) => {
   const [showPassword, setShowPassword] = useState(ShowPasswordInitialState);
 
   const dispatch = useAppDispatch();
+
   const methods = useForm<IUserPasswordValidationSchema>({
     resolver: async (data, context, options) =>
       await zodResolver(userPasswordValidationSchema)(data, context, options),
@@ -46,8 +47,7 @@ const GeneralPassword = ({ user }: IGeneralPassword) => {
   const {
     reset,
     handleSubmit,
-    formState: { errors },
-    control
+    formState: { errors }
   } = methods;
 
   useEffect(() => {
@@ -141,7 +141,6 @@ const GeneralPassword = ({ user }: IGeneralPassword) => {
               endAdornment
               showPassword={showPassword.first}
               handleClickShowPassword={handleShowPasswordFirst}
-              {...{ control }}
             />
             <TextFieldCard
               error={!!errors.confirmPassword}
@@ -153,7 +152,6 @@ const GeneralPassword = ({ user }: IGeneralPassword) => {
               endAdornment
               showPassword={showPassword.second}
               handleClickShowPassword={handleShowPasswordSecond}
-              {...{ control }}
             />
           </div>
         )}

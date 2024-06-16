@@ -1,16 +1,14 @@
-import { Control } from 'react-hook-form';
-import TextFieldFormValidation from '../../../../../../../components/form/TextFieldFormValidation';
+import AutoMoreiraTextFieldFormValidation from '../../../../../../../components/form/AutoMoreiraTextFieldFormValidation';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../../../../../redux/store';
 
-interface IGeneral {
+interface IAutoMoreiraTextFieldCard {
   name: string;
   label: string;
   value?: string | null;
   required?: boolean;
   error?: boolean;
   helperText?: string;
-  control: Control<any>;
   disabled?: boolean;
   type?: string;
   multiline?: boolean;
@@ -20,13 +18,12 @@ interface IGeneral {
   handleClickShowPassword?: () => void;
 }
 
-const TextField = ({
+const AutoMoreiraTextFieldCard = ({
   label,
   value,
   required,
   error,
   helperText,
-  control,
   name,
   disabled,
   type,
@@ -35,7 +32,7 @@ const TextField = ({
   endAdornment,
   showPassword,
   handleClickShowPassword
-}: IGeneral) => {
+}: IAutoMoreiraTextFieldCard) => {
   const darkMode = useSelector((state: RootState) => state.darkModeSlice.dark);
 
   return (
@@ -54,10 +51,9 @@ const TextField = ({
           !darkMode ? 'text-navy-700' : 'text-white'
         }`}
       >
-        <TextFieldFormValidation
+        <AutoMoreiraTextFieldFormValidation
           error={error}
           helperText={helperText}
-          control={control}
           defaultValue={value}
           name={name}
           variant="standard"
@@ -75,4 +71,4 @@ const TextField = ({
   );
 };
 
-export default TextField;
+export default AutoMoreiraTextFieldCard;

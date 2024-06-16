@@ -2,11 +2,10 @@ import { Grid } from '@mui/material';
 import { useFormContext } from 'react-hook-form';
 import { IRoleValidationSchema } from '../../services/RoleValidationSchema';
 import { RoleKeys } from '../../models/Role';
-import TextFieldCard from '../../../users/views/components/card/TextFieldCard';
+import TextFieldCard from '../../../users/views/components/card/AutoMoreiraTextFieldCard';
 
 export default function RoleDetails() {
   const {
-    control,
     watch,
     formState: { errors }
   } = useFormContext<IRoleValidationSchema>();
@@ -19,7 +18,6 @@ export default function RoleDetails() {
         <TextFieldCard
           {...{ errors }}
           disabled={userId === 1 || userId === 2}
-          control={control}
           required
           name={RoleKeys.name}
           label={'Nome'}

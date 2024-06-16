@@ -3,13 +3,12 @@ import { Controller, useFormContext } from 'react-hook-form';
 import { ModelKeys } from '../../models/Model';
 import { IMark } from '../../../marks/models/Mark';
 import { IModelValidationSchema } from '../../services/ModelValidationSchema';
-import TextFieldCard from '../../../identity/users/views/components/card/TextFieldCard';
+import TextFieldCard from '../../../identity/users/views/components/card/AutoMoreiraTextFieldCard';
 import AutoMoreiraLabel from '../../../../../components/form/AutoMoreiraLabel';
 import { AutocompleteSX } from '../../../../../components/form/style/AutocompleteSX';
 
 export default function ModelDetails({ marks }: { marks: IMark[] }) {
   const {
-    control,
     formState: { errors }
   } = useFormContext<IModelValidationSchema>();
 
@@ -18,7 +17,6 @@ export default function ModelDetails({ marks }: { marks: IMark[] }) {
       <Grid item md={6} xs={12}>
         <TextFieldCard
           {...{ errors }}
-          control={control}
           required
           name={ModelKeys.name}
           label={'Nome'}
@@ -54,7 +52,6 @@ export default function ModelDetails({ marks }: { marks: IMark[] }) {
                 />
               )}
               name={ModelKeys.markId}
-              control={control}
             />
           }
           label={'Marca'}

@@ -1,15 +1,14 @@
 import { Autocomplete, Grid, Stack, TextField } from '@mui/material';
-
 import { IMark } from '../../../marks/models/Mark';
 import { IModel } from '../../../vehicle-models/models/Model';
 import { fuels } from '../../models/enums/FuelEnum';
 import { transmissions } from '../../models/enums/TransmissionEnum';
 import { Controller, useFormContext } from 'react-hook-form';
 import { AutocompleteSX } from '../../../../../components/form/style/AutocompleteSX';
-import SwitchFormValidation from '../../../../../components/form/SwitchFormValidation';
+import SwitchFormValidation from '../../../../../components/form/AutoMoreiraSwitchFormValidation';
 import { IVehicleValidationSchema } from '../../services/VehicleValidationSchema';
 import AutoMoreiraLabel from '../../../../../components/form/AutoMoreiraLabel';
-import TextFieldCard from '../../../identity/users/views/components/card/TextFieldCard';
+import TextFieldCard from '../../../identity/users/views/components/card/AutoMoreiraTextFieldCard';
 import { VehicleKeys } from '../../models/Vehicle';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import dayjs from 'dayjs';
@@ -20,13 +19,12 @@ interface IVehicleDetails {
 }
 export default function VehicleDetails({ models, marks }: IVehicleDetails) {
   const {
-    control,
     setValue,
     watch,
     formState: { errors }
   } = useFormContext<IVehicleValidationSchema>();
-  const markId = Number(watch(VehicleKeys.modelMarkId));
 
+  const markId = Number(watch(VehicleKeys.modelMarkId));
   const sold = !!watch(VehicleKeys.sold);
 
   return (
@@ -61,7 +59,6 @@ export default function VehicleDetails({ models, marks }: IVehicleDetails) {
                 />
               )}
               name={VehicleKeys.modelMarkId}
-              control={control}
             />
           }
           label={'Marca'}
@@ -101,7 +98,6 @@ export default function VehicleDetails({ models, marks }: IVehicleDetails) {
                 />
               )}
               name={VehicleKeys.modelId}
-              control={control}
             />
           }
           label={'Modelo'}
@@ -112,8 +108,6 @@ export default function VehicleDetails({ models, marks }: IVehicleDetails) {
       <Grid item md={4} xs={12}>
         <TextFieldCard
           {...{ errors }}
-          control={control}
-          required
           name={VehicleKeys.version}
           label={'Versão'}
           error={!!errors.version}
@@ -129,6 +123,7 @@ export default function VehicleDetails({ models, marks }: IVehicleDetails) {
                 <Autocomplete
                   {...others}
                   sx={{ mt: 1 }}
+                  disableClearable
                   isOptionEqualToValue={(option, value) => option === value}
                   options={fuels.map((x) => x.id)}
                   getOptionLabel={(option) =>
@@ -148,7 +143,6 @@ export default function VehicleDetails({ models, marks }: IVehicleDetails) {
                 />
               )}
               name={VehicleKeys.fuelType}
-              control={control}
             />
           }
           label={'Combustível'}
@@ -159,8 +153,6 @@ export default function VehicleDetails({ models, marks }: IVehicleDetails) {
       <Grid item md={4} xs={12}>
         <TextFieldCard
           {...{ errors }}
-          control={control}
-          required
           name={VehicleKeys.color}
           label={'Cor'}
           error={!!errors.color}
@@ -171,7 +163,6 @@ export default function VehicleDetails({ models, marks }: IVehicleDetails) {
       <Grid item md={2} xs={6}>
         <TextFieldCard
           {...{ errors }}
-          control={control}
           name={VehicleKeys.year}
           label={'Ano'}
           error={!!errors.year}
@@ -182,7 +173,6 @@ export default function VehicleDetails({ models, marks }: IVehicleDetails) {
       <Grid item md={2} xs={6}>
         <TextFieldCard
           {...{ errors }}
-          control={control}
           name={VehicleKeys.price}
           label={'Preço (€)'}
           error={!!errors.price}
@@ -197,6 +187,7 @@ export default function VehicleDetails({ models, marks }: IVehicleDetails) {
               render={({ field: { onChange, ...others } }) => (
                 <Autocomplete
                   {...others}
+                  disableClearable
                   sx={{ mt: 1 }}
                   isOptionEqualToValue={(option, value) => option === value}
                   options={transmissions.map((x) => x.id)}
@@ -210,25 +201,23 @@ export default function VehicleDetails({ models, marks }: IVehicleDetails) {
                       variant="standard"
                       error={!!errors.transmission}
                       helperText={errors.transmission?.message}
-                      sx={AutocompleteSX(!!errors.fuelType)}
+                      sx={AutocompleteSX(!!errors.transmission)}
                     />
                   )}
                   onChange={(_, data) => onChange(data)}
                 />
               )}
               name={VehicleKeys.transmission}
-              control={control}
             />
           }
           label={'Transmissão'}
-          error={!!errors.fuelType}
+          error={!!errors.transmission}
           required
         />
       </Grid>
       <Grid item md={2} xs={6}>
         <TextFieldCard
           {...{ errors }}
-          control={control}
           name={VehicleKeys.mileage}
           label={'Nº de Kms'}
           error={!!errors.mileage}
@@ -239,7 +228,6 @@ export default function VehicleDetails({ models, marks }: IVehicleDetails) {
       <Grid item md={2} xs={6}>
         <TextFieldCard
           {...{ errors }}
-          control={control}
           name={VehicleKeys.doors}
           label={'Nº de portas'}
           error={!!errors.doors}
@@ -250,7 +238,6 @@ export default function VehicleDetails({ models, marks }: IVehicleDetails) {
       <Grid item md={2} xs={6}>
         <TextFieldCard
           {...{ errors }}
-          control={control}
           name={VehicleKeys.engineSize}
           label={'Tamanho do motor (cm3)'}
           error={!!errors.engineSize}
@@ -261,7 +248,6 @@ export default function VehicleDetails({ models, marks }: IVehicleDetails) {
       <Grid item md={2} xs={6}>
         <TextFieldCard
           {...{ errors }}
-          control={control}
           name={VehicleKeys.power}
           label={'Potência (CV)'}
           error={!!errors.power}
@@ -274,9 +260,8 @@ export default function VehicleDetails({ models, marks }: IVehicleDetails) {
           label="Oportunidade"
           children={
             <SwitchFormValidation
-              {...{ control }}
-              label="Não"
-              label1="Sim"
+              label={'Não'}
+              label1={'Sim'}
               name={VehicleKeys.opportunity}
             />
           }
@@ -287,9 +272,8 @@ export default function VehicleDetails({ models, marks }: IVehicleDetails) {
           label="Vendido"
           children={
             <SwitchFormValidation
-              {...{ control }}
-              label="Não"
-              label1="Sim"
+              label={'Não'}
+              label1={'Sim'}
               name={VehicleKeys.sold}
             />
           }
@@ -311,7 +295,6 @@ export default function VehicleDetails({ models, marks }: IVehicleDetails) {
                     />
                   )}
                   name={VehicleKeys.soldDate}
-                  control={control}
                 />
               </Stack>
             }
@@ -322,7 +305,6 @@ export default function VehicleDetails({ models, marks }: IVehicleDetails) {
       <Grid item xs={12}>
         <TextFieldCard
           {...{ errors }}
-          control={control}
           name={VehicleKeys.observations}
           label={'Observações'}
           error={!!errors.observations}

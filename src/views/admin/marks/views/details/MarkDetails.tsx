@@ -1,12 +1,11 @@
 import { Grid } from '@mui/material';
 import { MarkKeys } from '../../models/Mark';
-import TextFieldCard from '../../../identity/users/views/components/card/TextFieldCard';
+import TextFieldCard from '../../../identity/users/views/components/card/AutoMoreiraTextFieldCard';
 import { IMarkValidationSchema } from '../../services/MarkValidationSchema';
 import { useFormContext } from 'react-hook-form';
 
 export default function MarkDetails() {
   const {
-    control,
     formState: { errors }
   } = useFormContext<IMarkValidationSchema>();
 
@@ -15,7 +14,6 @@ export default function MarkDetails() {
       <Grid item xs={12}>
         <TextFieldCard
           {...{ errors }}
-          control={control}
           required
           name={MarkKeys.name}
           label={'Nome'}

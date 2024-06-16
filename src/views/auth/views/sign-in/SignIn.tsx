@@ -13,7 +13,7 @@ import {
   ISignInValidationSchema,
   signInValidationSchema
 } from '../../services/SignInValidationSchema';
-import TextFieldCard from '../../../admin/identity/users/views/components/card/TextFieldCard';
+import TextFieldCard from '../../../admin/identity/users/views/components/card/AutoMoreiraTextFieldCard';
 import { useState } from 'react';
 import { Box } from '@mui/material';
 
@@ -31,7 +31,6 @@ export default function SignIn() {
 
   const {
     handleSubmit,
-    control,
     formState: { errors }
   } = methods;
 
@@ -85,7 +84,6 @@ export default function SignIn() {
             required
             label={'Email'}
             value={''}
-            {...{ control }}
           />
 
           {/* Password */}
@@ -100,7 +98,6 @@ export default function SignIn() {
               endAdornment
               showPassword={showPassword}
               handleClickShowPassword={handleShowPassword}
-              {...{ control }}
             />
           </Box>
 
