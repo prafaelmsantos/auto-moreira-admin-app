@@ -4,7 +4,7 @@ export const vehicleListNavigate = '/admin/vehicles';
 export const addVehicleNavigate = '/admin/vehicles/add';
 
 const convertWhiteSpaceToNull = (value: string | null): string | null =>
-  value === '' ? null : value;
+  value?.trim().length === 0 ? null : value;
 
 export const verifyWhiteSpaces = (vehicle: IVehicle): IVehicle => {
   vehicle.version = convertWhiteSpaceToNull(vehicle.version);
