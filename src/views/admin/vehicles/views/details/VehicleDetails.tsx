@@ -285,11 +285,14 @@ export default function VehicleDetails({ models, marks }: IVehicleDetails) {
             children={
               <Stack sx={{ mt: 0.6 }}>
                 <Controller
-                  render={({ field: { value, ...others } }) => (
+                  render={({ field: { value, onChange, ...others } }) => (
                     <DatePicker
                       {...others}
                       disableFuture
                       defaultValue={value ? dayjs(value) : dayjs(new Date())}
+                      onChange={(data) =>
+                        onChange(data ? data.toString() : null)
+                      }
                       sx={AutocompleteSX(false)}
                       slotProps={{ textField: { variant: 'standard' } }}
                     />

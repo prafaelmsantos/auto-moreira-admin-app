@@ -16,14 +16,14 @@ export interface IVehicle {
   mileage: number;
   price: number;
   fuelType: Fuel;
-  version?: string | null;
+  version: string | null;
   doors: number;
   transmission: Transmission;
   engineSize: number;
   power: number;
   opportunity: boolean;
   sold: boolean;
-  soldDate?: Date | null;
+  soldDate?: string | null;
   vehicleImages: IVehicleImage[];
 }
 

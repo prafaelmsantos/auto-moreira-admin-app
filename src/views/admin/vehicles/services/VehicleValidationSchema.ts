@@ -28,7 +28,7 @@ export const vehicleValidationSchema = z.object({
     power: z.coerce.number().positive('A potência é inválida!'),
     opportunity: z.boolean().default(false),
     sold: z.boolean().default(false),
-    soldDate: z.date().nullable().default(null),
+    soldDate: z.string().nullable().default(null),
     vehicleImages: z.array(vehicleImageValidationSchema).default([]),
     id: z.coerce.number().default(0)
 });

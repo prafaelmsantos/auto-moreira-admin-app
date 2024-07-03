@@ -10,7 +10,7 @@ import { useQuery } from '@apollo/client';
 import { MARKS } from '../../marks/models/graphQL/Marks';
 import { convertToMark } from '../../marks/models/Mark';
 import { IVehicle, IVehicleImage } from '../models/Vehicle';
-import { addVehicleNavigate, vehicleListNavigate } from './utils/Utils';
+
 import { MODELS } from '../../vehicle-models/models/graphQL/Models';
 import { convertToModel } from '../../vehicle-models/models/Model';
 import VehicleDetails from './details/VehicleDetails';
@@ -40,6 +40,11 @@ import VehicleImages from './images/VehicleImages';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Fuel } from '../models/enums/FuelEnum';
 import { Transmission } from '../models/enums/TransmissionEnum';
+import {
+  addVehicleNavigate,
+  vehicleListNavigate,
+  verifyWhiteSpaces
+} from './utils/Utils';
 
 export default function Vehicle() {
   const methods = useForm<IVehicleValidationSchema>({
@@ -59,6 +64,7 @@ export default function Vehicle() {
     id: 0,
     modelId: 0,
     model: { id: 0, name: '', markId: 0 },
+    version: null,
     year: new Date().getFullYear(),
     color: '',
     mileage: 0,
@@ -131,6 +137,7 @@ export default function Vehicle() {
   const handleClose = () => navigate(vehicleListNavigate);
 
   const handleSumbitEdit = async (vehicle: IVehicle) => {
+    vehicle = verifyWhiteSpaces(vehicle);
     dispatch(setLoader(true));
     updateVehicle(vehicle)
       .then(() => {
@@ -159,6 +166,7 @@ export default function Vehicle() {
   };
 
   const handleSumbitAdd = async (vehicle: IVehicle) => {
+    vehicle = verifyWhiteSpaces(vehicle);
     dispatch(setLoader(true));
     createVehicle(vehicle)
       .then(() => {
