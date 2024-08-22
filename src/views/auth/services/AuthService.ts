@@ -53,10 +53,16 @@ const registration = async (
 ): Promise<IUserRegistration> =>
   await postData(`${BASE_API_URL}${'api/users/createUser'}`, user);
 
-  const resetPassword = async (
-  email: string
-): Promise<string> =>
-  await postData(`${BASE_API_URL}${'api/users/resetPassword'}`, email);
+  const resetPassword = async (email: string): Promise<IUser> => {
+  const response = await fetch(`${BASE_API_URL}api/users/resetPassword/${email}`, {
+    method: 'POST',
+    headers: getSessionHeaders()
+  });
+  if (!response.ok) {
+    throw new Error(await getErrorMessage(response));
+  }
+  return (await response.json()) as Promise<IUser>;
+};
 
 const login = async (userLogin: IUserLogin): Promise<IUser> => {
   const response = await fetch(`${BASE_API_URL}${'api/users/login'}`, {
