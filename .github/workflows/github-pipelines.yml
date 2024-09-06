@@ -1,0 +1,62 @@
+name: CI/CD Pipeline
+
+env:
+  NODE_VERSION: '15'
+  DOCKER_HUB_USERNAME: ${{ secrets.DOCKER_HUB_USERNAME }}
+  DOCKER_HUB_TOKEN: ${{ secrets.DOCKER_HUB_TOKEN }}
+  DOCKER_IMAGE: 'auto-moreira-admin-app'
+  DOCKER_FILE_PATH: './Dockerfile'
+  GITHUB_USERNAME: 'prafaelmsantos'
+  GITHUB_PASSWORD: ${{ secrets.TOKEN }}
+  
+on:
+  push:
+    branches:
+      - '**'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+
+    - name: Install dependencies
+      run: npm install
+
+    - name: Build the application
+      run: npm run build
+
+  docker:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout the code
+      uses: actions/checkout@v3
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v2
+
+    - name: Login to Docker Hub
+      uses: docker/login-action@v2
+      with:
+        username: ${{ env.DOCKER_HUB_USERNAME }}
+        password: ${{ env.DOCKER_HUB_TOKEN }}
+
+    - name: Build and push Docker image
+      uses: docker/build-push-action@v5
+      with:
+        context: .
+        file: ${{ env.DOCKER_FILE_PATH }}
+        push: true
+        tags: ${{ env.DOCKER_HUB_USERNAME }}/${{ env.DOCKER_IMAGE }}:latest
+        build-args: |
+          GITHUB_USERNAME=${{ github.actor }}
+          GITHUB_PASSWORD=${{ env.GITHUB_PASSWORD }}
