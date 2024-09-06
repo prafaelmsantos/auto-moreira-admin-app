@@ -19,7 +19,7 @@ import AlertModal from '../../../components/modal/AlertModal';
 import { MessageType } from '../../../models/enums/MessageTypeEnum';
 import { setSnackBar } from '../../../redux/snackBarSlice';
 import { setModal } from '../../../redux/modalSlice';
-import columns from './views/components/columns/ClientMessageColumns';
+import columns from './views/components/test/ClientMessageColumns';
 
 export default function ClientMessages() {
   const [idsToDelete, setIdsToDelete] = useState<number[]>([]);
