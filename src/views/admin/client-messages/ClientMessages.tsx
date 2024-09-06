@@ -11,7 +11,6 @@ import { useEffect, useState } from 'react';
 import GetActions from '../../../components/base/Actions';
 import { IMode } from '../../../models/enums/Base';
 import PageHolder from '../../../components/base/PageHolder';
-import columns from './views/components/columns/ClientMessageColumns';
 import { useAppDispatch } from '../../../redux/hooks';
 import { setLoader, setToInitialLoader } from '../../../redux/loaderSlice';
 import { BASE_API_URL } from '../../../config/variables';
@@ -20,6 +19,7 @@ import AlertModal from '../../../components/modal/AlertModal';
 import { MessageType } from '../../../models/enums/MessageTypeEnum';
 import { setSnackBar } from '../../../redux/snackBarSlice';
 import { setModal } from '../../../redux/modalSlice';
+import columns from './views/components/columns/ClientMessageColumns';
 
 export default function ClientMessages() {
   const [idsToDelete, setIdsToDelete] = useState<number[]>([]);
