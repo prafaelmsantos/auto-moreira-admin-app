@@ -1,5 +1,5 @@
 # pull official base image
-FROM node:15-alpine AS build
+FROM node:20-alpine AS build
 
 # set working directory
 WORKDIR /app
@@ -9,15 +9,15 @@ ENV PATH /app/node_modules/.bin:$PATH
 
 # install app dependencies
 COPY package.json ./
-COPY package-lock.json ./
-RUN npm install --silent
-RUN npm install react-scripts@3.4.1 -g --silent
+COPY pnpm-lock.json ./
+RUN pnpm install --silent
+RUN pnpm install react-scripts@3.4.1 -g --silent
 
 # add app
 COPY . ./
 
 # Build the React app for production
-RUN npm run build
+RUN pnpm run build
 
 # Use Nginx as the production server
 FROM nginx:stable-alpine AS buid
