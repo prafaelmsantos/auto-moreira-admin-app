@@ -1,7 +1,7 @@
 name: CI/CD Pipeline
 
 env:
-  NODE_VERSION: '20.17.0'
+  NODE_VERSION: '20'
   DOCKER_HUB_USERNAME: ${{ secrets.DOCKER_HUB_USERNAME }}
   DOCKER_HUB_TOKEN: ${{ secrets.DOCKER_HUB_TOKEN }}
   DOCKER_IMAGE: 'auto-moreira-admin-app'
