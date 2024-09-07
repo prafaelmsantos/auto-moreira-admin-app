@@ -30,7 +30,7 @@ export default function ClientMessages() {
     }
   });
 
-  const rows =
+     const rows =
     data?.clientMessages?.nodes?.map((clientMessage) =>
       convertToClientMessage(
         clientMessage as clientMessages_clientMessages_nodes

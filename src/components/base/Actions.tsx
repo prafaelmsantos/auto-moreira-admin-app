@@ -1,5 +1,5 @@
 import { FaPlusCircle, FaCheck } from 'react-icons/fa';
-import { FaPencil, FaXmark } from 'react-icons/fa6';
+/* import { FaPencil, FaXmark } from 'react-icons/fa6'; */
 import { IAction } from './PageHolder';
 import { IMode } from '../../models/enums/Base';
 import { MdOutlineDeleteOutline } from 'react-icons/md';
@@ -48,7 +48,7 @@ export default function GetActions({
     case IMode.ADD:
       return [
         {
-          icon: <FaXmark />,
+          icon: <FaCheck />,
           callback: () => handleClose && void handleClose()
         },
         {
@@ -60,7 +60,7 @@ export default function GetActions({
     case IMode.EDIT:
       return [
         {
-          icon: <FaXmark />,
+          icon: <FaCheck />,
           callback: () => handleClose && void handleClose()
         },
         {
@@ -72,7 +72,7 @@ export default function GetActions({
     case IMode.PREVIEW:
       return [
         {
-          icon: <FaPencil />,
+          icon: <FaCheck />,
           callback: () => handleEdit && void handleEdit()
         }
       ];

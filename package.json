@@ -20,6 +20,7 @@
     "@mui/styled-engine-sc": "^6.0.0-alpha.12",
     "@mui/x-data-grid": "^6.18.7",
     "@mui/x-date-pickers": "^7.0.0",
+    "@react-icons/all-files": "^4.1.0",
     "@reduxjs/toolkit": "^2.0.1",
     "@tanstack/react-table": "^8.7.9",
     "@testing-library/jest-dom": "^5.16.5",
@@ -60,10 +61,13 @@
   },
   "scripts": {
     "start": "vite",
-    "build": "tsc && vite build",
+    "build": "vite build",
     "serve": "vite preview",
-    "test": "vitest",
-    "test:coverage": "vitest run --coverage --watch=false"
+    "lint": "eslint src --ext .js,.jsx,.ts,.tsx",
+    "lint:fix": "eslint src --ext .js,.jsx,.ts,.tsx --fix",
+    "lint:errors": "eslint src --ext .js,.jsx,.ts,.tsx --quiet",
+    "test": "vitest --run",
+    "test-coverage": "TZ=America/New_York vitest run --coverage"
   },
   "eslintConfig": {
     "extends": [

@@ -3,7 +3,7 @@ import { COLORS } from '../../../../../../utils/Colors';
 import { useSelector } from 'react-redux';
 import { MdDeleteOutline } from 'react-icons/md';
 import { RootState } from '../../../../../../redux/store';
-import { LuUpload } from 'react-icons/lu';
+/* import { LuUpload } from 'react-icons/lu'; */
 
 interface IImageButton {
   deleteBtn?: boolean;
@@ -58,7 +58,7 @@ const ImageButton = ({ deleteBtn, handleClick }: IImageButton) => {
             alignItems="center"
             sx={{ py: 0.5, color: 'white' }}
           >
-            {deleteBtn ? <MdDeleteOutline /> : <LuUpload />}
+            {/*  {deleteBtn ? <MdDeleteOutline /> : <LuUpload />} */}
           </Stack>
         </Button>
       </Box>

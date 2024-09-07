@@ -2,7 +2,7 @@ import { IoCarSport } from 'react-icons/io5';
 import { SiMercedes, SiThemodelsresource } from 'react-icons/si';
 import { MdHome, MdLocalPolice, MdPerson } from 'react-icons/md';
 import { FaUsers } from 'react-icons/fa';
-import { LuMessagesSquare } from 'react-icons/lu';
+//import { LuMessagesSquare } from 'react-icons/lu';
 import { RouteName } from '../models/enums/RouteType';
 
 const SideBarRoutes = [
@@ -45,8 +45,8 @@ const SideBarRoutes = [
   {
     name: 'Mensagem de Clientes',
     layout: '/admin',
-    path: RouteName.CLIENT_MESSAGES,
-    icon: <LuMessagesSquare className="h-6 w-6" />
+    path: RouteName.CLIENT_MESSAGES
+    //icon: <LuMessagesSquare className="h-6 w-6" />
   },
   {
     name: 'Perfil',
