@@ -28,10 +28,10 @@ jobs:
         node-version: ${{ env.NODE_VERSION }}
 
     - name: Install dependencies
-      run: pnpm install
+      run: yarn install
 
     - name: Build the application
-      run: pnpm build
+      run: yarn build
 
   docker:
     needs: build
