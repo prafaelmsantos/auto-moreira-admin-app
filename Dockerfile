@@ -2,21 +2,19 @@
 FROM node:20-alpine AS build
 
 # set working directory
-WORKDIR /app
-
-# add `/app/node_modules/.bin` to $PATH
-ENV PATH /app/node_modules/.bin:$PATH
+WORKDIR /
+RUN npm i -g pnpm
 
 # install app dependencies
 COPY package.json ./
 COPY pnpm-lock.json ./
-RUN pnpm install --silent
-RUN pnpm install react-scripts@3.4.1 -g --silent
+RUN pnpm install
 
 # add app
-COPY . ./
+COPY . .
 
 # Build the React app for production
+ENV NODE_OPTIONS="--max-old-space-size=6592"
 RUN pnpm run build
 
 # Use Nginx as the production server
