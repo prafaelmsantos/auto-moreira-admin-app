@@ -6,8 +6,8 @@ WORKDIR /
 RUN npm i -g pnpm
 
 # install app dependencies
-COPY package.json ./
-COPY pnpm-lock.json ./
+COPY package.json .
+COPY pnpm-lock.yaml .
 RUN pnpm install
 
 # add app
